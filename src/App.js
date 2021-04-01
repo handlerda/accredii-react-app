@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import "./assets/main.css";
+import LandingPage from "./LandingPage/LandingPage";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useHistory,
+} from "react-router-dom";
+import InvestorApp from "./Investor/InvestorApp";
 
 function App() {
+  // const history = useHistory();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={LandingPage}></Route>
+        <Route path="/investor" component={InvestorApp}></Route>
+      </Switch>
+    </Router>
   );
 }
 
