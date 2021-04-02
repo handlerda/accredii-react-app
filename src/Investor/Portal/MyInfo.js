@@ -1,7 +1,12 @@
 import React from "react";
+import FormTemplate from "../FormTemplate";
 
 function MyInfo() {
-  return <h1>Hi from my info</h1>;
+  return (
+    <div className="pt-6">
+      <FormTemplate />
+    </div>
+  );
 }
 
 export default MyInfo;

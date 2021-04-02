@@ -5,5 +5,6 @@ module.exports = {
     require("tailwindcss"),
     require("autoprefixer"),
     require("@tailwindcss/ui"),
+    require("@tailwindcss/forms"),
   ],
 };

@@ -1662,6 +1662,13 @@
     "mini-svg-data-uri" "^1.0.3"
     "traverse" "^0.6.6"
 
+"@tailwindcss/forms@^0.3.2":
+  "integrity" "sha512-aj2/rJsGb2whAZ/BQWHWWQRSbhH0r/l1ozOByiv+ZNjBD84GMvb5dhAyfpeasFky+EJrAwX5eaqft8NQMZFWvA=="
+  "resolved" "https://registry.npmjs.org/@tailwindcss/forms/-/forms-0.3.2.tgz"
+  "version" "0.3.2"
+  dependencies:
+    "mini-svg-data-uri" "^1.2.3"
+
 "@tailwindcss/typography@^0.2.0":
   "integrity" "sha512-aPgMH+CjQiScLZculoDNOQUrrK2ktkbl3D6uCLYp1jgYRlNDrMONu9nMu8LfwAeetYNpVNeIGx7WzHSu0kvECg=="
   "resolved" "https://registry.npmjs.org/@tailwindcss/typography/-/typography-0.2.0.tgz"
@@ -7578,7 +7585,7 @@
     "schema-utils" "^1.0.0"
     "webpack-sources" "^1.1.0"
 
-"mini-svg-data-uri@^1.0.3":
+"mini-svg-data-uri@^1.0.3", "mini-svg-data-uri@^1.2.3":
   "integrity" "sha512-zd6KCAyXgmq6FV1mR10oKXYtvmA9vRoB6xPSTUJTbFApCtkefDnYueVR1gkof3KcdLZo1Y8mjF2DFmQMIxsHNQ=="
   "resolved" "https://registry.npmjs.org/mini-svg-data-uri/-/mini-svg-data-uri-1.2.3.tgz"
   "version" "1.2.3"
@@ -11157,7 +11164,7 @@
     "slice-ansi" "^4.0.0"
     "string-width" "^4.2.0"
 
-"tailwindcss@^1.0", "tailwindcss@^1.5.0", "tailwindcss@^1.8.3", "tailwindcss@^1.9.6":
+"tailwindcss@^1.0", "tailwindcss@^1.5.0", "tailwindcss@^1.8.3", "tailwindcss@^1.9.6", "tailwindcss@>=2.0.0":
   "integrity" "sha512-nY8WYM/RLPqGsPEGEV2z63riyQPcHYZUJpAwdyBzVpxQHOHqHE+F/fvbCeXhdF1+TA5l72vSkZrtYCB9hRcwkQ=="
   "resolved" "https://registry.npmjs.org/tailwindcss/-/tailwindcss-1.9.6.tgz"
   "version" "1.9.6"
