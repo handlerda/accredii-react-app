@@ -1,11 +1,13 @@
 import React from "react";
+import Checkbox from "../Components/Controls/Checkbox";
+import MultipleChoice from "../Components/Controls/MultipleChoice";
 import TextInput from "../Components/Controls/TextInput";
 import FormHeader from "../Form/FormHeader";
 import UseForm from "../Form/UseForm";
-
+import questions from "./InvestorQuestions";
 function FormTemplate() {
   return (
-    <UseForm className="space-y-8 divide-y divide-gray-200">
+    <UseForm className="space-y-8 divide-y divide-gray-200 bg-gray-100">
       <FormHeader
         header="Personal Investor Information"
         body="Please make sure the following information is up to date. Personal data below will be used to generate accreditation documents "
@@ -16,26 +18,42 @@ function FormTemplate() {
         <TextInput label="Last Name" name="last_name" id="last_name" />
         <TextInput label="Email" name="email" id="email_name" />
         <TextInput label="Phone Number" name="phone_number" id="phone_number" />
+        <TextInput
+          label="Street address"
+          name="street_address"
+          id="street_address"
+        />
+        <TextInput label="City" name="city" id="city" />
+        <TextInput label="State" name="state" id="state" />
+        <TextInput label="Zip / Postal" name="zip" id="zip" />
       </div>
-      <div class="mt-4">
-        <div class="">
-          <div class="text-sm">
-            <label for="comments" class="font-medium text-gray-700">
-              Comments
-            </label>
-            <div class="mt-0 sm:mt-0 sm:col-span-2 border-gray-400">
-              <input
-                id="comments"
-                name="comments"
-                type="checkbox"
-                class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded bg-gray-300 border-gray-900"
-              />
-            </div>
-            <p class="text-gray-500">
-              Get notified when someones posts a comment on a posting.
-            </p>
+
+      <div className="mt-15">
+        <FormHeader
+          header="Investor Accreditation Details"
+          body="Please make sure the following information is up to date. Personal data below will be used to generate accreditation documents "
+        />
+      </div>
+      {questions.map((question) => {
+        return (
+          <div>
+            <MultipleChoice title={question.title} helpText={question.helpText}>
+              {question.choices.map((choice) => {
+                return (
+                  <Checkbox label={choice.label} name={choice.question_name} />
+                );
+              })}
+            </MultipleChoice>
           </div>
-        </div>
+        );
+      })}
+      <div class="px-4 py-3  text-right sm:px-6">
+        <button
+          type="submit"
+          class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Save
+        </button>
       </div>
     </UseForm>
   );

@@ -1,4 +1,5 @@
 import React from "react";
+import Bridge from "../Controls/Bridge";
 import Paper from "../Paper";
 import TableHead from "./TableHead";
 import TableHeadRow from "./TableHeadRow";
@@ -23,6 +24,7 @@ function Table({ data }) {
                   <TableHeadRow name="Law Firm" />
                   <TableHeadRow name="Attorney" />
                   <TableHeadRow name="Status" />
+                  <TableHeadRow name="Action" />
                 </TableHead>
                 {/* <TableRow>
                   <TableRowData name="Davis" bold />
@@ -40,6 +42,8 @@ function Table({ data }) {
                       <TableRowData name={document.lawfirm_name} />
                       <TableRowData name={document.attorney_name} />
                       <TableRowData name={document.status} bold />
+
+                      <Bridge color="green" label={document.view || "View"} />
                     </TableRow>
                   );
                 })}
