@@ -8,9 +8,9 @@ import TableRowData from "./TableRowData";
 
 //take in head rows and data
 
-function Table({ data }) {
-  const docs = data.data.docs;
-  console.log(docs);
+function Table({ tableHeads, tableRows, keys }) {
+  // const docs = data.data.docs;
+  // console.log(docs);
   return (
     <Paper>
       <div class="flex flex-col">
@@ -19,31 +19,17 @@ function Table({ data }) {
             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
               <table class="min-w-full divide-y divide-gray-200">
                 <TableHead>
-                  <TableHeadRow name="Document Title" />
-                  <TableHeadRow name="Company" />
-                  <TableHeadRow name="Law Firm" />
-                  <TableHeadRow name="Attorney" />
-                  <TableHeadRow name="Status" />
-                  <TableHeadRow name="Action" />
+                  {tableHeads.map((head) => {
+                    return <TableHeadRow name={head.name} />;
+                  })}
                 </TableHead>
-                {/* <TableRow>
-                  <TableRowData name="Davis" bold />
-                  <TableRowData name="Davis" />
-                </TableRow>
-                <TableRow>
-                  <TableRowData name="Davis" bold />
-                  <TableRowData name="Davis" />
-                </TableRow> */}
-                {docs.map((document) => {
+                {tableRows.map((column) => {
                   return (
                     <TableRow>
-                      <TableRowData name={document.title} bold />
-                      <TableRowData name={document.company_name} />
-                      <TableRowData name={document.lawfirm_name} />
-                      <TableRowData name={document.attorney_name} />
-                      <TableRowData name={document.status} bold />
-
-                      <Bridge color="green" label={document.view || "View"} />
+                      {console.log(`here come the keys`, keys)}
+                      {keys.map((key) => {
+                        return <TableRowData name={column[key]} />;
+                      })}
                     </TableRow>
                   );
                 })}

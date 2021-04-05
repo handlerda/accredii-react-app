@@ -7,6 +7,7 @@ import {
   useHistory,
 } from "react-router-dom";
 import InvestorApp from "./Investor/InvestorApp";
+import LawfirmApp from "./Lawfirm/LawfirmApp";
 
 function App() {
   // const history = useHistory();
@@ -15,6 +16,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={LandingPage}></Route>
         <Route path="/investor" component={InvestorApp}></Route>
+        <Route path="/firm" component={LawfirmApp}></Route>
       </Switch>
     </Router>
   );

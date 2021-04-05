@@ -2,12 +2,8 @@ import React, { useState } from "react";
 import Container from "../Navbar.js/Container";
 import Items from "../Navbar.js/Items";
 import MobileContainer from "../Navbar.js/Mobile/MobileContainer";
+import Report from "../Investor/Portal/Report";
 import MobileItems from "../Navbar.js/Mobile/MobileItems";
-
-import Team from "./Portal/Company";
-import Document from "./Portal/Document";
-import MyInfo from "./Portal/MyInfo";
-import Report from "./Portal/Report";
 
 const tableHeaders = [
   { name: "Title" },
@@ -27,7 +23,7 @@ const api_names = [
   "sign",
 ];
 
-function InvestorApp() {
+function LawfirmApp() {
   const [choice, setChoice] = useState(null);
 
   function handleClick(clickChoice) {
@@ -53,8 +49,8 @@ function InvestorApp() {
       {/* <!-- Static sidebar for desktop --> */}
       <Container>
         <Items label="Dashboard" onClick={() => handleClick("dashboard")} />
+        <Items label="Clients" onClick={() => handleClick("report")} />
         <Items label="Companies" onClick={() => handleClick("company")} />
-        <Items label="My Info" onClick={() => handleClick("myInfo")} />
         <Items label="Documents" onClick={() => handleClick("document")} />
         <Items label="Reports" onClick={() => handleClick("report")} />
       </Container>
@@ -91,14 +87,11 @@ function InvestorApp() {
               </h1>
             </div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              {choice === "company" && <Team />}
-              {choice === "myInfo" && <MyInfo />}
-              {choice === "document" && <Document />}
               {choice === "report" && (
                 <Report
                   tableHeaders={tableHeaders}
-                  type="investor"
-                  id="auth0|60688e791549f20070e6281a"
+                  type="attorney"
+                  id="848290340"
                   keys={api_names}
                 />
               )}
@@ -110,4 +103,4 @@ function InvestorApp() {
   );
 }
 
-export default InvestorApp;
+export default LawfirmApp;
