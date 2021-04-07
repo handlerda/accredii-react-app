@@ -1,5 +1,5 @@
 import React from "react";
-import FormTemplate from "../FormTemplate";
+import FormTemplate from "../../Investor/FormTemplate";
 
 function MyInfo() {
   return (

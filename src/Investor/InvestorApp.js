@@ -4,10 +4,12 @@ import Items from "../Navbar.js/Items";
 import MobileContainer from "../Navbar.js/Mobile/MobileContainer";
 import MobileItems from "../Navbar.js/Mobile/MobileItems";
 
-import Team from "./Portal/Company";
-import Document from "./Portal/Document";
-import MyInfo from "./Portal/MyInfo";
-import Report from "./Portal/Report";
+import Team from "../Components/Portal/Company";
+import Document from "../Components/Portal/Document";
+import MyInfo from "../Components/Portal/MyInfo";
+import Report from "../Components/Portal/Report";
+import Documents from "../Components/Portal/Lawfirm/Documents";
+import NewButton from "../Components/Controls/NewButton";
 
 const tableHeaders = [
   { name: "Title" },
@@ -93,7 +95,18 @@ function InvestorApp() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               {choice === "company" && <Team />}
               {choice === "myInfo" && <MyInfo />}
-              {choice === "document" && <Document />}
+              {choice === "document" && (
+                <div>
+                  <NewButton
+                    text="New Document"
+                    onClick={(event) => console.log(event)}
+                  />
+                  <Documents
+                    type="investor"
+                    id="auth0|60688e791549f20070e6281a"
+                  />
+                </div>
+              )}
               {choice === "report" && (
                 <Report
                   tableHeaders={tableHeaders}

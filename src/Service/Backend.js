@@ -9,4 +9,16 @@ const getDocuments = async (type, id) => {
   return documentJson;
 };
 
-export default getDocuments;
+const generateInvestorEmbeddedDocument = async (id, documentId, type) => {
+  const queryParams =
+    type === "investor"
+      ? `?id=${id}&doc_obj_id=${documentId}`
+      : `?doc_obj_id=${documentId}`;
+  const url = `http://localhost:5000/api/${type}/sign${queryParams}`;
+  const documentDataURL = await axios(url);
+  const generatedDocumentData = documentDataURL.data;
+  console.log(generatedDocumentData);
+  return generatedDocumentData;
+};
+
+export { getDocuments, generateInvestorEmbeddedDocument };

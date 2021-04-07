@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Table from "../../Components/Table/Table";
-import getDocuments from "../../Service/Backend";
+import { getDocuments } from "../../Service/Backend";
 
 function Report({ tableHeaders, type, id, keys }) {
   //hit api on load

@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import Container from "../Navbar.js/Container";
 import Items from "../Navbar.js/Items";
 import MobileContainer from "../Navbar.js/Mobile/MobileContainer";
-import Report from "../Investor/Portal/Report";
+import Report from "../../src/Components/Portal/Report";
 import MobileItems from "../Navbar.js/Mobile/MobileItems";
+import Documents from "../Components/Portal/Lawfirm/Documents";
 
 const tableHeaders = [
   { name: "Title" },
@@ -94,6 +95,9 @@ function LawfirmApp() {
                   id="848290340"
                   keys={api_names}
                 />
+              )}
+              {choice === "document" && (
+                <Documents type="attorney" id="848290340"></Documents>
               )}
             </div>
           </div>
