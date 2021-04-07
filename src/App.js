@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import InvestorApp from "./Investor/InvestorApp";
 import LawfirmApp from "./Lawfirm/LawfirmApp";
+import Document from "../src/Components/Portal/Document";
 
 function App() {
   // const history = useHistory();
