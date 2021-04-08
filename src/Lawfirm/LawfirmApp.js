@@ -4,7 +4,9 @@ import Items from "../Navbar.js/Items";
 import MobileContainer from "../Navbar.js/Mobile/MobileContainer";
 import Report from "../../src/Components/Portal/Report";
 import MobileItems from "../Navbar.js/Mobile/MobileItems";
-import Documents from "../Components/Portal/Lawfirm/Documents";
+import Documents from "../Components/Portal/Documents/DocumentGrid";
+import { Route, Switch, useHistory } from "react-router";
+import NewButton from "../Components/Controls/NewButton";
 
 const tableHeaders = [
   { name: "Title" },
@@ -25,35 +27,25 @@ const api_names = [
 ];
 
 function LawfirmApp() {
-  const [choice, setChoice] = useState(null);
-
-  function handleClick(clickChoice) {
-    setChoice(clickChoice);
-  }
+  const history = useHistory();
 
   return (
     <div className="h-screen flex overflow-hidden bg-white">
       <MobileContainer>
-        <MobileItems
-          label="Dashboard"
-          onClick={() => handleClick("dashboard")}
-        />
-        <MobileItems label="Companies" onClick={() => handleClick("company")} />
-        <MobileItems label="My Info" onClick={() => handleClick("myInfo")} />
-        <MobileItems
-          label="Documents"
-          onClick={() => handleClick("document")}
-        />
-        <MobileItems lable="Reports" onClick={() => handleClick("report")} />
+        <MobileItems label="Dashboard" link="/attorney" />
+        <MobileItems label="Clients" link="/attorney/client" />
+        <MobileItems label="Companies" link="/attorney/company" />
+        <MobileItems label="Documents" link="/attorney/documents" />
+        <MobileItems label="Reports" link="/attorney/reports" />
       </MobileContainer>
 
       {/* <!-- Static sidebar for desktop --> */}
       <Container>
-        <Items label="Dashboard" onClick={() => handleClick("dashboard")} />
-        <Items label="Clients" onClick={() => handleClick("report")} />
-        <Items label="Companies" onClick={() => handleClick("company")} />
-        <Items label="Documents" onClick={() => handleClick("document")} />
-        <Items label="Reports" onClick={() => handleClick("report")} />
+        <Items label="Dashboard" link="/attorney" />
+        <Items label="Clients" link="/attorney/clients" />
+        <Items label="Companies" link="/attorney/companies" />
+        <Items label="Documents" link="/attorney/documents" />
+        <Items label="Reports" link="/attorney/reports" />
       </Container>
       <div className="flex flex-col w-0 flex-1 overflow-hidden">
         <div className="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
@@ -88,17 +80,39 @@ function LawfirmApp() {
               </h1>
             </div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              {choice === "report" && (
-                <Report
-                  tableHeaders={tableHeaders}
-                  type="attorney"
-                  id="848290340"
-                  keys={api_names}
-                />
-              )}
-              {choice === "document" && (
-                <Documents type="attorney" id="848290340"></Documents>
-              )}
+              <Switch>
+                <Route exact path={`/attorney/documents`}>
+                  <NewButton
+                    text="New Document"
+                    onClick={() => history.push(`/attorney/documents/new`)}
+                  ></NewButton>
+                  <Documents type="attorney" id="848290340"></Documents>
+                </Route>
+                <Route exact path={`/attorney/documents/new`}>
+                  <h1>Hello from new doc</h1>
+                </Route>
+                <Route path={`/attorney/documents/:documentId`}>
+                  <h1>Hello world from doc id</h1>
+                </Route>
+                <Route path="/attorney/reports">
+                  <Report
+                    tableHeaders={tableHeaders}
+                    type="attorney"
+                    id="848290340"
+                    keys={api_names}
+                  />
+                </Route>
+                <Route exact path={`/attorney/clients`}>
+                  <NewButton
+                    text="New Client"
+                    onClick={() => history.push(`/attorney/clients/new`)}
+                  ></NewButton>
+                  <h1>Hello from clients</h1>
+                </Route>
+                <Route exact path={`/attorney/clients/new`}>
+                  <h1>Hello from a new client </h1>
+                </Route>
+              </Switch>
             </div>
           </div>
         </main>

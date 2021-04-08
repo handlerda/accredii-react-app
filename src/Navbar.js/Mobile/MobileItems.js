@@ -1,10 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-function MobileItems({ label, onClick }) {
+function MobileItems({ label, link }) {
   return (
-    <button
+    <Link
       className="bg-gray-100 text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md"
-      onClick={onClick}
+      to={link}
     >
       {/* <!-- Current: "text-gray-500", Default: "text-gray-400 group-hover:text-gray-500" -->
         <!-- Heroicon name: outline/home --> */}
@@ -24,7 +25,7 @@ function MobileItems({ label, onClick }) {
         />
       </svg>
       {label}
-    </button>
+    </Link>
   );
 }
 

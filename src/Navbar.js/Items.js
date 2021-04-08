@@ -1,10 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-function Items({ label, onClick }) {
+function Items({ label, link }) {
   return (
-    <a
+    <Link
       className="text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-      onClick={onClick}
+      to={link}
     >
       {/* <!-- Current: "text-gray-500", Default: "text-gray-400 group-hover:text-gray-500" -->
         <!-- Heroicon name: outline/home --> */}
@@ -24,7 +25,7 @@ function Items({ label, onClick }) {
         />
       </svg>
       {label}
-    </a>
+    </Link>
   );
 }
 

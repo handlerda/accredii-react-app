@@ -2,7 +2,7 @@ import React from "react";
 import {
   //   BrowserRouter as Router,
   Route,
-  NavLink,
+  Link,
   Switch,
   useHistory,
 } from "react-router-dom";
@@ -80,18 +80,18 @@ function TopHeroSection() {
                     Placeholder 2
                   </a>
 
-                  <NavLink
+                  <Link
                     to="/investor"
                     className="font-medium text-indigo-600 hover:text-indigo-500"
                   >
                     Investor Log in
-                  </NavLink>
-                  <a
-                    href="#"
+                  </Link>
+                  <Link
+                    to="/attorney"
                     className="font-medium text-indigo-600 hover:text-indigo-500"
                   >
                     Firm Log in
-                  </a>
+                  </Link>
                 </div>
               </nav>
             </div>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import HelloSign from "hellosign-embedded";
 import { generateInvestorEmbeddedDocument } from "../../Service/Backend";
+import { Link } from "react-router-dom";
 
 function GridItem({ id, investor, status, title, document_id, type }) {
   const [sign, setSigning] = useState("!sign");
@@ -41,12 +42,12 @@ function GridItem({ id, investor, status, title, document_id, type }) {
         <div>
           <div class="-mt-px flex divide-x divide-gray-200">
             <div class="w-0 flex-1 flex">
-              <a
-                href="mailto:janecooper@example.com"
+              <Link
+                to={`documents/${document_id}`}
                 class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
               >
-                <span class="ml-3">View</span>
-              </a>
+                <span class="ml-3">More details</span>
+              </Link>
             </div>
             <div class="-ml-px w-0 flex-1 flex">
               <a
