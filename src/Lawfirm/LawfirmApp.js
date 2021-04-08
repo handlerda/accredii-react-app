@@ -33,8 +33,8 @@ function LawfirmApp() {
     <div className="h-screen flex overflow-hidden bg-white">
       <MobileContainer>
         <MobileItems label="Dashboard" link="/attorney" />
-        <MobileItems label="Clients" link="/attorney/client" />
-        <MobileItems label="Companies" link="/attorney/company" />
+        <MobileItems label="Clients" link="/attorney/clients" />
+        <MobileItems label="Companies" link="/attorney/companies" />
         <MobileItems label="Documents" link="/attorney/documents" />
         <MobileItems label="Reports" link="/attorney/reports" />
       </MobileContainer>
@@ -111,6 +111,21 @@ function LawfirmApp() {
                 </Route>
                 <Route exact path={`/attorney/clients/new`}>
                   <h1>Hello from a new client </h1>
+                </Route>
+                <Route path={`/attorney/clients/:id`}>
+                  <h1>Hello from a client id </h1>
+                </Route>
+                <Route path={`/attorney/companies`}>
+                  <NewButton
+                    text="New Company"
+                    onClick={() => history.push(`/attorney/companies/new`)}
+                  ></NewButton>
+                </Route>
+                <Route exact path={`/attorney/companies/new`}>
+                  <h1>Hello from a new company </h1>
+                </Route>
+                <Route path={`/attorney/companies/:id`}>
+                  <h1>Hello from client id </h1>
                 </Route>
               </Switch>
             </div>

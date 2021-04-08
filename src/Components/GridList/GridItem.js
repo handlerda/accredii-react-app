@@ -7,22 +7,6 @@ function GridItem({ id, investor, status, title, document_id, type }) {
   const [sign, setSigning] = useState("!sign");
   const [helloSignData, setHelloSignData] = useState(null);
 
-  async function embeddedSigning() {
-    try {
-      const signedURL = await generateInvestorEmbeddedDocument(
-        id,
-        document_id,
-        type
-      );
-      console.log(`here comes the signed url`, signedURL);
-      if (!signedURL["sign_url"]) setHelloSignData("signed");
-      setHelloSignData(signedURL);
-      setSigning("sign");
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   if (sign === "!sign")
     return (
       <li class="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
@@ -50,39 +34,38 @@ function GridItem({ id, investor, status, title, document_id, type }) {
               </Link>
             </div>
             <div class="-ml-px w-0 flex-1 flex">
-              <a
-                onClick={embeddedSigning}
+              <Link
+                to={`/documents/sign/${document_id}`}
                 class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500"
               >
                 <span class="ml-3">Sign</span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
       </li>
     );
 
-  if ("sign") {
-    console.log(helloSignData);
-    const client = new HelloSign({
-      clientId: helloSignData.client_id,
-      debug: true,
-    });
-    client.open(helloSignData.sign_url, {
-      testMode: true,
-    });
+  // if ("sign") {
+  //   console.log(helloSignData);
+  //   const client = new HelloSign({
+  //     clientId: helloSignData.client_id,
+  //     debug: true,
+  //   });
+  //   client.open(helloSignData.sign_url, {
+  //     testMode: true,
+  //     container: document.querySelector("#hello-sign-doc"),
+  //   });
 
-    client.on("sign", () => {
-      alert("The document has been signed!");
-    });
-    client.on("error", () => {
-      console.log(`there was an error`);
-    });
-    console.log(`the iframe tried to open`);
-    return <h1>The doc has been generated</h1>;
-  }
-
-  if ("signed") return <h1>You aint signing today</h1>;
+  //   client.on("sign", () => {
+  //     alert("The document has been signed!");
+  //   });
+  //   client.on("error", () => {
+  //     console.log(`there was an error`);
+  //   });
+  //   console.log(`the iframe tried to open`);
+  // }
+  // if (sign) return <h1>Hello world</h1>;
 }
 
 export default GridItem;

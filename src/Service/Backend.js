@@ -21,4 +21,11 @@ const generateInvestorEmbeddedDocument = async (id, documentId, type) => {
   return generatedDocumentData;
 };
 
-export { getDocuments, generateInvestorEmbeddedDocument };
+const getInvestor = async (investor_id) => {
+  const url = `http://localhost:5000/api/investor?id=${investor_id}`;
+  const getInvestorData = await axios(url);
+  const jsonData = await getInvestorData.data.investor_data;
+  return jsonData;
+};
+
+export { getDocuments, generateInvestorEmbeddedDocument, getInvestor };

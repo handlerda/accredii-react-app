@@ -82,7 +82,10 @@ function InvestorApp() {
                 Welcome Name
               </h1>
             </div>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+            <div
+              className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8"
+              id="hello-sign-doc"
+            >
               <Switch>
                 <Route exact path={`/investor/documents`}>
                   <NewButton
@@ -96,6 +99,9 @@ function InvestorApp() {
                 </Route>
                 <Route exact path={`/investor/documents/new`}>
                   <h1>Hello from new doc</h1>
+                </Route>
+                <Route path={`/investor/documents/sign/:documentId`}>
+                  <h1>Hello from doc sign</h1>
                 </Route>
                 <Route path={`/investor/documents/:documentId`}>
                   <h1>Hello from doc id</h1>
