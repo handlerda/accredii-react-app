@@ -7,6 +7,7 @@ import MobileItems from "../Navbar.js/Mobile/MobileItems";
 import Documents from "../Components/Portal/Documents/DocumentGrid";
 import { Route, Switch, useHistory } from "react-router";
 import NewButton from "../Components/Controls/NewButton";
+import DocumentSignContainer from "../Components/Portal/Documents/DocumentSignContainer";
 
 const tableHeaders = [
   { name: "Title" },
@@ -90,6 +91,10 @@ function LawfirmApp() {
                 </Route>
                 <Route exact path={`/attorney/documents/new`}>
                   <h1>Hello from new doc</h1>
+                </Route>
+                <Route path={`/attorney/documents/sign/:documentId`}>
+                  <DocumentSignContainer type="attorney" user_id="848290340" />
+                  <div id="hello-sign-container"></div>
                 </Route>
                 <Route path={`/attorney/documents/:documentId`}>
                   <h1>Hello world from doc id</h1>

@@ -1,33 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { generateInvestorEmbeddedDocument } from "../../../Service/Backend";
+import HelloSign from "hellosign-embedded";
+import { useParams } from "react-router";
 
-function DocumentSignContainer() {
+function DocumentSignContainer({ user_id, type }) {
+  let counter = 0;
   const [sign, setSigning] = useState("!sign");
   const [helloSignData, setHelloSignData] = useState(null);
-  async function embeddedSigning() {
-    try {
-      const signedURL = await generateInvestorEmbeddedDocument(
-        id,
-        document_id,
-        type
-      );
-      console.log(`here comes the signed url`, signedURL);
-      if (!signedURL["sign_url"]) setHelloSignData("signed");
-      setHelloSignData(signedURL);
-      setSigning("sign");
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  if ("sign") {
-    console.log(helloSignData);
+  const { documentId } = useParams();
+
+  useEffect(() => {
+    counter++;
+    console.log(`how many times did I run counter ${counter}`);
+    const embeddedSigningData = async () => {
+      try {
+        const signedURL = await generateInvestorEmbeddedDocument(
+          user_id,
+          documentId,
+          type
+        );
+        console.log(`here comes the signed url`, signedURL);
+        setHelloSignData(signedURL);
+        setSigning("sign");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    embeddedSigningData();
+  }, []);
+
+  if (sign === "sign") {
+    console.log(`hello from counter ${counter}`);
     const client = new HelloSign({
       clientId: helloSignData.client_id,
       debug: true,
     });
     client.open(helloSignData.sign_url, {
       testMode: true,
-      container: document.querySelector("#hello-sign-doc"),
     });
 
     client.on("sign", () => {
@@ -36,10 +45,20 @@ function DocumentSignContainer() {
     client.on("error", () => {
       console.log(`there was an error`);
     });
-    console.log(`the iframe tried to open`);
+
+    client.on("open", () => {
+      console.log("the frame has opened");
+    });
+
+    client.on("cancel", () => {
+      console.log("hello from cancel");
+    });
+    return <div></div>;
   }
-  if (sign) return <h1>Hello world</h1>;
-  return <div id="hello-sign-container"></div>;
+
+  if (sign === "!sign") {
+    return <h1>Loading</h1>;
+  }
 }
 
 export default DocumentSignContainer;

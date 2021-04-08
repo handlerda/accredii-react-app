@@ -10,6 +10,7 @@ import Documents from "../Components/Portal/Documents/DocumentGrid";
 import NewButton from "../Components/Controls/NewButton";
 import { Switch, Route, useHistory } from "react-router";
 import MyInfo from "./MyInfo";
+import DocumentSignContainer from "../Components/Portal/Documents/DocumentSignContainer";
 
 const tableHeaders = [
   { name: "Title" },
@@ -101,7 +102,11 @@ function InvestorApp() {
                   <h1>Hello from new doc</h1>
                 </Route>
                 <Route path={`/investor/documents/sign/:documentId`}>
-                  <h1>Hello from doc sign</h1>
+                  <DocumentSignContainer
+                    type="investor"
+                    user_id="auth0|60688e791549f20070e6281a"
+                  />
+                  <div id="hello-sign-container"></div>
                 </Route>
                 <Route path={`/investor/documents/:documentId`}>
                   <h1>Hello from doc id</h1>
