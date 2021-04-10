@@ -8,12 +8,13 @@ import Documents from "../Components/Portal/Documents/DocumentGrid";
 import { Route, Switch, useHistory } from "react-router";
 import NewButton from "../Components/Controls/NewButton";
 import DocumentSignContainer from "../Components/Portal/Documents/DocumentSignContainer";
+import NewClient from "./clients/NewClient";
 
 const tableHeaders = [
   { name: "Title" },
   { name: "Company" },
   { name: "Law Firm" },
-  { name: "Attorney" },
+  { name: "Client" },
   { name: "Status" },
   { name: "Action" },
 ];
@@ -22,7 +23,7 @@ const api_names = [
   "title",
   "company_name",
   "lawfirm_name",
-  "attorney_name",
+  "investor_name",
   "status",
   "sign",
 ];
@@ -115,7 +116,7 @@ function LawfirmApp() {
                   <h1>Hello from clients</h1>
                 </Route>
                 <Route exact path={`/attorney/clients/new`}>
-                  <h1>Hello from a new client </h1>
+                  <NewClient />
                 </Route>
                 <Route path={`/attorney/clients/:id`}>
                   <h1>Hello from a client id </h1>

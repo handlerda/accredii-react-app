@@ -1,4 +1,4 @@
-const questions = [
+const InvestorMCQuestions = [
   {
     title: "American Citizen",
     helpText:
@@ -6,10 +6,12 @@ const questions = [
     choices: [
       {
         label: "Yes",
+        value: true,
         question_name: "american_citizen",
       },
       {
         label: "No",
+        value: false,
         question_name: "american_citizen",
       },
     ],
@@ -21,10 +23,12 @@ const questions = [
     choices: [
       {
         label: "Yes",
+        value: true,
         question_name: "income_req",
       },
       {
         label: "No",
+        value: false,
         question_name: "income_req",
       },
     ],
@@ -35,10 +39,12 @@ const questions = [
     choices: [
       {
         label: "Yes",
+        value: true,
         question_name: "networth_req",
       },
       {
         label: "No",
+        value: false,
         question_name: "networth_req",
       },
     ],
@@ -49,10 +55,12 @@ const questions = [
     choices: [
       {
         label: "Yes",
+        value: true,
         question_name: "good_standing_req",
       },
       {
         label: "No",
+        value: false,
         question_name: "good_standing_req",
       },
     ],
@@ -63,14 +71,49 @@ const questions = [
     choices: [
       {
         label: "Yes",
+        value: true,
         question_name: "family_client_req",
       },
       {
         label: "No",
+        value: false,
         question_name: "family_client_req",
       },
     ],
   },
 ];
 
-export default questions;
+const InvestorInputQuestions = [
+  {
+    name: "first_name",
+    label: "First Name",
+    type: "text",
+  },
+  {
+    name: "middle_name",
+    label: "Middle Name",
+    type: "text",
+  },
+  {
+    name: "last_name",
+    label: "Last Name",
+    type: "text",
+  },
+  {
+    name: "email",
+    label: "Email",
+    type: "email",
+  },
+  {
+    name: "phone",
+    label: "Phone Number",
+    type: "number",
+  },
+  {
+    name: "address",
+    label: "Address",
+    text: "text",
+  },
+];
+
+export { InvestorMCQuestions, InvestorInputQuestions };

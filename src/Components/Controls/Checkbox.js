@@ -1,6 +1,8 @@
 import React from "react";
 
-function Checkbox({ label, name }) {
+function Checkbox({ label, name, onChange, value, checked }) {
+  // value = typeof value === "boolean" ? value.toString() : value;
+  // console.log(`here is the value`, value);
   return (
     <div class="flex items-center">
       <div class="max-w-lg space-y-4">
@@ -11,6 +13,9 @@ function Checkbox({ label, name }) {
               name={name}
               type="radio"
               class="border-gray-300 rounded form-checkbox "
+              onChange={onChange}
+              defaultChecked={checked}
+              value={value}
             />
             <label
               for={name}

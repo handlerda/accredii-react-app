@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 
-function UseForm(
-  initialFieldValues,
-  validateOnChange = false,
-  validate = false
-) {
+function UseForm(initialFieldValues) {
   console.log("hello world");
   const [values, setValues] = useState(initialFieldValues);
   const [errors, setErrors] = useState({});
@@ -12,12 +8,12 @@ function UseForm(
   const handleInputChange = (e) => {
     console.log(e);
     const { name, value } = e.target;
-    console.log(value);
+    console.log(`here comes the name ${name} here comes the value ${value}`);
     setValues({
       ...values,
       [name]: value,
     });
-    if (validateOnChange) validate({ [name]: value });
+    // if (validateOnChange) validate({ [name]: value });
   };
 
   const resetForm = () => {
