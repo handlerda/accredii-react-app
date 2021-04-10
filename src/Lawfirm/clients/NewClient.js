@@ -6,13 +6,14 @@ import SubmitButton from "../../Components/Controls/SubmitButton";
 import TextInput from "../../Components/Controls/TextInput";
 import FormHeader from "../../Form/FormHeader";
 import { Form, UseForm } from "../../Form/UseForm";
+import { insertInvestor } from "../../Service/Backend";
 import {
   NewClientInputs,
   NewClientDropDown,
   NewClientDocumentDropDown,
 } from "../LawfirmQuestions";
 
-function NewClient() {
+function NewClient({ attorney_id }) {
   const initialValues = {};
 
   NewClientInputs.forEach((question) => {
@@ -26,10 +27,26 @@ function NewClient() {
   // ON SUBMIT NEEDS TWO API CALLS
   // 1. CREATE USER
   // 2. GENERATE DOCUMENT
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // create the user
+    try {
+      // create the new investor
+      // -- new user in auth0 & mongo
+      const newInvestor = insertInvestor(values, attorney_id);
+      // get payload and create a document for the user
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const { values, handleInputChange } = UseForm(initialValues);
   console.log(values);
   return (
-    <Form className="space-y-8 divide-y divide-gray-200">
+    <Form
+      className="space-y-8 divide-y divide-gray-200"
+      onSubmit={handleSubmit}
+    >
       <FormHeader
         header="Add a new investor"
         body="Please fill out the following information to invite a new investor. They will be sent an email to login"

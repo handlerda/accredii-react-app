@@ -116,7 +116,7 @@ function LawfirmApp() {
                   <h1>Hello from clients</h1>
                 </Route>
                 <Route exact path={`/attorney/clients/new`}>
-                  <NewClient />
+                  <NewClient attorney_id="848290340" />
                 </Route>
                 <Route path={`/attorney/clients/:id`}>
                   <h1>Hello from a client id </h1>

@@ -14,7 +14,7 @@ function TextInput({ label, id, name, value, onChange }) {
           type="text"
           name={name}
           id={id}
-          class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-black-500 rounded-md bg-gray-50 border-gray-700"
+          class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-black-500 rounded-md bg-gray-100 border-gray-700"
           defaultValue={value || ""}
           onChange={onChange}
         />
