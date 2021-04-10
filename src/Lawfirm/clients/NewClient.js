@@ -7,11 +7,7 @@ import TextInput from "../../Components/Controls/TextInput";
 import FormHeader from "../../Form/FormHeader";
 import { Form, UseForm } from "../../Form/UseForm";
 import { insertInvestor } from "../../Service/Backend";
-import {
-  NewClientInputs,
-  NewClientDropDown,
-  NewClientDocumentDropDown,
-} from "../LawfirmQuestions";
+import { NewClientInputs, NewClientDropDown } from "../LawfirmQuestions";
 
 function NewClient({ attorney_id }) {
   const initialValues = {};
@@ -67,19 +63,7 @@ function NewClient({ attorney_id }) {
       </div>
       {NewClientDropDown.map((question) => {
         return (
-          <MultipleChoice title={question.label} helpText={question.name}>
-            <SelectDropdown
-              options={question.options}
-              onChange={handleInputChange}
-              name={question.name}
-            />
-          </MultipleChoice>
-        );
-      })}
-
-      {NewClientDocumentDropDown.map((question) => {
-        return (
-          <MultipleChoice title={question.label} helpText={question.name}>
+          <MultipleChoice title={question.label} helpText={question.text}>
             <SelectDropdown
               options={question.options}
               onChange={handleInputChange}

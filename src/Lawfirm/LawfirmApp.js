@@ -8,7 +8,9 @@ import Documents from "../Components/Portal/Documents/DocumentGrid";
 import { Route, Switch, useHistory } from "react-router";
 import NewButton from "../Components/Controls/NewButton";
 import DocumentSignContainer from "../Components/Portal/Documents/DocumentSignContainer";
-import NewClient from "./clients/NewClient";
+import NewClient from "./Clients/NewClient";
+import NewCompany from "./Companies/NewCompany";
+import NewDocument from "./Documents/NewDocument";
 
 const tableHeaders = [
   { name: "Title" },
@@ -91,7 +93,7 @@ function LawfirmApp() {
                   <Documents type="attorney" id="848290340"></Documents>
                 </Route>
                 <Route exact path={`/attorney/documents/new`}>
-                  <h1>Hello from new doc</h1>
+                  <NewDocument />
                 </Route>
                 <Route path={`/attorney/documents/sign/:documentId`}>
                   <DocumentSignContainer type="attorney" user_id="848290340" />
@@ -121,14 +123,14 @@ function LawfirmApp() {
                 <Route path={`/attorney/clients/:id`}>
                   <h1>Hello from a client id </h1>
                 </Route>
-                <Route path={`/attorney/companies`}>
+                <Route exact path={`/attorney/companies`}>
                   <NewButton
                     text="New Company"
                     onClick={() => history.push(`/attorney/companies/new`)}
                   ></NewButton>
                 </Route>
                 <Route exact path={`/attorney/companies/new`}>
-                  <h1>Hello from a new company </h1>
+                  <NewCompany />
                 </Route>
                 <Route path={`/attorney/companies/:id`}>
                   <h1>Hello from client id </h1>

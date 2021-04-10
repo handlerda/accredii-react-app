@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+//pass in signing status
 function GridItem({ investor, status, title, document_id }) {
   return (
     <li class="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
