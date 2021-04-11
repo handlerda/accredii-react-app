@@ -30,7 +30,8 @@ function NewClient({ attorney_id }) {
     try {
       // create the new investor
       // -- new user in auth0 & mongo
-      const newInvestor = insertInvestor(values, attorney_id);
+      const newInvestor = insertInvestor(values, attorney_id, "auth0|39420394");
+      console.log(newInvestor);
       // get payload and create a document for the user
     } catch (error) {
       console.log(error);

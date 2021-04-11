@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, UseForm } from "../../Form/UseForm";
 import FormHeader from "../../Form/FormHeader";
 import { NewDocumentDropDown } from "../LawfirmQuestions";
 import MultipleChoice from "../../Components/Controls/MultipleChoice";
 import SelectDropdown from "../../Components/Controls/SelectDropdown";
 import SubmitButton from "../../Components/Controls/SubmitButton";
+import TextInput from "../../Components/Controls/TextInput";
+import { toBase64 } from "../../Service/FileParsing";
+import { uploadNewForm } from "../../Service/Backend";
 
 const initialValues = {};
 //loop through the values
@@ -13,8 +16,18 @@ NewDocumentDropDown.map((question) => {
   initialValues[question.name] = "";
 });
 function NewDocument() {
+  //set document state
+  const [file, setFile] = useState();
   const { values, handleInputChange } = UseForm(initialValues);
-  console.log(`here come the values on change`, values);
+
+  //will send the file data as a base64 encoding
+  async function newDocument(target) {
+    const file = target.target.files[0];
+    const base64String = await toBase64(file);
+    uploadNewForm(base64String);
+    setFile(file);
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
   }
@@ -24,8 +37,8 @@ function NewDocument() {
       onSubmit={handleSubmit}
     >
       <FormHeader
-        header="Add a new investor"
-        body="Please fill out the following information to invite a new investor. They will be sent an email to login"
+        header="Send a document to an investor"
+        body="Please fill out the following information to send a new document to an investor. They will notified once you submit."
       />
 
       {NewDocumentDropDown.map((question) => {
@@ -39,6 +52,14 @@ function NewDocument() {
           </MultipleChoice>
         );
       })}
+      <TextInput
+        type="file"
+        name="new_doc_upload"
+        label="Add a new file"
+        onChange={newDocument}
+        id={"new_doc_upload"}
+        hidden={true}
+      />
       <SubmitButton
         text="Submit"
         onClick={() => console.log(`here comes the log`)}

@@ -20,12 +20,13 @@ function Documents({ type, id }) {
           {documents.docs.map((doc) => {
             return (
               <GridItem
-                investor={doc.investor_name}
+                name={doc.investor_name}
                 status={doc.investor_status}
                 title={doc.title}
-                document_id={doc.doc_obj_id}
-                id={doc.investor_auth_zero_id}
-                type={type}
+                text_to_left="Document Details"
+                link_to_left={`/investor/documents/${doc.doc_obj_id}`}
+                text_to_right="Sign"
+                link_to_right={`/investor/documents/sign/${doc.doc_obj_id}`}
               />
             );
           })}

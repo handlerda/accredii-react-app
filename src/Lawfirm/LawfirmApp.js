@@ -11,6 +11,7 @@ import DocumentSignContainer from "../Components/Portal/Documents/DocumentSignCo
 import NewClient from "./Clients/NewClient";
 import NewCompany from "./Companies/NewCompany";
 import NewDocument from "./Documents/NewDocument";
+import CompanyGrid from "../Components/Portal/Companies/CompanyGrid";
 
 const tableHeaders = [
   { name: "Title" },
@@ -128,6 +129,7 @@ function LawfirmApp() {
                     text="New Company"
                     onClick={() => history.push(`/attorney/companies/new`)}
                   ></NewButton>
+                  <CompanyGrid type="attorney" id="848290340" />
                 </Route>
                 <Route exact path={`/attorney/companies/new`}>
                   <NewCompany />

@@ -118,6 +118,7 @@ function InvestorApp() {
                     type="investor"
                     id="auth0|60688e791549f20070e6281a"
                     keys={api_names}
+                    content="docs"
                   />
                 </Route>
                 <Route exact path={`/investor/info`}>

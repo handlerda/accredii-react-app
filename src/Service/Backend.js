@@ -39,15 +39,27 @@ const generateInvestorDocument = async (investor_id, lawfirm_id) => {
   return documentJSON.doc_id;
 };
 
-const insertInvestor = async (data, user_id) => {
+const insertInvestor = async (data, attorney_id, lawfirm_id) => {
   const investorPayload = {
     // we will add an id in the backend and return the id in the payload
-    user_id,
+    attorney_id,
+    lawfirm_id,
     data,
   };
   console.log(JSON.stringify(investorPayload));
-  const response = await axios.post(`${api_path}investor`, investorPayload);
+  const response = await axios.post(`${api_path}investor/new`, investorPayload);
   console.log(response);
+};
+
+const uploadNewForm = async (form_data) => {
+  const url = `${api_path}document/upload/new`;
+  const documentPayload = {
+    encoded_form: form_data,
+  };
+  console.log(`here was the upload`, documentPayload);
+  const upload = await axios.post(url, documentPayload);
+  console.log(`here was the upload`, documentPayload);
+  return upload;
 };
 
 export {
@@ -56,4 +68,5 @@ export {
   getInvestor,
   generateInvestorDocument,
   insertInvestor,
+  uploadNewForm,
 };

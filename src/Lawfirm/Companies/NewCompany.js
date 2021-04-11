@@ -26,8 +26,8 @@ function NewCompany() {
       onSubmit={handleSubmit}
     >
       <FormHeader
-        header="Add a new investor"
-        body="Please fill out the following information to invite a new investor. They will be sent an email to login"
+        header="Add a new company"
+        body="Please fill out the following information to add a new company."
       />
 
       <div class="space-y-6 sm:space-y-5">
