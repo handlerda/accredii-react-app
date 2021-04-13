@@ -8,6 +8,7 @@ function Report({ tableHeaders, type, id, keys, content }) {
   useEffect(() => {
     const getStatus = async () => {
       const data = await getDocuments(type, id);
+      console.log(data);
       setDocumentStatus(data);
     };
     getStatus();

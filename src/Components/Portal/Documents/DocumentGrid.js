@@ -8,6 +8,7 @@ function Documents({ type, id }) {
   useEffect(() => {
     const getStatus = async () => {
       const data = await getDocuments(type, id);
+      console.log(data);
       setDocuments(data.data);
     };
     getStatus();

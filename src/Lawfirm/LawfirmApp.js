@@ -11,7 +11,9 @@ import DocumentSignContainer from "../Components/Portal/Documents/DocumentSignCo
 import NewClient from "./Clients/NewClient";
 import NewCompany from "./Companies/NewCompany";
 import NewDocument from "./Documents/NewDocument";
-import CompanyGrid from "../Components/Portal/Companies/CompanyGrid";
+import CompanyList from "./Companies/CompanyList";
+import { FcComboChart } from "react-icons/fc";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const tableHeaders = [
   { name: "Title" },
@@ -33,7 +35,6 @@ const api_names = [
 
 function LawfirmApp() {
   const history = useHistory();
-
   return (
     <div className="h-screen flex overflow-hidden bg-white">
       <MobileContainer>
@@ -50,7 +51,11 @@ function LawfirmApp() {
         <Items label="Clients" link="/attorney/clients" />
         <Items label="Companies" link="/attorney/companies" />
         <Items label="Documents" link="/attorney/documents" />
-        <Items label="Reports" link="/attorney/reports" />
+        <Items
+          label="Reports"
+          link="/attorney/reports"
+          icon={<FcComboChart />}
+        />
       </Container>
       <div className="flex flex-col w-0 flex-1 overflow-hidden">
         <div className="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
@@ -109,6 +114,7 @@ function LawfirmApp() {
                     type="attorney"
                     id="848290340"
                     keys={api_names}
+                    content="docs"
                   />
                 </Route>
                 <Route exact path={`/attorney/clients`}>
@@ -119,7 +125,10 @@ function LawfirmApp() {
                   <h1>Hello from clients</h1>
                 </Route>
                 <Route exact path={`/attorney/clients/new`}>
-                  <NewClient attorney_id="848290340" />
+                  <NewClient
+                    attorney_id="848290340"
+                    lawfirm_id="auth0|39420394"
+                  />
                 </Route>
                 <Route path={`/attorney/clients/:id`}>
                   <h1>Hello from a client id </h1>
@@ -129,10 +138,13 @@ function LawfirmApp() {
                     text="New Company"
                     onClick={() => history.push(`/attorney/companies/new`)}
                   ></NewButton>
-                  <CompanyGrid type="attorney" id="848290340" />
+                  <CompanyList type="attorney" id="848290340" />
                 </Route>
                 <Route exact path={`/attorney/companies/new`}>
-                  <NewCompany />
+                  <NewCompany
+                    attorney_id="848290340"
+                    lawfirm_id="auth0|39420394"
+                  />
                 </Route>
                 <Route path={`/attorney/companies/:id`}>
                   <h1>Hello from client id </h1>

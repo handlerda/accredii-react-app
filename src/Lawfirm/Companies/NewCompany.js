@@ -4,7 +4,7 @@ import FormHeader from "../../Form/FormHeader";
 import { NewCompanyInputs } from "../LawfirmQuestions";
 import SubmitButton from "../../Components/Controls/SubmitButton";
 import TextInput from "../../Components/Controls/TextInput";
-
+import { createNewCompany, createNewDocument } from "../../Service/Backend";
 const initialValues = {};
 
 //loop
@@ -12,12 +12,16 @@ NewCompanyInputs.forEach((question) => {
   initialValues[question.name] = "";
 });
 
-function NewCompany() {
+function NewCompany({ attorney_id, lawfirm_id }) {
   console.log(`hello from new Comapny`);
   const { values, handleInputChange } = UseForm(initialValues);
   console.log(`here come the values`, values);
   function handleSubmit(e) {
     e.preventDefault();
+    values.attorney_id = attorney_id;
+    values.lawfirm_id = lawfirm_id;
+    console.log(values);
+    createNewCompany(values);
   }
 
   return (

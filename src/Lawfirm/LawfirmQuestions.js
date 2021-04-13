@@ -18,7 +18,7 @@ const NewClientInputs = [
 
 const NewClientDropDown = [
   {
-    name: "client_company_select",
+    name: "company",
     label: "Please select the company",
     text: "Choose from the list below:",
     options: [
@@ -37,7 +37,7 @@ const NewClientDropDown = [
     ],
   },
   {
-    name: "client_document_select",
+    name: "template",
     label: "Please select the accreditation document",
     text: "Choose from the list below:",
     options: [
@@ -62,11 +62,6 @@ const NewCompanyInputs = [
     name: "name",
     label: "Name",
     text: "Please enter the name of the company",
-  },
-  {
-    name: "primary_contact_name",
-    label: "Primary Contact Name",
-    text: "Please enter the primary company contact's first name",
   },
   {
     name: "address",

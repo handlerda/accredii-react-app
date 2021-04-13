@@ -6,9 +6,11 @@ import {
   Switch,
   useHistory,
 } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import InvestorApp from "../../Investor/InvestorApp";
 
 function TopHeroSection() {
+  const history = useHistory();
   return (
     <div>
       <div className="relative bg-white overflow-hidden">
@@ -80,18 +82,18 @@ function TopHeroSection() {
                     Placeholder 2
                   </a>
 
-                  <Link
-                    to="/investor"
+                  <button
+                    onClick={() => history.push("investor")}
                     className="font-medium text-indigo-600 hover:text-indigo-500"
                   >
                     Investor Log in
-                  </Link>
-                  <Link
-                    to="/attorney"
+                  </button>
+                  <button
+                    onClick={() => history.push("attorney")}
                     className="font-medium text-indigo-600 hover:text-indigo-500"
                   >
                     Firm Log in
-                  </Link>
+                  </button>
                 </div>
               </nav>
             </div>
