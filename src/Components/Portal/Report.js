@@ -13,6 +13,7 @@ function Report({ tableHeaders, type, id, keys, content }) {
     };
     getStatus();
   }, []);
+  console.log(documentStatus);
   return (
     documentStatus && (
       <Table

@@ -8,7 +8,7 @@ import NewClient from "./Clients/NewClient";
 import CompanyList from "./Companies/CompanyList";
 import NewCompany from "./Companies/NewCompany";
 import NewDocument from "./Documents/NewDocument";
-import LawfirmAppContainer from "./LawfirmAppContainer";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const tableHeaders = [
   { name: "Title" },
@@ -28,6 +28,9 @@ const api_names = [
   "sign",
 ];
 function LawfirmRoutes() {
+  // const { user } = useAuth0();
+  const user = {};
+  user.sub = "848290340";
   const history = useHistory();
   return (
     <Switch>
@@ -36,13 +39,13 @@ function LawfirmRoutes() {
           text="New Document"
           onClick={() => history.push(`/attorney/documents/new`)}
         ></NewButton>
-        <Documents type="attorney" id="848290340"></Documents>
+        <Documents type="attorney" id={user.sub}></Documents>
       </Route>
       <Route exact path={`/attorney/documents/new`}>
         <NewDocument />
       </Route>
       <Route path={`/attorney/documents/sign/:documentId`}>
-        <DocumentSignContainer type="attorney" user_id="848290340" />
+        <DocumentSignContainer type="attorney" user_id={user.sub} />
         <div id="hello-sign-container"></div>
       </Route>
       <Route path={`/attorney/documents/:documentId`}>
@@ -52,7 +55,7 @@ function LawfirmRoutes() {
         <Report
           tableHeaders={tableHeaders}
           type="attorney"
-          id="848290340"
+          id={user.sub}
           keys={api_names}
           content="docs"
         />
@@ -65,7 +68,7 @@ function LawfirmRoutes() {
         <h1>Hello from clients</h1>
       </Route>
       <Route exact path={`/attorney/clients/new`}>
-        <NewClient attorney_id="848290340" lawfirm_id="auth0|39420394" />
+        <NewClient attorney_id={user.sub} lawfirm_id="auth0|39420394" />
       </Route>
       <Route path={`/attorney/clients/:id`}>
         <h1>Hello from a client id </h1>
@@ -75,10 +78,12 @@ function LawfirmRoutes() {
           text="New Company"
           onClick={() => history.push(`/attorney/companies/new`)}
         ></NewButton>
-        <CompanyList type="attorney" id="848290340" />
+        {console.log(user.sub)}
+        <CompanyList type="attorney" id={user.sub} />
       </Route>
       <Route exact path={`/attorney/companies/new`}>
-        <NewCompany attorney_id="848290340" lawfirm_id="auth0|39420394" />
+        {console.log(user)}
+        <NewCompany attorney_id={user.sub} lawfirm_id="auth0|39420394" />
       </Route>
       <Route path={`/attorney/companies/:id`}>
         <h1>Hello from client id </h1>

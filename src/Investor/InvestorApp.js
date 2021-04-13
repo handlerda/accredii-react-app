@@ -4,35 +4,9 @@ import Items from "../Navbar.js/Items";
 import MobileContainer from "../Navbar.js/Mobile/MobileContainer";
 import MobileItems from "../Navbar.js/Mobile/MobileItems";
 
-import Report from "../Components/Portal/Report";
-import Company from "../Components/Portal/Company";
-import Documents from "../Components/Portal/Documents/DocumentGrid";
-import NewButton from "../Components/Controls/NewButton";
-import { Switch, Route, useHistory } from "react-router";
-import MyInfo from "./MyInfo";
-import DocumentSignContainer from "../Components/Portal/Documents/DocumentSignContainer";
-
-const tableHeaders = [
-  { name: "Title" },
-  { name: "Company" },
-  { name: "Law Firm" },
-  { name: "Attorney" },
-  { name: "Status" },
-  { name: "Action" },
-];
-
-const api_names = [
-  "title",
-  "company_name",
-  "lawfirm_name",
-  "attorney_name",
-  "status",
-  "sign",
-];
+import InvestorRoutes from "./InvestorRoutes";
 
 function InvestorApp() {
-  const history = useHistory();
-
   return (
     <div className="h-screen flex overflow-hidden bg-white">
       <MobileContainer>
@@ -87,47 +61,7 @@ function InvestorApp() {
               className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8"
               id="hello-sign-doc"
             >
-              <Switch>
-                <Route exact path={`/investor/documents`}>
-                  <NewButton
-                    text="New Document"
-                    onClick={() => history.push(`/investor/documents/new`)}
-                  ></NewButton>
-                  <Documents
-                    type="investor"
-                    id="auth0|60688e791549f20070e6281a"
-                  ></Documents>
-                </Route>
-                <Route exact path={`/investor/documents/new`}>
-                  <h1>Hello from new doc</h1>
-                </Route>
-                <Route path={`/investor/documents/sign/:documentId`}>
-                  <DocumentSignContainer
-                    type="investor"
-                    user_id="auth0|60688e791549f20070e6281a"
-                  />
-                  <div id="hello-sign-container"></div>
-                </Route>
-                <Route path={`/investor/documents/:documentId`}>
-                  <h1>Hello from doc id</h1>
-                </Route>
-
-                <Route exact path={`/investor/reports`}>
-                  <Report
-                    tableHeaders={tableHeaders}
-                    type="investor"
-                    id="auth0|60688e791549f20070e6281a"
-                    keys={api_names}
-                    content="docs"
-                  />
-                </Route>
-                <Route exact path={`/investor/info`}>
-                  <MyInfo />
-                </Route>
-                <Route exact path={`/investor/companies`}>
-                  <Company />
-                </Route>
-              </Switch>
+              <InvestorRoutes />
             </div>
           </div>
         </main>
