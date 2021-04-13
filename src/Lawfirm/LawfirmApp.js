@@ -14,27 +14,9 @@ import NewDocument from "./Documents/NewDocument";
 import CompanyList from "./Companies/CompanyList";
 import { FcComboChart } from "react-icons/fc";
 import { useAuth0 } from "@auth0/auth0-react";
-
-const tableHeaders = [
-  { name: "Title" },
-  { name: "Company" },
-  { name: "Law Firm" },
-  { name: "Client" },
-  { name: "Status" },
-  { name: "Action" },
-];
-
-const api_names = [
-  "title",
-  "company_name",
-  "lawfirm_name",
-  "investor_name",
-  "status",
-  "sign",
-];
+import LawfirmRoutes from "./LawfirmRoutes";
 
 function LawfirmApp() {
-  const history = useHistory();
   return (
     <div className="h-screen flex overflow-hidden bg-white">
       <MobileContainer>
@@ -90,66 +72,7 @@ function LawfirmApp() {
               </h1>
             </div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              <Switch>
-                <Route exact path={`/attorney/documents`}>
-                  <NewButton
-                    text="New Document"
-                    onClick={() => history.push(`/attorney/documents/new`)}
-                  ></NewButton>
-                  <Documents type="attorney" id="848290340"></Documents>
-                </Route>
-                <Route exact path={`/attorney/documents/new`}>
-                  <NewDocument />
-                </Route>
-                <Route path={`/attorney/documents/sign/:documentId`}>
-                  <DocumentSignContainer type="attorney" user_id="848290340" />
-                  <div id="hello-sign-container"></div>
-                </Route>
-                <Route path={`/attorney/documents/:documentId`}>
-                  <h1>Hello world from doc id</h1>
-                </Route>
-                <Route path="/attorney/reports">
-                  <Report
-                    tableHeaders={tableHeaders}
-                    type="attorney"
-                    id="848290340"
-                    keys={api_names}
-                    content="docs"
-                  />
-                </Route>
-                <Route exact path={`/attorney/clients`}>
-                  <NewButton
-                    text="New Client"
-                    onClick={() => history.push(`/attorney/clients/new`)}
-                  ></NewButton>
-                  <h1>Hello from clients</h1>
-                </Route>
-                <Route exact path={`/attorney/clients/new`}>
-                  <NewClient
-                    attorney_id="848290340"
-                    lawfirm_id="auth0|39420394"
-                  />
-                </Route>
-                <Route path={`/attorney/clients/:id`}>
-                  <h1>Hello from a client id </h1>
-                </Route>
-                <Route exact path={`/attorney/companies`}>
-                  <NewButton
-                    text="New Company"
-                    onClick={() => history.push(`/attorney/companies/new`)}
-                  ></NewButton>
-                  <CompanyList type="attorney" id="848290340" />
-                </Route>
-                <Route exact path={`/attorney/companies/new`}>
-                  <NewCompany
-                    attorney_id="848290340"
-                    lawfirm_id="auth0|39420394"
-                  />
-                </Route>
-                <Route path={`/attorney/companies/:id`}>
-                  <h1>Hello from client id </h1>
-                </Route>
-              </Switch>
+              <LawfirmRoutes />
             </div>
           </div>
         </main>

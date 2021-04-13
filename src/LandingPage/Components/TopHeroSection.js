@@ -82,18 +82,18 @@ function TopHeroSection() {
                     Placeholder 2
                   </a>
 
-                  <button
-                    onClick={() => history.push("investor")}
+                  <Link
+                    to="/investor"
                     className="font-medium text-indigo-600 hover:text-indigo-500"
                   >
                     Investor Log in
-                  </button>
-                  <button
-                    onClick={() => history.push("attorney")}
+                  </Link>
+                  <Link
+                    to="/attorney"
                     className="font-medium text-indigo-600 hover:text-indigo-500"
                   >
                     Firm Log in
-                  </button>
+                  </Link>
                 </div>
               </nav>
             </div>
