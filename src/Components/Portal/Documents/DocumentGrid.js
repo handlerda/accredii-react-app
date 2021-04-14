@@ -2,18 +2,30 @@ import React, { useEffect, useState } from "react";
 import GridListContainer from "../../GridList/GridListContainer";
 import { getDocuments } from "../../../Service/Backend";
 import GridItem from "../../GridList/GridItem";
+import NoData from "../../NoData";
 
 function Documents({ type, id }) {
   const [documents, setDocuments] = useState(null);
   useEffect(() => {
     const getStatus = async () => {
       const data = await getDocuments(type, id);
-      console.log(data);
-      setDocuments(data.data);
+      if (data.data.docs.length) setDocuments(data.data);
+      else setDocuments(false);
     };
     getStatus();
   }, []);
   console.log(documents);
+
+  if (documents === false) {
+    return (
+      <NoData
+        title="No Documents"
+        text="Please create a new document or wait to get invited to a fund"
+        buttonText="Go back"
+        relativeLink={type}
+      />
+    );
+  }
   return (
     documents && (
       <div>
@@ -22,12 +34,12 @@ function Documents({ type, id }) {
             return (
               <GridItem
                 name={doc.investor_name}
-                status={doc.investor_status}
+                status={doc.status}
                 title={doc.title}
                 text_to_left="Document Details"
-                link_to_left={`/investor/documents/${doc.doc_obj_id}`}
-                text_to_right="Sign"
-                link_to_right={`/investor/documents/sign/${doc.doc_obj_id}`}
+                link_to_left={`/${type}/documents/${doc.doc_obj_id}`}
+                text_to_right={"sign"}
+                link_to_right={`/${type}/documents/sign/${doc.doc_obj_id}`}
               />
             );
           })}

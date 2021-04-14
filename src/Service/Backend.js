@@ -51,6 +51,20 @@ const insertInvestor = async (data, attorney_id, lawfirm_id) => {
   console.log(response);
 };
 
+const updateInvestor = async (investor_id, data) => {
+  const investorPayload = {
+    // we will add an id in the backend and return the id in the payload
+    user_id: investor_id,
+    data,
+  };
+  console.log(JSON.stringify(investorPayload));
+  const response = await axios.post(
+    `${api_path}investor/update`,
+    investorPayload
+  );
+  console.log(response);
+};
+
 const uploadNewForm = async (form_data) => {
   const url = `${api_path}document/upload/new`;
   const documentPayload = {
@@ -103,4 +117,5 @@ export {
   createNewDocument,
   getAttorneyInfo,
   createNewCompany,
+  updateInvestor,
 };

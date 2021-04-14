@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Checkbox from "../../Components/Controls/Checkbox";
 import MultipleChoice from "../../Components/Controls/MultipleChoice";
 import SelectDropdown from "../../Components/Controls/SelectDropdown";
 import SubmitButton from "../../Components/Controls/SubmitButton";
@@ -78,7 +77,7 @@ function NewClient({ attorney_id, lawfirm_id }) {
     handleInputChange: handleDocumentValueChange,
   } = UseForm(initialDocumentValues);
 
-  console.log(documentValues);
+  console.log(values, documentValues);
 
   return (
     documents && (

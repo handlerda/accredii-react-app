@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Table from "../../Components/Table/Table";
 import { getDocuments } from "../../Service/Backend";
+import NoData from "../NoData";
 
 function Report({ tableHeaders, type, id, keys, content }) {
   //hit api on load
@@ -8,12 +9,23 @@ function Report({ tableHeaders, type, id, keys, content }) {
   useEffect(() => {
     const getStatus = async () => {
       const data = await getDocuments(type, id);
-      console.log(data);
-      setDocumentStatus(data);
+      if (data.data.stats.total === 0) setDocumentStatus(false);
+      else setDocumentStatus(data);
     };
     getStatus();
   }, []);
-  console.log(documentStatus);
+
+  if (documentStatus === false) {
+    return (
+      <NoData
+        title="Looks like you are a new user!"
+        text="Please create a new document or wait to get invited to a fund"
+        buttonText="Go back"
+        relativeLink={type}
+      />
+    );
+  }
+
   return (
     documentStatus && (
       <Table

@@ -11,35 +11,47 @@ import TableRowData from "./TableRowData";
 function Table({ tableHeads, tableRows, keys }) {
   // const docs = data.data.docs;
   // console.log(docs);
-  return (
-    <Paper>
-      <div class="flex flex-col">
-        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <table class="min-w-full divide-y divide-gray-200">
-                <TableHead>
-                  {tableHeads.map((head) => {
-                    return <TableHeadRow name={head.name} />;
+  if (!tableRows.length) {
+    console.log(`there are no rows`);
+    return (
+      <Paper>
+        <h1>
+          Looks like you are a new user. Create a document or wait until you get
+          invite to a fund by an attorney
+        </h1>
+      </Paper>
+    );
+  } else {
+    return (
+      <Paper>
+        <div class="flex flex-col">
+          <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+              <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <table class="min-w-full divide-y divide-gray-200">
+                  <TableHead>
+                    {tableHeads.map((head) => {
+                      return <TableHeadRow name={head.name} />;
+                    })}
+                  </TableHead>
+                  {tableRows.map((column) => {
+                    return (
+                      <TableRow>
+                        {console.log(`here come the keys`, keys)}
+                        {keys.map((key) => {
+                          return <TableRowData name={column[key]} />;
+                        })}
+                      </TableRow>
+                    );
                   })}
-                </TableHead>
-                {tableRows.map((column) => {
-                  return (
-                    <TableRow>
-                      {console.log(`here come the keys`, keys)}
-                      {keys.map((key) => {
-                        return <TableRowData name={column[key]} />;
-                      })}
-                    </TableRow>
-                  );
-                })}
-              </table>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </Paper>
-  );
+      </Paper>
+    );
+  }
 }
 
 export default Table;

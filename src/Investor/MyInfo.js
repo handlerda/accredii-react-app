@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import FormTemplate from "./FormTemplate";
 import { getInvestor } from "../Service/Backend";
 
-function MyInfo() {
+function MyInfo({ id }) {
   const [investorInfo, setInvestorInfo] = useState(null);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ function MyInfo() {
       const data = await response;
       setInvestorInfo(data[0]);
     };
-    getInvestorInfo("auth0|60688e791549f20070e6281a");
+    getInvestorInfo(id);
   }, []);
   return (
     investorInfo && (

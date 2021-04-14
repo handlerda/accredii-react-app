@@ -4,7 +4,7 @@ import MultipleChoice from "../Components/Controls/MultipleChoice";
 import TextInput from "../Components/Controls/TextInput";
 import FormHeader from "../Form/FormHeader";
 import { UseForm, Form } from "../Form/UseForm";
-import { getInvestor } from "../Service/Backend";
+import { getInvestor, updateInvestor } from "../Service/Backend";
 import {
   InvestorMCQuestions,
   InvestorInputQuestions,
@@ -32,11 +32,19 @@ function FormTemplate(props) {
 
   const { values, handleInputChange } = UseForm(initialValues);
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    updateInvestor(values);
+  }
+
   console.log(`here is investor info`, values);
 
   return (
     data && (
-      <Form className="space-y-8 divide-y divide-gray-200">
+      <Form
+        className="space-y-8 divide-y divide-gray-200"
+        onSubmit={handleSubmit}
+      >
         <FormHeader
           header="Personal Investor Information"
           body="Please make sure the following information is up to date. Personal data below will be used to generate accreditation documents "

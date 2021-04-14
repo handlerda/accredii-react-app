@@ -6,6 +6,7 @@ import Documents from "../Components/Portal/Documents/DocumentGrid";
 import DocumentSignContainer from "../Components/Portal/Documents/DocumentSignContainer";
 import Report from "../Components/Portal/Report";
 import MyInfo from "./MyInfo";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const tableHeaders = [
   { name: "Title" },
@@ -27,6 +28,8 @@ const api_names = [
 
 function InvestorRoutes() {
   const history = useHistory();
+  const { user } = useAuth0();
+  console.log(user);
   return (
     <Switch>
       <Route exact path={`/investor/documents`}>
@@ -34,19 +37,13 @@ function InvestorRoutes() {
           text="New Document"
           onClick={() => history.push(`/investor/documents/new`)}
         ></NewButton>
-        <Documents
-          type="investor"
-          id="auth0|60688e791549f20070e6281a"
-        ></Documents>
+        <Documents type="investor" id={user.sub}></Documents>
       </Route>
       <Route exact path={`/investor/documents/new`}>
         <h1>Hello from new doc</h1>
       </Route>
       <Route path={`/investor/documents/sign/:documentId`}>
-        <DocumentSignContainer
-          type="investor"
-          user_id="auth0|60688e791549f20070e6281a"
-        />
+        <DocumentSignContainer type="investor" user_id={user.sub} />
         <div id="hello-sign-container"></div>
       </Route>
       <Route path={`/investor/documents/:documentId`}>
@@ -57,13 +54,13 @@ function InvestorRoutes() {
         <Report
           tableHeaders={tableHeaders}
           type="investor"
-          id="auth0|60688e791549f20070e6281a"
+          id={user.sub}
           keys={api_names}
           content="docs"
         />
       </Route>
       <Route exact path={`/investor/info`}>
-        <MyInfo />
+        <MyInfo id={user.sub} />
       </Route>
       <Route exact path={`/investor/companies`}>
         <Company />
