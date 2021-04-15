@@ -7,12 +7,12 @@ const InvestorMCQuestions = [
       {
         label: "Yes",
         value: true,
-        question_name: "american_citizen",
+        question_name: "is_us_person",
       },
       {
         label: "No",
         value: false,
-        question_name: "american_citizen",
+        question_name: "is_us_person",
       },
     ],
   },

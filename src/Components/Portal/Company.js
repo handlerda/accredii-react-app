@@ -1,11 +1,14 @@
 import React from "react";
-import Paper from "../../Components/Paper";
+import NoData from "../NoData";
 
 function Company() {
   return (
-    <Paper>
-      <h1>Hello from Company</h1>
-    </Paper>
+    <NoData
+      title="Looks like you are a new user!"
+      text="Please create a new document or wait to get invited to a fund"
+      buttonText="Go back"
+      relativeLink="investor"
+    />
   );
 }
 

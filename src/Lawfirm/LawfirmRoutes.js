@@ -9,6 +9,7 @@ import CompanyList from "./Companies/CompanyList";
 import NewCompany from "./Companies/NewCompany";
 import NewDocument from "./Documents/NewDocument";
 import { useAuth0 } from "@auth0/auth0-react";
+import Dashboard from "./Dashboard";
 
 const tableHeaders = [
   { name: "Title" },
@@ -34,6 +35,9 @@ function LawfirmRoutes() {
   const history = useHistory();
   return (
     <Switch>
+      <Route exact path={`/attorney`}>
+        <Dashboard />
+      </Route>
       <Route exact path={`/attorney/documents`}>
         <NewButton
           text="New Document"

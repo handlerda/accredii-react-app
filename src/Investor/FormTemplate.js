@@ -11,7 +11,9 @@ import {
 } from "./InvestorQuestions";
 import axios from "axios";
 import SubmitButton from "../Components/Controls/SubmitButton";
+import { useAuth0 } from "@auth0/auth0-react";
 function FormTemplate(props) {
+  const { isAuthenticated, isLoading, loginWithRedirect, user } = useAuth0();
   const data = props.data;
 
   const initialValues = {};
@@ -34,7 +36,7 @@ function FormTemplate(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    updateInvestor(values);
+    updateInvestor(user.sub, values);
   }
 
   console.log(`here is investor info`, values);

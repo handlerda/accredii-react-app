@@ -42,7 +42,8 @@ function NewClient({ attorney_id, lawfirm_id }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // create the user
+    console.log(documentValues, `documentvalues`);
+    //create the user
     try {
       console.log(documentValues["company"], documentValues["template"]);
       if (!documents["template"]) {
@@ -54,10 +55,10 @@ function NewClient({ attorney_id, lawfirm_id }) {
         attorney_id,
         "auth0|39420394"
       );
-      console.log(JSON.stringify(newInvestor));
+      console.log(newInvestor);
 
       const createDocument = await createNewDocument(
-        "123456",
+        newInvestor.id,
         attorney_id,
         lawfirm_id,
         "",

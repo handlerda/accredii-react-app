@@ -31,6 +31,7 @@ function DocumentSignContainer({ user_id, type }) {
 
   if (sign === "sign") {
     console.log(`hello from counter ${counter}`);
+    console.log(helloSignData.sign_url);
     const client = new HelloSign({
       clientId: helloSignData.client_id,
       debug: true,

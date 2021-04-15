@@ -3,10 +3,12 @@ import Container from "../Navbar.js/Container";
 import Items from "../Navbar.js/Items";
 import MobileContainer from "../Navbar.js/Mobile/MobileContainer";
 import MobileItems from "../Navbar.js/Mobile/MobileItems";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import InvestorRoutes from "./InvestorRoutes";
 
 function InvestorApp() {
+  const { isAuthenticated, isLoading, loginWithRedirect, user } = useAuth0();
   return (
     <div className="h-screen flex overflow-hidden bg-white">
       <MobileContainer>
@@ -54,7 +56,7 @@ function InvestorApp() {
           <div className="py-6">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               <h1 className="text-2xl font-semibold text-gray-900">
-                Welcome Name
+                Welcome {user.name}
               </h1>
             </div>
             <div

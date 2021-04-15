@@ -48,7 +48,7 @@ const insertInvestor = async (data, attorney_id, lawfirm_id) => {
   };
   console.log(JSON.stringify(investorPayload));
   const response = await axios.post(`${api_path}investor/new`, investorPayload);
-  console.log(response);
+  return response.data;
 };
 
 const updateInvestor = async (investor_id, data) => {

@@ -1,7 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { CheckIcon } from "@heroicons/react/outline";
+import { ExclamationIcon } from "@heroicons/react/outline";
 import { useHistory } from "react-router-dom";
 
 function NoData({ title, text, buttonText, relativeLink }) {
@@ -54,7 +54,7 @@ function NoData({ title, text, buttonText, relativeLink }) {
             <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
               <div>
                 <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
-                  <CheckIcon
+                  <ExclamationIcon
                     className="h-6 w-6 text-green-600"
                     aria-hidden="true"
                   />

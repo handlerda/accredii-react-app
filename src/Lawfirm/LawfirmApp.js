@@ -33,11 +33,7 @@ function LawfirmApp() {
         <Items label="Clients" link="/attorney/clients" />
         <Items label="Companies" link="/attorney/companies" />
         <Items label="Documents" link="/attorney/documents" />
-        <Items
-          label="Reports"
-          link="/attorney/reports"
-          icon={<FcComboChart />}
-        />
+        <Items label="Reports" link="/attorney/reports" />
       </Container>
       <div className="flex flex-col w-0 flex-1 overflow-hidden">
         <div className="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
