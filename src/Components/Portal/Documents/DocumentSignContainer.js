@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { generateInvestorEmbeddedDocument } from "../../../Service/Backend";
 import HelloSign from "hellosign-embedded";
 import { useParams } from "react-router";
+import AskSigningQuestions from "./AskSigningQuestions";
 
 function DocumentSignContainer({ user_id, type }) {
   let counter = 0;
-  const [sign, setSigning] = useState("!sign");
+  const [sign, setSigning] = useState("loading");
   const [helloSignData, setHelloSignData] = useState(null);
+  const [questions, setQuestions] = useState(null);
   const { documentId } = useParams();
 
   useEffect(() => {
@@ -19,9 +21,13 @@ function DocumentSignContainer({ user_id, type }) {
           documentId,
           type
         );
-        console.log(`here comes the signed url`, signedURL);
-        setHelloSignData(signedURL);
-        setSigning("sign");
+        if (signedURL.status === "ask") {
+          setSigning("ask");
+          setQuestions(signedURL);
+        } else {
+          setHelloSignData(signedURL);
+          setSigning("sign");
+        }
       } catch (error) {
         console.log(error);
       }
@@ -57,7 +63,10 @@ function DocumentSignContainer({ user_id, type }) {
     return <div></div>;
   }
 
-  if (sign === "!sign") {
+  if (sign === "ask") {
+    return <AskSigningQuestions questions={questions} doc_id={documentId} />;
+  }
+  if (sign === "loading") {
     return <h1>Loading</h1>;
   }
 }

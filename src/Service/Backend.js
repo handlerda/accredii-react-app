@@ -76,6 +76,13 @@ const uploadNewForm = async (form_data) => {
   return upload;
 };
 
+const updateDocument = async (payload) => {
+  const url = `${api_path}document/update`;
+  const response = await axios.post(url, payload);
+  console.log(response);
+  return response;
+};
+
 const createNewDocument = async (
   investor_id,
   attorney_id,
@@ -118,4 +125,5 @@ export {
   getAttorneyInfo,
   createNewCompany,
   updateInvestor,
+  updateDocument,
 };
