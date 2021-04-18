@@ -27,6 +27,7 @@ function FormTemplate(props) {
   InvestorMCQuestions.forEach((question) => {
     const questionName = question.choices[0].question_name;
     if (props.data[questionName]) {
+      console.log(`prop data`, props.data[questionName]);
       console.log(props.data[questionName]["value"]);
       initialValues[questionName] = props.data[questionName]["value"] || "";
     }
@@ -79,15 +80,14 @@ function FormTemplate(props) {
                 helpText={question.helpText}
               >
                 {question.choices.map((choice) => {
+                  console.log(`here is the choice`);
+
                   return (
                     <Checkbox
                       label={choice.label}
                       name={choice.question_name}
                       value={choice.value}
                       onChange={handleInputChange}
-                      checked={
-                        initialValues[choice.question_name] === choice.value
-                      }
                     />
                   );
                 })}

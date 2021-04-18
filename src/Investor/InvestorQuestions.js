@@ -3,6 +3,7 @@ const InvestorMCQuestions = [
     title: "American Citizen",
     helpText:
       "Are you an American Citizen? Check yes if you have a valid U.S passport",
+    question_name: "is_us_person",
     choices: [
       {
         label: "Yes",
@@ -20,6 +21,7 @@ const InvestorMCQuestions = [
     title: "Income Requirement",
     helpText:
       "Is your personal yearly income over 200k or is your joint income over 300k",
+    question_name: "income_req",
     choices: [
       {
         label: "Yes",
@@ -36,6 +38,7 @@ const InvestorMCQuestions = [
   {
     title: "Networth Requirement",
     helpText: "Is your accumulated net worth over 1M in total assets?",
+    question_name: "networth_req",
     choices: [
       {
         label: "Yes",
@@ -52,6 +55,7 @@ const InvestorMCQuestions = [
   {
     title: "Legal Standing",
     helpText: "Are you in good legal standing according to the SEC?",
+    question_name: "good_standing_req",
     choices: [
       {
         label: "Yes",
@@ -68,6 +72,7 @@ const InvestorMCQuestions = [
   {
     title: "Family Office",
     helpText: "Do you work with or control a family office",
+    question_name: "family_client_req",
     choices: [
       {
         label: "Yes",

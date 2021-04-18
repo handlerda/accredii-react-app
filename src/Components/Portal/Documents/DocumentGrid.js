@@ -31,6 +31,7 @@ function Documents({ type, id }) {
       <div>
         <GridListContainer>
           {documents.docs.map((doc) => {
+            console.log(doc);
             return (
               <GridItem
                 name={doc.investor_name}
