@@ -61,8 +61,8 @@ function NewClient({ attorney_id, lawfirm_id }) {
         newInvestor.id,
         attorney_id,
         lawfirm_id,
-        "",
         documentValues["company"],
+        "",
         documentValues["template"]
       );
       console.log(createDocument);

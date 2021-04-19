@@ -79,6 +79,9 @@ function FormTemplate(props) {
                 title={question.title}
                 helpText={question.helpText}
               >
+                <p>
+                  The current server is {initialValues[question.question_name]}
+                </p>
                 {question.choices.map((choice) => {
                   console.log(`here is the choice`);
 

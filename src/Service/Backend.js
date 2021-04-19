@@ -93,6 +93,7 @@ const createNewDocument = async (
 ) => {
   const url = `${api_path}document/new?investor_id=${investor_id}&attorney_id=${attorney_id}&lawfirm_id=${lawfirm_id}&company_id=${company_id}&company_name=${company_name}&template_id=${template_id}`;
   const response = await axios.get(url);
+  console.log(response);
   console.log(response.data);
   return response.data;
 };
@@ -114,6 +115,13 @@ const createNewCompany = async (data) => {
   return response.data;
 };
 
+const getViewableDocument = async (id) => {
+  const url = `${api_path}document/view?id=${id}`;
+  const response = await axios.get(url);
+  window.open(response.url);
+  return response.data;
+};
+
 export {
   getDocuments,
   generateInvestorEmbeddedDocument,
@@ -126,4 +134,5 @@ export {
   createNewCompany,
   updateInvestor,
   updateDocument,
+  getViewableDocument,
 };

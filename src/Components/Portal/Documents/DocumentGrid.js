@@ -39,8 +39,14 @@ function Documents({ type, id }) {
                 title={doc.title}
                 text_to_left="Document Details"
                 link_to_left={`/${type}/documents/${doc.doc_obj_id}`}
-                text_to_right={"sign"}
-                link_to_right={`/${type}/documents/sign/${doc.doc_obj_id}`}
+                id={doc.viewable === true ? doc.doc_obj_id : null}
+                text_to_middle={"View"}
+                text_to_right={doc.status === "completed" ? "View" : "sign"}
+                link_to_right={
+                  doc.status === "completed"
+                    ? `/${type}/documents/view?id=${doc.doc_obj_id}`
+                    : `/${type}/documents/sign/${doc.doc_obj_id}`
+                }
               />
             );
           })}

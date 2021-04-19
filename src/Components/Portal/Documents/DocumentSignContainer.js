@@ -26,6 +26,7 @@ function DocumentSignContainer({ user_id, type }) {
           setQuestions(signedURL);
         } else {
           setHelloSignData(signedURL);
+          console.log(`here is the raw payload from the render`, signedURL);
           setSigning("sign");
         }
       } catch (error) {
@@ -38,6 +39,8 @@ function DocumentSignContainer({ user_id, type }) {
   if (sign === "sign") {
     console.log(`hello from counter ${counter}`);
     console.log(helloSignData.sign_url);
+    console.log(helloSignData.client_id);
+    console.log(`hello sign data client id`, helloSignData);
     const client = new HelloSign({
       clientId: helloSignData.client_id,
       debug: true,
