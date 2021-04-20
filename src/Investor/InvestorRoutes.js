@@ -1,13 +1,12 @@
 import React from "react";
 import { Switch, Route, useHistory } from "react-router";
 import NewButton from "../Components/Controls/NewButton";
-import Company from "../Components/Portal/Company";
 import Documents from "../Components/Portal/Documents/DocumentGrid";
 import DocumentSignContainer from "../Components/Portal/Documents/DocumentSignContainer";
 import Report from "../Components/Portal/Report";
 import MyInfo from "./MyInfo";
 import { useAuth0 } from "@auth0/auth0-react";
-
+import NoData from "../Components/NoData";
 const tableHeaders = [
   { name: "Title" },
   { name: "Company" },
@@ -32,6 +31,14 @@ function InvestorRoutes() {
   console.log(user);
   return (
     <Switch>
+      <Route exact path={`/investor`}>
+        <NoData
+          title="We are still working on this page"
+          text="Check out some of our other pages"
+          buttonText="Take me to documents"
+          handleClick={() => history.push(`/investor/documents`)}
+        />
+      </Route>
       <Route exact path={`/investor/documents`}>
         <NewButton
           text="New Document"
@@ -40,14 +47,24 @@ function InvestorRoutes() {
         <Documents type="investor" id={user.sub}></Documents>
       </Route>
       <Route exact path={`/investor/documents/new`}>
-        <h1>Hello from new doc</h1>
+        <NoData
+          title="We are still working on this page"
+          text="Check out some of our other pages"
+          buttonText="Take me to documents"
+          handleClick={() => history.push(`/investor/documents`)}
+        />
       </Route>
       <Route path={`/investor/documents/sign/:documentId`}>
         <DocumentSignContainer type="investor" user_id={user.sub} />
         <div id="hello-sign-container"></div>
       </Route>
       <Route path={`/investor/documents/:documentId`}>
-        <h1>Hello from doc id</h1>
+        <NoData
+          title="We are still working on this page"
+          text="Check out some of our other pages"
+          buttonText="Take me to documents"
+          handleClick={() => history.push(`/investor/documents`)}
+        />
       </Route>
 
       <Route exact path={`/investor/reports`}>
@@ -63,7 +80,12 @@ function InvestorRoutes() {
         <MyInfo id={user.sub} />
       </Route>
       <Route exact path={`/investor/companies`}>
-        <Company />
+        <NoData
+          title="We are still working on this page"
+          text="Check out some of our other pages"
+          buttonText="Take me to documents"
+          handleClick={() => history.push(`/investor/documents`)}
+        />
       </Route>
     </Switch>
   );

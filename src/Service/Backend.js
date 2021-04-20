@@ -48,6 +48,7 @@ const insertInvestor = async (data, attorney_id, lawfirm_id) => {
   };
   console.log(JSON.stringify(investorPayload));
   const response = await axios.post(`${api_path}investor/new`, investorPayload);
+  console.log(response);
   return response.data;
 };
 
@@ -63,6 +64,7 @@ const updateInvestor = async (investor_id, data) => {
     investorPayload
   );
   console.log(response);
+  return response.data;
 };
 
 const uploadNewForm = async (form_data) => {
@@ -80,7 +82,7 @@ const updateDocument = async (payload) => {
   const url = `${api_path}document/update`;
   const response = await axios.post(url, payload);
   console.log(response);
-  return response;
+  return response.data;
 };
 
 const createNewDocument = async (
@@ -112,6 +114,7 @@ const createNewCompany = async (data) => {
   };
 
   const response = await axios.post(url, payload);
+  console.log(response.data);
   return response.data;
 };
 

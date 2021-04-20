@@ -6,9 +6,9 @@ import { useHistory } from "react-router-dom";
 import { Form, UseForm } from "../../../Form/UseForm";
 import TextInput from "../../Controls/TextInput";
 import { updateDocument } from "../../../Service/Backend";
-
-function AskSigningQuestions({ questions, doc_id }) {
+function AskSigningQuestions({ questions, doc_id, handleSubmit }) {
   const [open, setOpen] = useState(true);
+  const [openDocument, setOpenDocument] = useState(false);
   const history = useHistory();
 
   function handleSubmit(e) {
@@ -20,7 +20,11 @@ function AskSigningQuestions({ questions, doc_id }) {
         amount: values.amount,
       },
     };
-    updateDocument(payload);
+    const data = updateDocument(payload);
+    console.log(data);
+    if (data.status === `update successful`) {
+      history.push(`/investor/documents/sign/${doc_id}`);
+    }
     // setOpen(false);
     // history.push(`/hello`);
     console.log(values);
@@ -33,7 +37,6 @@ function AskSigningQuestions({ questions, doc_id }) {
 
   const { values, handleInputChange } = UseForm(initialValues);
   console.log(values);
-
   return (
     questions && (
       <Transition.Root show={open} as={Fragment}>

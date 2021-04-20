@@ -6,7 +6,7 @@ const NewClientInputs = [
   },
   {
     name: "last_name",
-    label: "First Name",
+    label: "Last Name",
     text: "Please enter the client's last name",
   },
   {

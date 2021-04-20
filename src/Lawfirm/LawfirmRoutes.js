@@ -10,6 +10,7 @@ import NewCompany from "./Companies/NewCompany";
 import NewDocument from "./Documents/NewDocument";
 import { useAuth0 } from "@auth0/auth0-react";
 import Dashboard from "./Dashboard";
+import NoData from "../Components/NoData";
 
 const tableHeaders = [
   { name: "Title" },
@@ -36,7 +37,12 @@ function LawfirmRoutes() {
   return (
     <Switch>
       <Route exact path={`/attorney`}>
-        <Dashboard />
+        <NoData
+          title="We are still working on the Attorney dashboard"
+          text="Explore our other pages"
+          buttonText="Take me to documents"
+          handleClick={() => history.push(`/attorney/documents`)}
+        />
       </Route>
       <Route exact path={`/attorney/documents`}>
         <NewButton
@@ -53,7 +59,12 @@ function LawfirmRoutes() {
         <div id="hello-sign-container"></div>
       </Route>
       <Route path={`/attorney/documents/:documentId`}>
-        <h1>Hello world from doc id</h1>
+        <NoData
+          title="This page is in progress!"
+          text="We are still working on this. It will be ready soon"
+          buttonText="Take me home"
+          handleClick={() => history.push(`/attorney/documents`)}
+        />
       </Route>
       <Route path="/attorney/reports">
         <Report
@@ -64,14 +75,14 @@ function LawfirmRoutes() {
           content="docs"
         />
       </Route>
-      <Route exact path={`/attorney/clients`}>
+      {/* <Route exact path={`/attorney/clients`}>
         <NewButton
           text="New Client"
           onClick={() => history.push(`/attorney/clients/new`)}
         ></NewButton>
         <h1>Hello from clients</h1>
-      </Route>
-      <Route exact path={`/attorney/clients/new`}>
+      </Route> */}
+      <Route exact path={`/attorney/clients`}>
         <NewClient attorney_id={user.sub} lawfirm_id="auth0|39420394" />
       </Route>
       <Route path={`/attorney/clients/:id`}>

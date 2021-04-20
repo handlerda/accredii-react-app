@@ -12,8 +12,13 @@ import {
 import axios from "axios";
 import SubmitButton from "../Components/Controls/SubmitButton";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useHistory } from "react-router";
+import NoData from "../Components/NoData";
 function FormTemplate(props) {
-  const { isAuthenticated, isLoading, loginWithRedirect, user } = useAuth0();
+  const { user } = useAuth0();
+  const history = useHistory();
+  const [successSubmit, setSuccessSubmit] = useState(null);
+
   const data = props.data;
 
   const initialValues = {};
@@ -35,13 +40,25 @@ function FormTemplate(props) {
 
   const { values, handleInputChange } = UseForm(initialValues);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    updateInvestor(user.sub, values);
+    const data = await updateInvestor(user.sub, values);
+    if (data.status === true) {
+      setSuccessSubmit(true);
+    }
   }
 
   console.log(`here is investor info`, values);
-
+  if (successSubmit === true) {
+    return (
+      <NoData
+        title="Your information has been saved"
+        text="You can update specific document information on the document"
+        buttonText="Take me to documents"
+        handleClick={() => history.push(`/investor/documents`)}
+      />
+    );
+  }
   return (
     data && (
       <Form
@@ -79,9 +96,6 @@ function FormTemplate(props) {
                 title={question.title}
                 helpText={question.helpText}
               >
-                <p>
-                  The current server is {initialValues[question.question_name]}
-                </p>
                 {question.choices.map((choice) => {
                   console.log(`here is the choice`);
 

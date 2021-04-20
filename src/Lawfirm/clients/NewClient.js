@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import MultipleChoice from "../../Components/Controls/MultipleChoice";
 import SelectDropdown from "../../Components/Controls/SelectDropdown";
 import SubmitButton from "../../Components/Controls/SubmitButton";
 import TextInput from "../../Components/Controls/TextInput";
+import NoData from "../../Components/NoData";
 import FormHeader from "../../Form/FormHeader";
 import { Form, UseForm } from "../../Form/UseForm";
 import {
@@ -14,6 +16,8 @@ import { NewClientInputs, NewClientDropDown } from "../LawfirmQuestions";
 
 function NewClient({ attorney_id, lawfirm_id }) {
   const [documents, setDocuments] = useState(null);
+  const [submitSuccess, setSubmitSuccess] = useState(null);
+  const history = useHistory();
   useEffect(() => {
     async function getDocuments() {
       const data = await getAttorneyInfo(attorney_id);
@@ -65,7 +69,9 @@ function NewClient({ attorney_id, lawfirm_id }) {
         "",
         documentValues["template"]
       );
-      console.log(createDocument);
+      if (createDocument.status === true) {
+        setSubmitSuccess(true);
+      }
 
       // get payload and create a document for the user
     } catch (error) {
@@ -80,6 +86,16 @@ function NewClient({ attorney_id, lawfirm_id }) {
 
   console.log(values, documentValues);
 
+  if (submitSuccess === true) {
+    return (
+      <NoData
+        title="The investor and document were created"
+        text="The investor will be notified via email"
+        buttonText="Take me home"
+        handleClick={() => history.push(`/attorney/documents`)}
+      />
+    );
+  }
   return (
     documents && (
       <Form

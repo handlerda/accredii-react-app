@@ -4,14 +4,8 @@ import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
 import { useHistory } from "react-router-dom";
 
-function NoData({ title, text, buttonText, relativeLink }) {
+function NoData({ title, text, buttonText, relativeLink, handleClick }) {
   const [open, setOpen] = useState(true);
-  const history = useHistory();
-
-  function handleclick() {
-    setOpen(false);
-    history.push(`/${relativeLink}`);
-  }
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -75,7 +69,7 @@ function NoData({ title, text, buttonText, relativeLink }) {
                 <button
                   type="button"
                   className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
-                  onClick={() => handleclick()}
+                  onClick={handleClick}
                 >
                   {buttonText}
                 </button>
