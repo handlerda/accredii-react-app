@@ -57,10 +57,11 @@ function NewDocument({ id }) {
           console.log(question);
           switch (question.name) {
             case "companies":
+              console.log(`here from companies,`, attorneyInfo.companies);
               return (
                 <MultipleChoice title={question.label} helpText={question.text}>
                   <SelectDropdown
-                    options={data.companies}
+                    options={attorneyInfo.companies}
                     onChange={handleInputChange}
                     name={question.name}
                   />
@@ -68,10 +69,11 @@ function NewDocument({ id }) {
               );
 
             case "templates":
+              console.log(`here from templates,`, data.templates);
               return (
                 <MultipleChoice title={question.label} helpText={question.text}>
                   <SelectDropdown
-                    options={data.companies}
+                    options={attorneyInfo.templates}
                     onChange={handleInputChange}
                     name={question.name}
                   />
