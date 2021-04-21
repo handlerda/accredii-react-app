@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, UseForm } from "../../Form/UseForm";
 import FormHeader from "../../Form/FormHeader";
 import { NewDocumentDropDown } from "../LawfirmQuestions";
@@ -7,7 +7,8 @@ import SelectDropdown from "../../Components/Controls/SelectDropdown";
 import SubmitButton from "../../Components/Controls/SubmitButton";
 import TextInput from "../../Components/Controls/TextInput";
 import { toBase64 } from "../../Service/FileParsing";
-import { uploadNewForm } from "../../Service/Backend";
+import { uploadNewForm, getAttorneyInfo } from "../../Service/Backend";
+import { data } from "autoprefixer";
 
 const initialValues = {};
 //loop through the values
@@ -15,10 +16,20 @@ const initialValues = {};
 NewDocumentDropDown.map((question) => {
   initialValues[question.name] = "";
 });
-function NewDocument() {
+function NewDocument({ id }) {
   //set document state
   const [file, setFile] = useState();
+  const [attorneyInfo, setAttorneyInfo] = useState(null);
   const { values, handleInputChange } = UseForm(initialValues);
+
+  useEffect(() => {
+    async function getAttorneyData() {
+      const data = await getAttorneyInfo(id);
+      console.log(data);
+      setAttorneyInfo(data);
+    }
+    getAttorneyData();
+  }, []);
 
   //will send the file data as a base64 encoding
   async function newDocument(target) {
@@ -32,39 +43,58 @@ function NewDocument() {
     e.preventDefault();
   }
   return (
-    <Form
-      className="space-y-8 divide-y divide-gray-200"
-      onSubmit={handleSubmit}
-    >
-      <FormHeader
-        header="Send a document to an investor"
-        body="Please fill out the following information to send a new document to an investor. They will notified once you submit."
-      />
+    attorneyInfo && (
+      <Form
+        className="space-y-8 divide-y divide-gray-200"
+        onSubmit={handleSubmit}
+      >
+        <FormHeader
+          header="Send a document to an investor"
+          body="Please fill out the following information to send a new document to an investor. They will notified once you submit."
+        />
 
-      {NewDocumentDropDown.map((question) => {
-        return (
-          <MultipleChoice title={question.label} helpText={question.text}>
-            <SelectDropdown
-              options={question.options}
-              onChange={handleInputChange}
-              name={question.name}
-            />
-          </MultipleChoice>
-        );
-      })}
-      <TextInput
-        type="file"
-        name="new_doc_upload"
-        label="Add a new file"
-        onChange={newDocument}
-        id={"new_doc_upload"}
-        hidden={true}
-      />
-      <SubmitButton
-        text="Submit"
-        onClick={() => console.log(`here comes the log`)}
-      />
-    </Form>
+        {NewDocumentDropDown.map((question) => {
+          console.log(question);
+          switch (question.name) {
+            case "companies":
+              return (
+                <MultipleChoice title={question.label} helpText={question.text}>
+                  <SelectDropdown
+                    options={data.companies}
+                    onChange={handleInputChange}
+                    name={question.name}
+                  />
+                </MultipleChoice>
+              );
+
+            case "templates":
+              return (
+                <MultipleChoice title={question.label} helpText={question.text}>
+                  <SelectDropdown
+                    options={data.companies}
+                    onChange={handleInputChange}
+                    name={question.name}
+                  />
+                </MultipleChoice>
+              );
+            default:
+              return <div>hello</div>;
+          }
+        })}
+        <TextInput
+          type="file"
+          name="new_doc_upload"
+          label="Add a new file"
+          onChange={newDocument}
+          id={"new_doc_upload"}
+          hidden={true}
+        />
+        <SubmitButton
+          text="Submit"
+          onClick={() => console.log(`here comes the log`)}
+        />
+      </Form>
+    )
   );
 }
 

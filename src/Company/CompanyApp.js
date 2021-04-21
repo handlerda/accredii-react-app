@@ -1,29 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
 import Container from "../Navbar.js/Container";
 import Items from "../Navbar.js/Items";
 import MobileContainer from "../Navbar.js/Mobile/MobileContainer";
 import MobileItems from "../Navbar.js/Mobile/MobileItems";
-import LawfirmRoutes from "./LawfirmRoutes";
-
-function LawfirmApp() {
+import CompanyRoutes from "./CompanyRoutes";
+function CompanyApp() {
   return (
     <div className="h-screen flex overflow-hidden bg-white">
       <MobileContainer>
-        <MobileItems label="Dashboard" link="/attorney" />
-        <MobileItems label="Clients" link="/attorney/clients" />
-        <MobileItems label="Companies" link="/attorney/companies" />
-        <MobileItems label="Documents" link="/attorney/documents" />
-        <MobileItems label="Reports" link="/attorney/reports" />
+        <MobileItems label="Dashboard" link="/company" />
+        <MobileItems label="Investors" link="/company/investors" />
+        <MobileItems label="Documents" link="/company/documents" />
+        <MobileItems label="Legal" link="/company/legal" />
+        <MobileItems label="Reports" link="/company/reports" />
       </MobileContainer>
 
       {/* <!-- Static sidebar for desktop --> */}
       <Container>
-        <Items label="Dashboard" link="/attorney" />
-        <Items label="Clients" link="/attorney/clients" />
-        <Items label="Companies" link="/attorney/companies" />
-        <Items label="Documents" link="/attorney/documents" />
-        <Items label="Reports" link="/attorney/reports" />
-        <Items label="Logout" link="/attorney/logout" />
+        <Items label="Dashboard" link="/company" />
+        <Items label="Investors" link="/company/investors" />
+        <Items label="Documents" link="/company/documents" />
+        <Items label="Legal" link="/company/legal" />
+        <Items label="Reports" link="/company/reports" />
+        <Items label="Logout" link="/company/logout" />
       </Container>
       <div className="flex flex-col w-0 flex-1 overflow-hidden">
         <div className="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
@@ -58,7 +57,7 @@ function LawfirmApp() {
               </h1>
             </div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              <LawfirmRoutes />
+              <CompanyRoutes />
             </div>
           </div>
         </main>
@@ -67,4 +66,4 @@ function LawfirmApp() {
   );
 }
 
-export default LawfirmApp;
+export default CompanyApp;

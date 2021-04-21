@@ -1,7 +1,6 @@
 import React from "react";
 
 function SelectDropdown({ name, options, onChange, defaultValue }) {
-  console.log(options);
   return (
     <div>
       <select
@@ -12,7 +11,6 @@ function SelectDropdown({ name, options, onChange, defaultValue }) {
         defaultValue={defaultValue}
       >
         {options.map((option) => {
-          console.log(option);
           return (
             <option value={option.id}>
               {!option.label ? option.title : option.label}

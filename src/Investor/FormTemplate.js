@@ -97,7 +97,8 @@ function FormTemplate(props) {
                 helpText={question.helpText}
               >
                 {question.choices.map((choice) => {
-                  console.log(`here is the choice`);
+                  console.log(`here is the choice`, choice);
+                  console.log(data[choice.question_name]["value"], choice);
 
                   return (
                     <Checkbox
@@ -105,6 +106,11 @@ function FormTemplate(props) {
                       name={choice.question_name}
                       value={choice.value}
                       onChange={handleInputChange}
+                      defaultChecked={
+                        choice.value === data[choice.question_name]["value"]
+                          ? true
+                          : false
+                      }
                     />
                   );
                 })}

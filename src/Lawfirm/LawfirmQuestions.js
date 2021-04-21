@@ -101,7 +101,7 @@ const NewDocumentDropDown = [
     ],
   },
   {
-    name: "document_company_select",
+    name: "companies",
     label: "Please select the company",
     text: "Choose from the list below:",
     options: [
@@ -120,7 +120,7 @@ const NewDocumentDropDown = [
     ],
   },
   {
-    name: "document_template_select",
+    name: "templates",
     label: "Please select the accredidation form",
     text: "Choose from the list below:",
     options: [

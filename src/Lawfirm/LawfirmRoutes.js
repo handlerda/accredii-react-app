@@ -30,7 +30,7 @@ const api_names = [
   "sign",
 ];
 function LawfirmRoutes() {
-  // const { user } = useAuth0();
+  const { logout } = useAuth0();
   const user = {};
   user.sub = "848290340";
   const history = useHistory();
@@ -52,7 +52,7 @@ function LawfirmRoutes() {
         <Documents type="attorney" id={user.sub}></Documents>
       </Route>
       <Route exact path={`/attorney/documents/new`}>
-        <NewDocument />
+        <NewDocument id={user.sub} />
       </Route>
       <Route path={`/attorney/documents/sign/:documentId`}>
         <DocumentSignContainer type="attorney" user_id={user.sub} />
@@ -102,6 +102,14 @@ function LawfirmRoutes() {
       </Route>
       <Route path={`/attorney/companies/:id`}>
         <h1>Hello from client id </h1>
+      </Route>
+      <Route exact path={`/attorney/logout`}>
+        <NoData
+          title="Are you sure you want to logout"
+          text="Your data will be cleared from your browser"
+          buttonText="Yes"
+          handleClick={() => logout({ returnTo: window.location.origin })}
+        />
       </Route>
     </Switch>
   );

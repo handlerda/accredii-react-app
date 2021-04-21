@@ -68,19 +68,19 @@ function TopHeroSection() {
                   </div>
                 </div>
                 <div className="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
-                  <a
-                    href="#"
-                    className="font-medium text-gray-500 hover:text-gray-900"
+                  <Link
+                    to="/fund"
+                    className="font-medium text-indigo-600  hover:text-indigo-500"
                   >
-                    Placeholder 1
-                  </a>
+                    Fund Login
+                  </Link>
 
-                  <a
-                    href="#"
-                    className="font-medium text-gray-500 hover:text-gray-900"
+                  <Link
+                    to="/company"
+                    className="font-medium text-indigo-600  hover:text-indigo-500"
                   >
-                    Placeholder 2
-                  </a>
+                    Company Login
+                  </Link>
 
                   <Link
                     to="/investor"

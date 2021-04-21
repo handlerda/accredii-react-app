@@ -1,12 +1,13 @@
 import React from "react";
-import { Switch, Route, useHistory } from "react-router";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Route, Switch, useHistory } from "react-router";
+import NoData from "../Components/NoData";
 import NewButton from "../Components/Controls/NewButton";
 import Documents from "../Components/Portal/Documents/DocumentGrid";
 import DocumentSignContainer from "../Components/Portal/Documents/DocumentSignContainer";
 import Report from "../Components/Portal/Report";
-import MyInfo from "./MyInfo";
-import { useAuth0 } from "@auth0/auth0-react";
-import NoData from "../Components/NoData";
+import MyInfo from "../Investor/MyInfo";
+
 const tableHeaders = [
   { name: "Title" },
   { name: "Company" },
@@ -25,49 +26,49 @@ const api_names = [
   "sign",
 ];
 
-function InvestorRoutes() {
+function CompanyRoutes() {
   const history = useHistory();
   const { user, logout } = useAuth0();
   console.log(user);
   return (
     <Switch>
-      <Route exact path={`/investor`}>
+      <Route exact path={`/company`}>
         <NoData
           title="We are still working on this page"
           text="Check out some of our other pages"
           buttonText="Take me to documents"
-          handleClick={() => history.push(`/investor/documents`)}
+          handleClick={() => history.push(`/company/documents`)}
         />
       </Route>
-      <Route exact path={`/investor/documents`}>
+      <Route exact path={`/company/documents`}>
         <NewButton
           text="New Document"
-          onClick={() => history.push(`/investor/documents/new`)}
+          onClick={() => history.push(`/company/documents/new`)}
         ></NewButton>
-        <Documents type="investor" id={user.sub}></Documents>
+        <Documents type="company" id={user.sub}></Documents>
       </Route>
-      <Route exact path={`/investor/documents/new`}>
+      <Route exact path={`/company/documents/new`}>
         <NoData
           title="We are still working on this page"
           text="Check out some of our other pages"
           buttonText="Take me to documents"
-          handleClick={() => history.push(`/investor/documents`)}
+          handleClick={() => history.push(`/company/documents`)}
         />
       </Route>
-      <Route path={`/investor/documents/sign/:documentId`}>
-        <DocumentSignContainer type="investor" user_id={user.sub} />
+      <Route path={`/company/documents/sign/:documentId`}>
+        <DocumentSignContainer type="company" user_id={user.sub} />
         <div id="hello-sign-container"></div>
       </Route>
-      <Route path={`/investor/documents/:documentId`}>
+      <Route path={`/company/documents/:documentId`}>
         <NoData
           title="We are still working on this page"
           text="Check out some of our other pages"
           buttonText="Take me to documents"
-          handleClick={() => history.push(`/investor/documents`)}
+          handleClick={() => history.push(`/company/documents`)}
         />
       </Route>
 
-      <Route exact path={`/investor/reports`}>
+      <Route exact path={`/company/reports`}>
         <Report
           tableHeaders={tableHeaders}
           type="investor"
@@ -76,18 +77,18 @@ function InvestorRoutes() {
           content="docs"
         />
       </Route>
-      <Route exact path={`/investor/info`}>
+      <Route exact path={`/company/info`}>
         <MyInfo id={user.sub} />
       </Route>
-      <Route exact path={`/investor/companies`}>
+      <Route exact path={`/company/investors`}>
         <NoData
           title="We are still working on this page"
           text="Check out some of our other pages"
           buttonText="Take me to documents"
-          handleClick={() => history.push(`/investor/documents`)}
+          handleClick={() => history.push(`/company/documents`)}
         />
       </Route>
-      <Route exact path={`/investor/logout`}>
+      <Route exact path={`/company/logout`}>
         <NoData
           title="Are you sure you want to logout"
           text="Your data will be cleared from your browser"
@@ -99,4 +100,4 @@ function InvestorRoutes() {
   );
 }
 
-export default InvestorRoutes;
+export default CompanyRoutes;

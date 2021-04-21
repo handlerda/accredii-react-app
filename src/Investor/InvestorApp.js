@@ -26,6 +26,7 @@ function InvestorApp() {
         <Items label="My Info" link="/investor/info" />
         <Items label="Documents" link="/investor/documents" />
         <Items label="Reports" link="/investor/reports" />
+        <Items label="Logout" link="/investor/logout" />
       </Container>
       <div className="flex flex-col w-0 flex-1 overflow-hidden">
         <div className="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
