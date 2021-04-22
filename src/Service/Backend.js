@@ -78,6 +78,13 @@ const uploadNewForm = async (form_data) => {
   return upload;
 };
 
+const getDocumentInfo = async (doc_id) => {
+  const url = `${api_path}document?id=${doc_id}`;
+  const response = await axios.get(url);
+  console.log(response.data);
+  return response.data;
+};
+
 const updateDocument = async (payload) => {
   const url = `${api_path}document/update`;
   const response = await axios.post(url, payload);
@@ -138,4 +145,5 @@ export {
   updateInvestor,
   updateDocument,
   getViewableDocument,
+  getDocumentInfo,
 };

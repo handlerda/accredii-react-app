@@ -34,12 +34,8 @@ function GridItem({
     status = "Completed";
   }
 
-  console.log(`here is the id`);
   async function handleS3Link() {
     const link = await getViewableDocument(id);
-
-    console.log(link);
-    console.log(`hello from the call`);
     window.open(link.url);
   }
   if (status === "Completed") {

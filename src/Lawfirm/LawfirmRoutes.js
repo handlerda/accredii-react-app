@@ -11,6 +11,8 @@ import NewDocument from "./Documents/NewDocument";
 import { useAuth0 } from "@auth0/auth0-react";
 import Dashboard from "./Dashboard";
 import NoData from "../Components/NoData";
+import Feed from "../Components/Documents/Feed";
+import Details from "../Components/Documents/Details";
 
 const tableHeaders = [
   { name: "Title" },
@@ -59,12 +61,14 @@ function LawfirmRoutes() {
         <div id="hello-sign-container"></div>
       </Route>
       <Route path={`/attorney/documents/:documentId`}>
-        <NoData
+        {/* <NoData
           title="This page is in progress!"
           text="We are still working on this. It will be ready soon"
           buttonText="Take me home"
           handleClick={() => history.push(`/attorney/documents`)}
-        />
+        /> */}
+        <Details />
+        {/* <Feed /> */}
       </Route>
       <Route path="/attorney/reports">
         <Report
