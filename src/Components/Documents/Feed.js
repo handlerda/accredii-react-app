@@ -45,7 +45,7 @@ function Feed({ documentData }) {
                   <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
                     <div>
                       <p className="text-xs text-gray-500">
-                        {activity.party_name}
+                        {activity.party_name.split(" ")[0]}
                         <a
                           href={"/"}
                           className="text-xs font-medium text-gray-900"

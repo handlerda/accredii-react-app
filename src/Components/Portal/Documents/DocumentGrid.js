@@ -3,7 +3,7 @@ import GridListContainer from "../../GridList/GridListContainer";
 import { getDocuments } from "../../../Service/Backend";
 import GridItem from "../../GridList/GridItem";
 import NoData from "../../NoData";
-
+import Piechart from "../../Dashboard/Piechart";
 function Documents({ type, id }) {
   const [documents, setDocuments] = useState(null);
   useEffect(() => {
@@ -15,6 +15,30 @@ function Documents({ type, id }) {
     getStatus();
   }, []);
   console.log(documents);
+  const generalStats = [];
+  if (documents !== null) {
+    console.log(`we made it`);
+    generalStats.push({
+      name: "awaiting_company",
+      value: documents.stats.awaiting_company,
+    });
+    generalStats.push({
+      name: "awaiting_investor",
+      value: documents.stats.awaiting_investor,
+    });
+    generalStats.push({
+      name: "awaiting_lawfirm",
+      value: documents.stats.awaiting_lawfirm,
+    });
+    generalStats.push({
+      name: "completed",
+      value: documents.stats.completed,
+    });
+    generalStats.push({
+      name: "total",
+      value: documents.stats.total,
+    });
+  }
 
   if (documents === false) {
     return (
@@ -29,29 +53,34 @@ function Documents({ type, id }) {
   return (
     documents && (
       <div>
-        <GridListContainer>
-          {documents.docs.map((doc) => {
-            console.log(doc);
-            return (
-              <GridItem
-                name={doc.investor_name}
-                status={doc.status}
-                title={doc.title}
-                text_to_left="Document Details"
-                link_to_left={`/${type}/documents/${doc.doc_obj_id}`}
-                id={doc.viewable === true ? doc.doc_obj_id : null}
-                text_to_middle={"View"}
-                text_to_right={doc.status === "completed" ? "View" : "Sign"}
-                link_to_right={
-                  doc.status === "completed"
-                    ? `/${type}/documents/view?id=${doc.doc_obj_id}`
-                    : `/${type}/documents/sign/${doc.doc_obj_id}`
-                }
-                type={type}
-              />
-            );
-          })}
-        </GridListContainer>
+        <div>
+          <Piechart formattedData={generalStats} key="value" />
+        </div>
+        <div>
+          <GridListContainer>
+            {documents.docs.map((doc) => {
+              console.log(doc);
+              return (
+                <GridItem
+                  name={doc.investor_name}
+                  status={doc.status}
+                  title={doc.title}
+                  text_to_left="Document Details"
+                  link_to_left={`/${type}/documents/${doc.doc_obj_id}`}
+                  id={doc.viewable === true ? doc.doc_obj_id : null}
+                  text_to_middle={"View"}
+                  text_to_right={doc.status === "completed" ? "View" : "Sign"}
+                  link_to_right={
+                    doc.status === "completed"
+                      ? `/${type}/documents/view?id=${doc.doc_obj_id}`
+                      : `/${type}/documents/sign/${doc.doc_obj_id}`
+                  }
+                  type={type}
+                />
+              );
+            })}
+          </GridListContainer>
+        </div>
       </div>
     )
   );

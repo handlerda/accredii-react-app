@@ -9,9 +9,8 @@ import CompanyList from "./Companies/CompanyList";
 import NewCompany from "./Companies/NewCompany";
 import NewDocument from "./Documents/NewDocument";
 import { useAuth0 } from "@auth0/auth0-react";
-import Dashboard from "./Dashboard";
+import Dashboard from "../Components/Dashboard/Dashboard";
 import NoData from "../Components/NoData";
-import Feed from "../Components/Documents/Feed";
 import Details from "../Components/Documents/Details";
 
 const tableHeaders = [
@@ -39,12 +38,13 @@ function LawfirmRoutes() {
   return (
     <Switch>
       <Route exact path={`/attorney`}>
-        <NoData
+        {/* <NoData
           title="We are still working on the Attorney dashboard"
           text="Explore our other pages"
           buttonText="Take me to documents"
-          handleClick={() => history.push(`/attorney/documents`)}
-        />
+          handleClick={() => history.push("attorney/documents")}
+        /> */}
+        <Dashboard type="attorney" user_id={user.sub} />
       </Route>
       <Route exact path={`/attorney/documents`}>
         <NewButton
@@ -61,14 +61,7 @@ function LawfirmRoutes() {
         <div id="hello-sign-container"></div>
       </Route>
       <Route path={`/attorney/documents/:documentId`}>
-        {/* <NoData
-          title="This page is in progress!"
-          text="We are still working on this. It will be ready soon"
-          buttonText="Take me home"
-          handleClick={() => history.push(`/attorney/documents`)}
-        /> */}
         <Details />
-        {/* <Feed /> */}
       </Route>
       <Route path="/attorney/reports">
         <Report
@@ -97,11 +90,9 @@ function LawfirmRoutes() {
           text="New Company"
           onClick={() => history.push(`/attorney/companies/new`)}
         ></NewButton>
-        {console.log(user.sub)}
         <CompanyList type="attorney" id={user.sub} />
       </Route>
       <Route exact path={`/attorney/companies/new`}>
-        {console.log(user)}
         <NewCompany attorney_id={user.sub} lawfirm_id="auth0|39420394" />
       </Route>
       <Route path={`/attorney/companies/:id`}>

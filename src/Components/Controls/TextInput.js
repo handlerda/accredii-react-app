@@ -10,7 +10,7 @@ function TextInput({
   hidden = false,
 }) {
   const className =
-    "block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-black-500 rounded-md bg-gray-100 border-gray-700";
+    "block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-black-500 rounded-md bg-white border-gray-700";
   return (
     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5 ">
       <label
