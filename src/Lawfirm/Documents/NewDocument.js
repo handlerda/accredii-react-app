@@ -7,7 +7,11 @@ import SelectDropdown from "../../Components/Controls/SelectDropdown";
 import SubmitButton from "../../Components/Controls/SubmitButton";
 import TextInput from "../../Components/Controls/TextInput";
 import { toBase64 } from "../../Service/FileParsing";
-import { uploadNewForm, getAttorneyInfo } from "../../Service/Backend";
+import {
+  uploadNewForm,
+  getAttorneyInfo,
+  createNewDocument,
+} from "../../Service/Backend";
 import { data } from "autoprefixer";
 
 const initialValues = {};
@@ -39,9 +43,20 @@ function NewDocument({ id }) {
     setFile(file);
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+    console.log(values);
+    const response = await createNewDocument(
+      values.investors,
+      id,
+      attorneyInfo.lawfirm_id,
+      values.companies,
+      "",
+      values.templates
+    );
+    console.log(response);
   }
+  console.log(`attorney info`, attorneyInfo);
   return (
     attorneyInfo && (
       <Form
@@ -56,6 +71,17 @@ function NewDocument({ id }) {
         {NewDocumentDropDown.map((question) => {
           console.log(question);
           switch (question.name) {
+            case "investors":
+              return (
+                <MultipleChoice title={question.label} helpText={question.text}>
+                  <SelectDropdown
+                    options={attorneyInfo.investors}
+                    onChange={handleInputChange}
+                    name={question.name}
+                  />
+                </MultipleChoice>
+              );
+
             case "companies":
               console.log(`here from companies,`, attorneyInfo.companies);
               return (
@@ -80,7 +106,7 @@ function NewDocument({ id }) {
                 </MultipleChoice>
               );
             default:
-              return <div>hello</div>;
+              return <div></div>;
           }
         })}
         <TextInput

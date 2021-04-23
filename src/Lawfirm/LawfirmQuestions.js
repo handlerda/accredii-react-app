@@ -82,25 +82,6 @@ const NewCompanyInputs = [
 
 const NewDocumentDropDown = [
   {
-    name: "document_investor_select",
-    label: "Please select the investor",
-    text: "Choose from the list below:",
-    options: [
-      {
-        name: "investor_1",
-        label: "Investor 1",
-      },
-      {
-        name: "investor_2",
-        label: "Investor 2",
-      },
-      {
-        name: "investor_3",
-        label: "Investor 3",
-      },
-    ],
-  },
-  {
     name: "companies",
     label: "Please select the company",
     text: "Choose from the list below:",
@@ -137,6 +118,12 @@ const NewDocumentDropDown = [
         label: "Template 3",
       },
     ],
+  },
+
+  {
+    name: "investors",
+    label: "Please select a investor",
+    text: "Choose from the list below:",
   },
 ];
 

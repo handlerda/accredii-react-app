@@ -7,6 +7,7 @@ import Documents from "../Components/Portal/Documents/DocumentGrid";
 import DocumentSignContainer from "../Components/Portal/Documents/DocumentSignContainer";
 import Report from "../Components/Portal/Report";
 import MyInfo from "../Investor/MyInfo";
+import Dashboard from "../Components/Dashboard/Dashboard";
 
 const tableHeaders = [
   { name: "Title" },
@@ -33,12 +34,7 @@ function CompanyRoutes() {
   return (
     <Switch>
       <Route exact path={`/company`}>
-        <NoData
-          title="We are still working on this page"
-          text="Check out some of our other pages"
-          buttonText="Take me to documents"
-          handleClick={() => history.push(`/company/documents`)}
-        />
+        <Dashboard type="company" user_id={user.sub} />
       </Route>
       <Route exact path={`/company/documents`}>
         <NewButton
@@ -71,7 +67,7 @@ function CompanyRoutes() {
       <Route exact path={`/company/reports`}>
         <Report
           tableHeaders={tableHeaders}
-          type="investor"
+          type="company"
           id={user.sub}
           keys={api_names}
           content="docs"

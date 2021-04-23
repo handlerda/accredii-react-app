@@ -4,8 +4,8 @@ import Items from "../Navbar.js/Items";
 import MobileContainer from "../Navbar.js/Mobile/MobileContainer";
 import MobileItems from "../Navbar.js/Mobile/MobileItems";
 import { useAuth0 } from "@auth0/auth0-react";
-
 import InvestorRoutes from "./InvestorRoutes";
+import Searchbar from "../Components/Dashboard/Searchbar";
 
 function InvestorApp() {
   const { isAuthenticated, isLoading, loginWithRedirect, user } = useAuth0();
@@ -51,19 +51,15 @@ function InvestorApp() {
           </button>
         </div>
         <main
-          className="flex-1 relative z-0 overflow-y-auto focus:outline-none"
+          className="flex-1 relative z-0 overflow-y-auto focus:outline-none bg-gray-100"
           tabIndex="0"
         >
-          <div className="py-6">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              <h1 className="text-2xl font-semibold text-gray-900">
-                Welcome {user.name}
-              </h1>
-            </div>
-            <div
-              className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8"
-              id="hello-sign-doc"
-            >
+          <div className="bg-white">
+            <Searchbar />
+          </div>
+
+          <div className="py-1 ">
+            <div className="max-w-7xl py-6 mx-auto px-4 sm:px-6 ">
               <InvestorRoutes />
             </div>
           </div>

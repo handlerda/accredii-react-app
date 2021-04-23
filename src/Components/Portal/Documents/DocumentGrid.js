@@ -9,36 +9,12 @@ function Documents({ type, id }) {
   useEffect(() => {
     const getStatus = async () => {
       const data = await getDocuments(type, id);
-      if (data.data.docs.length) setDocuments(data.data);
+      if (data.data.stats.total > 0) setDocuments(data.data);
       else setDocuments(false);
     };
     getStatus();
   }, []);
   console.log(documents);
-  const generalStats = [];
-  if (documents !== null) {
-    console.log(`we made it`);
-    generalStats.push({
-      name: "awaiting_company",
-      value: documents.stats.awaiting_company,
-    });
-    generalStats.push({
-      name: "awaiting_investor",
-      value: documents.stats.awaiting_investor,
-    });
-    generalStats.push({
-      name: "awaiting_lawfirm",
-      value: documents.stats.awaiting_lawfirm,
-    });
-    generalStats.push({
-      name: "completed",
-      value: documents.stats.completed,
-    });
-    generalStats.push({
-      name: "total",
-      value: documents.stats.total,
-    });
-  }
 
   if (documents === false) {
     return (
@@ -50,12 +26,13 @@ function Documents({ type, id }) {
       />
     );
   }
+  console.log(`here from documents`);
   return (
     documents && (
       <div>
-        <div>
-          <Piechart formattedData={generalStats} key="value" />
-        </div>
+        {/* <div>
+          <Piechart formattedData={documents} key="value" />
+        </div> */}
         <div>
           <GridListContainer>
             {documents.docs.map((doc) => {

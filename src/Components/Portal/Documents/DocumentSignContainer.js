@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useRef } from "react";
 import {
   generateInvestorEmbeddedDocument,
   updateDocument,
@@ -18,6 +18,8 @@ function DocumentSignContainer({ user_id, type }) {
   const { documentId } = useParams();
   const [open, setOpen] = useState(true);
   const history = useHistory();
+  const hsContainer = useRef();
+  const hsNode = useRef(null);
   useEffect(() => {
     counter++;
     console.log(`how many times did I run counter ${counter}`);
@@ -99,6 +101,7 @@ function DocumentSignContainer({ user_id, type }) {
 
     client.on("cancel", () => {
       console.log("hello from cancel");
+      history.push(`/${type}/documents`);
     });
     return <div></div>;
   }

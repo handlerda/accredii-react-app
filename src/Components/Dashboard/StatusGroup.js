@@ -1,22 +1,22 @@
 import React from "react";
 import { ArrowSmDownIcon, ArrowSmUpIcon } from "@heroicons/react/solid";
 
-function StatusGroup() {
+function StatusGroup({ doc_stats }) {
   const stats = [
     {
       name: "Waiting on investors to sign",
-      stat: "5",
-      previousStat: "10 total documents",
+      stat: doc_stats.awaiting_investor,
+      previousStat: `${doc_stats.total} total documents`,
     },
     {
       name: "Waiting on companies to sign",
-      stat: "3",
-      previousStat: "10 total documents",
+      stat: doc_stats.awaiting_company,
+      previousStat: `${doc_stats.total} total documents`,
     },
     {
-      name: "Waiting on me to sign",
-      stat: "2",
-      previousStat: "10 total documents",
+      name: "Waiting on lawfirm to sign",
+      stat: doc_stats.awaiting_lawfirm,
+      previousStat: `${doc_stats.total} total documents`,
     },
   ];
 

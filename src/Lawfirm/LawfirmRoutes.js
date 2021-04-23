@@ -35,6 +35,7 @@ function LawfirmRoutes() {
   const user = {};
   user.sub = "848290340";
   const history = useHistory();
+
   return (
     <Switch>
       <Route exact path={`/attorney`}>
@@ -61,7 +62,7 @@ function LawfirmRoutes() {
         <div id="hello-sign-container"></div>
       </Route>
       <Route path={`/attorney/documents/:documentId`}>
-        <Details />
+        <Details type="attorney" />
       </Route>
       <Route path="/attorney/reports">
         <Report

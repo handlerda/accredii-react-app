@@ -7,6 +7,8 @@ import Report from "../Components/Portal/Report";
 import MyInfo from "./MyInfo";
 import { useAuth0 } from "@auth0/auth0-react";
 import NoData from "../Components/NoData";
+import Dashboard from "../Components/Dashboard/Dashboard";
+import Details from "../Components/Documents/Details";
 const tableHeaders = [
   { name: "Title" },
   { name: "Company" },
@@ -32,12 +34,7 @@ function InvestorRoutes() {
   return (
     <Switch>
       <Route exact path={`/investor`}>
-        <NoData
-          title="We are still working on this page"
-          text="Check out some of our other pages"
-          buttonText="Take me to documents"
-          handleClick={() => history.push(`/investor/documents`)}
-        />
+        <Dashboard user_id={user.sub} type="investor" />
       </Route>
       <Route exact path={`/investor/documents`}>
         <NewButton
@@ -59,12 +56,7 @@ function InvestorRoutes() {
         <div id="hello-sign-container"></div>
       </Route>
       <Route path={`/investor/documents/:documentId`}>
-        <NoData
-          title="We are still working on this page"
-          text="Check out some of our other pages"
-          buttonText="Take me to documents"
-          handleClick={() => history.push(`/investor/documents`)}
-        />
+        <Details type="investor" />
       </Route>
 
       <Route exact path={`/investor/reports`}>

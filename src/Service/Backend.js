@@ -101,6 +101,7 @@ const createNewDocument = async (
   template_id = ""
 ) => {
   const url = `${api_path}document/new?investor_id=${investor_id}&attorney_id=${attorney_id}&lawfirm_id=${lawfirm_id}&company_id=${company_id}&company_name=${company_name}&template_id=${template_id}`;
+  console.log(url);
   const response = await axios.get(url);
   console.log(response);
   console.log(response.data);

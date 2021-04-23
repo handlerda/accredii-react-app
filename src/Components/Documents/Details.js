@@ -49,48 +49,7 @@ const eventTypes = {
   advanced: { icon: ThumbUpIcon, bgColorClass: "bg-blue-500" },
   completed: { icon: CheckIcon, bgColorClass: "bg-green-500" },
 };
-const timeline = [
-  {
-    id: 1,
-    type: eventTypes.applied,
-    content: "Applied to",
-    target: "Front End Developer",
-    date: "Sep 20",
-    datetime: "2020-09-20",
-  },
-  {
-    id: 2,
-    type: eventTypes.advanced,
-    content: "Advanced to phone screening by",
-    target: "Bethany Blake",
-    date: "Sep 22",
-    datetime: "2020-09-22",
-  },
-  {
-    id: 3,
-    type: eventTypes.completed,
-    content: "Completed phone screening with",
-    target: "Martha Gardner",
-    date: "Sep 28",
-    datetime: "2020-09-28",
-  },
-  {
-    id: 4,
-    type: eventTypes.advanced,
-    content: "Advanced to interview by",
-    target: "Bethany Blake",
-    date: "Sep 30",
-    datetime: "2020-09-30",
-  },
-  {
-    id: 5,
-    type: eventTypes.completed,
-    content: "Completed interview with",
-    target: "Katherine Snyder",
-    date: "Oct 4",
-    datetime: "2020-10-04",
-  },
-];
+
 const comments = [
   {
     id: 1,
@@ -118,7 +77,7 @@ const comments = [
   },
 ];
 
-export default function Details() {
+export default function Details({ type }) {
   const [documentData, setDocumentData] = useState(null);
   const { documentId } = useParams();
   console.log(documentId);
@@ -152,18 +111,14 @@ export default function Details() {
               </div>
             </div>
             <div className="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 md:mt-0 md:flex-row md:space-x-3">
-              <button
-                type="button"
-                className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500"
-              >
-                Disqualify
-              </button>
-              <button
-                type="button"
-                className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500"
-              >
-                Advance to offer
-              </button>
+              {documentData.status !== "completed" && (
+                <button
+                  type="button"
+                  className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500"
+                >
+                  Sign the agreement
+                </button>
+              )}
             </div>
           </div>
 
