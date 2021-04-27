@@ -32,6 +32,7 @@ function Report({ tableHeaders, type, id, keys, content }) {
         tableHeads={tableHeaders}
         tableRows={documentStatus.data[content]}
         keys={keys}
+        type={type}
       />
     )
   );

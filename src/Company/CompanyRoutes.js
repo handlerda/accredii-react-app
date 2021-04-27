@@ -8,6 +8,7 @@ import DocumentSignContainer from "../Components/Portal/Documents/DocumentSignCo
 import Report from "../Components/Portal/Report";
 import MyInfo from "../Investor/MyInfo";
 import Dashboard from "../Components/Dashboard/Dashboard";
+import Details from "../Components/Documents/Details";
 
 const tableHeaders = [
   { name: "Title" },
@@ -56,12 +57,7 @@ function CompanyRoutes() {
         <div id="hello-sign-container"></div>
       </Route>
       <Route path={`/company/documents/:documentId`}>
-        <NoData
-          title="We are still working on this page"
-          text="Check out some of our other pages"
-          buttonText="Take me to documents"
-          handleClick={() => history.push(`/company/documents`)}
-        />
+        <Details type="company" />
       </Route>
 
       <Route exact path={`/company/reports`}>

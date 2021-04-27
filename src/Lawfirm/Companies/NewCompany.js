@@ -32,6 +32,17 @@ function NewCompany({ attorney_id, lawfirm_id }) {
     }
   }
 
+  if (submitSuccess === false) {
+    return (
+      <NoData
+        title="The company was not able to be created"
+        text="Our engineering team is on it"
+        buttonText="Take me back"
+        handleClick={() => history.push(`/attorney/documents`)}
+      ></NoData>
+    );
+  }
+
   if (submitSuccess === true) {
     return (
       <NoData

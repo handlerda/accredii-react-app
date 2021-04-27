@@ -18,7 +18,7 @@ function DocumentSignContainer({ user_id, type }) {
   const { documentId } = useParams();
   const [open, setOpen] = useState(true);
   const history = useHistory();
-  const hsContainer = useRef();
+  const hsClient = useRef();
   const hsNode = useRef(null);
   useEffect(() => {
     counter++;
@@ -76,34 +76,36 @@ function DocumentSignContainer({ user_id, type }) {
   const { values, handleInputChange } = UseForm(initialValues);
 
   if (sign === "sign") {
-    console.log(`hello from counter ${counter}`);
-    console.log(helloSignData.sign_url);
-    console.log(helloSignData.client_id);
-    console.log(`hello sign data client id`, helloSignData);
-    const client = new HelloSign({
+    // console.log(`hello from counter ${counter}`);
+    // console.log(helloSignData.sign_url);
+    // console.log(helloSignData.client_id);
+    // console.log(`hello sign data client id`, helloSignData);
+    hsClient.current = new HelloSign({
       clientId: helloSignData.client_id,
       debug: true,
+      container: hsNode.current,
     });
-    client.open(helloSignData.sign_url, {
+    hsClient.current.open(helloSignData.sign_url, {
       testMode: true,
+      container: hsNode.current,
     });
 
-    client.on("sign", () => {
+    hsClient.current.on("sign", () => {
       history.push(`/${type}/documents`);
     });
-    client.on("error", () => {
+    hsClient.current.on("error", () => {
       console.log(`there was an error`);
     });
 
-    client.on("open", () => {
+    hsClient.current.on("open", () => {
       console.log("the frame has opened");
     });
 
-    client.on("cancel", () => {
+    hsClient.current.on("cancel", () => {
       console.log("hello from cancel");
       history.push(`/${type}/documents`);
     });
-    return <div></div>;
+    return <section ref={hsNode}> Hello from container </section>;
   }
 
   if (sign === "ask") {

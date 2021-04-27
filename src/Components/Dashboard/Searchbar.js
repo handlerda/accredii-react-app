@@ -6,8 +6,9 @@ import {
   SearchIcon,
 } from "@heroicons/react/outline";
 import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 
-function Searchbar() {
+function Searchbar({ type, name }) {
   const { user } = useAuth0();
   return (
     <div className="flex-1 px-2 flex ">
@@ -47,7 +48,7 @@ function Searchbar() {
                 <Menu.Button className="max-w-xs bg-white rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 lg:p-2 lg:rounded-md lg:hover:bg-gray-50">
                   <span className="hidden ml-3 text-gray-700 text-sm font-medium lg:block">
                     <span className="sr-only">Open user menu for </span>
-                    {user.name}
+                    {name}
                   </span>
                   <ChevronDownIcon
                     className="hidden flex-shrink-0 ml-1 h-5 w-5 text-gray-400 lg:block"
@@ -84,7 +85,7 @@ function Searchbar() {
                   </Menu.Item>
                   <Menu.Item>
                     {({ active }) => (
-                      <a
+                      <Link
                         href="#"
                         className={
                           (active ? "bg-gray-100" : "",
@@ -92,20 +93,20 @@ function Searchbar() {
                         }
                       >
                         Settings
-                      </a>
+                      </Link>
                     )}
                   </Menu.Item>
                   <Menu.Item>
                     {({ active }) => (
-                      <a
-                        href="#"
+                      <Link
+                        to={`${type}/logout`}
                         className={
                           (active ? "bg-gray-100" : "",
                           "block px-4 py-2 text-sm text-gray-700")
                         }
                       >
                         Logout
-                      </a>
+                      </Link>
                     )}
                   </Menu.Item>
                 </Menu.Items>

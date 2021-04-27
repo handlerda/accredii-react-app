@@ -86,6 +86,15 @@ function NewClient({ attorney_id, lawfirm_id }) {
 
   console.log(values, documentValues);
 
+  if (submitSuccess === false) {
+    <NoData
+      title="The investor was not able to be created"
+      text="Our engineering team is on it"
+      buttonText="Take me back"
+      handleClick={() => history.push(`/attorney/documents`)}
+    ></NoData>;
+  }
+
   if (submitSuccess === true) {
     return (
       <NoData

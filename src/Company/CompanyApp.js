@@ -14,7 +14,7 @@ function CompanyApp() {
   useEffect(() => {
     const getStatus = async () => {
       const data = await getDocuments("company", user.sub);
-      if (data.status === true) setData(data.data);
+      if (data.status === true) setData(data);
       else setData(false);
     };
     getStatus();
@@ -66,7 +66,7 @@ function CompanyApp() {
             tabIndex="0"
           >
             <div className="bg-white">
-              <Searchbar />
+              <Searchbar name={data.name} type="company" />
             </div>
 
             <div className="py-1 ">

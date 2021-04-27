@@ -20,7 +20,7 @@ function FormTemplate(props) {
   const [successSubmit, setSuccessSubmit] = useState(null);
 
   const data = props.data;
-
+  console.log();
   const initialValues = {};
 
   //loop over all the input questions
@@ -97,8 +97,8 @@ function FormTemplate(props) {
                 helpText={question.helpText}
               >
                 {question.choices.map((choice) => {
-                  console.log(`here is the choice`, choice);
-                  console.log(data[choice.question_name]["value"], choice);
+                  // console.log(`here is the choice`, choice);
+                  // console.log(data[choice.question_name]["value"], choice);
 
                   return (
                     <Checkbox

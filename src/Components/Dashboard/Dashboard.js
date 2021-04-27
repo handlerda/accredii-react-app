@@ -35,7 +35,6 @@ const tableHeaders = [
   { name: "Law Firm" },
   { name: "Client" },
   { name: "Status" },
-  { name: "Action" },
 ];
 
 const api_names = [
@@ -44,12 +43,9 @@ const api_names = [
   "lawfirm_name",
   "investor_name",
   "status",
-  "sign",
-];
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+  "doc_obj_id",
+];
 
 export default function Dashboard({ user_id, type = "attorney" }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -138,7 +134,13 @@ export default function Dashboard({ user_id, type = "attorney" }) {
             <main className="flex-1 relative pb-8 z-0 overflow-y-auto">
               {/* Page header */}
 
-              <ProfileHeader />
+              <ProfileHeader
+                type={type}
+                name={documentStatus.name}
+                lawfirm_name={
+                  type === "attorney" ? documentStatus.lawfirm_name : false
+                }
+              />
 
               <div className="mt-2">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -151,19 +153,20 @@ export default function Dashboard({ user_id, type = "attorney" }) {
                   )}
                 </div>
 
-                <h2 className="max-w-6xl mx-auto mt-8 px-4 text-lg leading-6 font-medium text-gray-900 sm:px-6 lg:px-8">
-                  Recent activity
+                <h2 className="max-w-6xl mx-auto mt-8 px- text-lg leading-6 font-medium text-gray-900 sm:px-6 lg:px-8 mb-8">
+                  All documents
                 </h2>
 
                 {/* Activity list (smallest breakpoint only) */}
-
-                <Report
-                  tableHeaders={tableHeaders}
-                  type={type}
-                  id={user_id}
-                  keys={api_names}
-                  content="docs"
-                />
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                  <Report
+                    tableHeaders={tableHeaders}
+                    type={type}
+                    id={user_id}
+                    keys={api_names}
+                    content="docs"
+                  />
+                </div>
               </div>
             </main>
           </div>

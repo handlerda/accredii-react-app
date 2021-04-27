@@ -15,7 +15,7 @@ function LawfirmApp() {
   useEffect(() => {
     const getStatus = async () => {
       const data = await getDocuments("attorney", user.sub);
-      if (data.data.docs.length) setData(data.data);
+      if (data.data.docs.length) setData(data);
       else setData(false);
     };
     getStatus();
@@ -68,7 +68,7 @@ function LawfirmApp() {
             tabIndex="0"
           >
             <div className="bg-white">
-              <Searchbar />
+              <Searchbar name={data.name} />
             </div>
 
             <div className="py-1 ">

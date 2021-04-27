@@ -13,6 +13,9 @@ import {
   createNewDocument,
 } from "../../Service/Backend";
 import { data } from "autoprefixer";
+import NoData from "../../Components/NoData";
+import { useHistory } from "react-router";
+import Checkbox from "../../Components/Controls/Checkbox";
 
 const initialValues = {};
 //loop through the values
@@ -21,8 +24,10 @@ NewDocumentDropDown.map((question) => {
   initialValues[question.name] = "";
 });
 function NewDocument({ id }) {
+  const history = useHistory();
   //set document state
   const [file, setFile] = useState();
+  const [submitSuccess, setSuccess] = useState(null);
   const [attorneyInfo, setAttorneyInfo] = useState(null);
   const { values, handleInputChange } = UseForm(initialValues);
 
@@ -54,8 +59,31 @@ function NewDocument({ id }) {
       "",
       values.templates
     );
-    console.log(response);
+    if (response.status === true) setSuccess(true);
+    if (response.status === false) setSuccess(false);
   }
+
+  if (submitSuccess === true) {
+    return (
+      <NoData
+        title="The document has been sent!"
+        text="The investor has been notified"
+        buttonText="Take me back"
+        handleClick={() => history.push(`/attorney/`)}
+      ></NoData>
+    );
+  }
+  if (submitSuccess === false) {
+    return (
+      <NoData
+        title="There was an error!"
+        text="The engineering team has been notified"
+        buttonText="Take me back"
+        handleClick={() => history.push(`/attorney/`)}
+      ></NoData>
+    );
+  }
+
   console.log(`attorney info`, attorneyInfo);
   return (
     attorneyInfo && (
@@ -109,14 +137,15 @@ function NewDocument({ id }) {
               return <div></div>;
           }
         })}
-        <TextInput
+
+        {/* <TextInput
           type="file"
           name="new_doc_upload"
           label="Add a new file"
           onChange={newDocument}
           id={"new_doc_upload"}
           hidden={true}
-        />
+        /> */}
         <SubmitButton
           text="Submit"
           onClick={() => console.log(`here comes the log`)}

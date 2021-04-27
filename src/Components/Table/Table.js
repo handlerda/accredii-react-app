@@ -8,7 +8,7 @@ import TableRowData from "./TableRowData";
 
 //take in head rows and data
 
-function Table({ tableHeads, tableRows, keys }) {
+function Table({ tableHeads, tableRows, keys, type }) {
   // const docs = data.data.docs;
   // console.log(docs);
   if (!tableRows.length) {
@@ -39,7 +39,19 @@ function Table({ tableHeads, tableRows, keys }) {
                       <TableRow>
                         {console.log(`here come the keys`, keys)}
                         {keys.map((key) => {
-                          return <TableRowData name={column[key]} />;
+                          if (key !== "doc_obj_id" && key !== "title") {
+                            return <TableRowData name={column[key]} />;
+                          }
+                          if (key === "title") {
+                            return (
+                              <TableRowData
+                                name={column[key]}
+                                click={true}
+                                route={`/${type}/documents/${column.doc_obj_id}`}
+                                bold={true}
+                              />
+                            );
+                          }
                         })}
                       </TableRow>
                     );
