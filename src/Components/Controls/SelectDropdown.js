@@ -10,9 +10,9 @@ function SelectDropdown({ name, options, onChange, defaultValue }) {
         onChange={onChange}
         defaultValue={defaultValue}
       >
-        {options.map((option) => {
+        {options.map((option, index) => {
           return (
-            <option value={option.id}>
+            <option value={option.id} selected={index === 0 ? true : false}>
               {!option.label ? option.title : option.label}
             </option>
           );

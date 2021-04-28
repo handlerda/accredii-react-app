@@ -50,14 +50,14 @@ function NewDocument({ id }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(values);
+    //IF VALUES === "" (NOT CLICKED) DEFAULT TO FIRST ID
     const response = await createNewDocument(
-      values.investors,
+      values.investors || attorneyInfo.investors[0].id,
       id,
       attorneyInfo.lawfirm_id,
-      values.companies,
+      values.companies || attorneyInfo.companies[0].id,
       "",
-      values.templates
+      values.templates || attorneyInfo.templates[0].id
     );
     if (response.status === true) setSuccess(true);
     if (response.status === false) setSuccess(false);
