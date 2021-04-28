@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const api_path = `http://localhost:5000/api/`;
-
+const api_path = process.env.REACT_APP_SERVER_URI_LOCAL;
 const getDocuments = async (type, id) => {
   console.log(type, id);
   const url = `${api_path}${type}/status?id=${id}`;
@@ -47,8 +46,9 @@ const insertInvestor = async (data, attorney_id, lawfirm_id) => {
     data,
   };
   console.log(JSON.stringify(investorPayload));
+  console.log(`hello from insert`);
   const response = await axios.post(`${api_path}investor/new`, investorPayload);
-  console.log(response);
+  console.log(response.data);
   return response.data;
 };
 

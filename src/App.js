@@ -1,8 +1,6 @@
 import "./assets/main.css";
 import LandingPage from "./LandingPage/LandingPage";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import InvestorApp from "./Investor/InvestorApp";
-import LawfirmApp from "./Lawfirm/LawfirmApp";
 import { Auth0Provider } from "@auth0/auth0-react";
 import LawfirmAppContainer from "./Lawfirm/LawfirmAppContainer";
 import InvestorAppContainer from "./Investor/InvestorAppContainer";

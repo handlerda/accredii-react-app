@@ -47,7 +47,7 @@ const api_names = [
   "doc_obj_id",
 ];
 
-export default function Dashboard({ user_id, type = "attorney" }) {
+export default function Dashboard({ user_id, type }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [documentStatus, setDocumentStatus] = useState(null);
   useEffect(() => {

@@ -353,14 +353,24 @@ function GridItem({
         </div>
         <div>
           <div class="-mt-px flex divide-x divide-gray-200">
-            <div class="-ml-px w-0 flex-1 flex">
+            <div class="w-0 flex-1 flex">
               <Link
-                to={link_to_right}
-                class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500"
+                to={link_to_left}
+                class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
               >
-                <span class="ml-3">{text_to_right}</span>
+                <span class="ml-3">{text_to_left}</span>
               </Link>
             </div>
+            {id !== null && (
+              <div class="-ml-px w-0 flex-1 flex">
+                <button
+                  onClick={handleS3Link}
+                  class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500"
+                >
+                  <span class="ml-3">{text_to_middle}</span>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </li>

@@ -90,11 +90,6 @@ function Information({ documentData }) {
               )}
             </div>
             <div className="sm:col-span-2">
-              {!documentData.viewable && (
-                <dt className="text-sm font-medium text-gray-500">
-                  The document is not viewable and can not be downloaded
-                </dt>
-              )}
               <dt className="text-sm font-medium text-gray-500">Attachments</dt>
               <dd className="mt-1 text-sm text-gray-900">
                 <ul className="border border-gray-200 rounded-md divide-y divide-gray-200">

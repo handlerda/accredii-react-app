@@ -16,38 +16,13 @@ import Paper from "../Paper";
 import FormHeader from "../../Form/FormHeader";
 import Information from "./Information";
 import { getDocumentInfo } from "../../Service/Backend";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 
 const user = {
   name: "Whitney Francis",
   email: "whitney@example.com",
   imageUrl:
     "https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80",
-};
-const navigation = [
-  { name: "Dashboard", href: "#" },
-  { name: "Jobs", href: "#" },
-  { name: "Applicants", href: "#" },
-  { name: "Company", href: "#" },
-];
-const breadcrumbs = [
-  { name: "Jobs", href: "#", current: false },
-  { name: "Front End Developer", href: "#", current: false },
-  { name: "Applicants", href: "#", current: true },
-];
-const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
-];
-const attachments = [
-  { name: "resume_front_end_developer.pdf", href: "#" },
-  { name: "coverletter_front_end_developer.pdf", href: "#" },
-];
-const eventTypes = {
-  applied: { icon: UserIcon, bgColorClass: "bg-gray-400" },
-  advanced: { icon: ThumbUpIcon, bgColorClass: "bg-blue-500" },
-  completed: { icon: CheckIcon, bgColorClass: "bg-green-500" },
 };
 
 const comments = [
@@ -79,6 +54,7 @@ const comments = [
 
 export default function Details({ type }) {
   const [documentData, setDocumentData] = useState(null);
+  const history = useHistory();
   const { documentId } = useParams();
   console.log(documentId);
   //this will be nested. It will make sense to call this from the parent component
@@ -115,6 +91,9 @@ export default function Details({ type }) {
                 <button
                   type="button"
                   className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500"
+                  onClick={() =>
+                    history.push(`/${type}/documents/sign/${documentId}`)
+                  }
                 >
                   Sign the agreement
                 </button>

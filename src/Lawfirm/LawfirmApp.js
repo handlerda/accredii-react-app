@@ -68,7 +68,7 @@ function LawfirmApp() {
             tabIndex="0"
           >
             <div className="bg-white">
-              <Searchbar name={data.name} />
+              <Searchbar type="attorney" name={data.name} />
             </div>
 
             <div className="py-1 ">

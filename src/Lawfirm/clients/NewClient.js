@@ -59,20 +59,27 @@ function NewClient({ attorney_id, lawfirm_id }) {
         attorney_id,
         "auth0|39420394"
       );
-      console.log(newInvestor);
-
-      const createDocument = await createNewDocument(
-        newInvestor.id,
-        attorney_id,
-        lawfirm_id,
-        documentValues["company"],
-        "",
-        documentValues["template"]
-      );
-      if (createDocument.status === true) {
-        setSubmitSuccess(true);
+      console.log(`here is the new status`, newInvestor);
+      console.log(newInvestor.status);
+      if (newInvestor.status === false) {
+        setSubmitSuccess(false);
+      } else {
+        const createDocument = await createNewDocument(
+          newInvestor.id,
+          attorney_id,
+          lawfirm_id,
+          documentValues["company"],
+          "",
+          documentValues["template"]
+        );
+        if (createDocument.status === true) {
+          setSubmitSuccess(true);
+          console.log(submitSuccess);
+        }
+        if (createDocument.status === false) {
+          return setSubmitSuccess(false);
+        }
       }
-
       // get payload and create a document for the user
     } catch (error) {
       console.log(error);
@@ -85,14 +92,15 @@ function NewClient({ attorney_id, lawfirm_id }) {
   } = UseForm(initialDocumentValues);
 
   console.log(values, documentValues);
-
   if (submitSuccess === false) {
-    <NoData
-      title="The investor was not able to be created"
-      text="Our engineering team is on it"
-      buttonText="Take me back"
-      handleClick={() => history.push(`/attorney/documents`)}
-    ></NoData>;
+    return (
+      <NoData
+        title="The investor was not able to be created"
+        text="This is because the investor already exists"
+        buttonText="Take me back"
+        handleClick={() => history.push(`/attorney/documents`)}
+      ></NoData>
+    );
   }
 
   if (submitSuccess === true) {
@@ -104,63 +112,64 @@ function NewClient({ attorney_id, lawfirm_id }) {
         handleClick={() => history.push(`/attorney/documents`)}
       />
     );
-  }
-  return (
-    documents && (
-      <Form
-        className="space-y-8 divide-y divide-gray-200"
-        onSubmit={handleSubmit}
-      >
-        <FormHeader
-          header="Add a new investor"
-          body="Please fill out the following information to invite a new investor. They will be sent an email to login"
-        />
+  } else {
+    return (
+      documents && (
+        <Form
+          className="space-y-8 divide-y divide-gray-200"
+          onSubmit={handleSubmit}
+        >
+          <FormHeader
+            header="Add a new investor"
+            body="Please fill out the following information to invite a new investor. They will be sent an email to login"
+          />
 
-        <div class="space-y-6 sm:space-y-5">
-          {NewClientInputs.map((question) => {
-            return (
-              <TextInput
-                label={question.label}
-                name={question.name}
-                id={question.name}
-                value={initialClientValues[question.name]}
-                onChange={handleInputChange}
-              />
-            );
+          <div class="space-y-6 sm:space-y-5">
+            {NewClientInputs.map((question) => {
+              return (
+                <TextInput
+                  label={question.label}
+                  name={question.name}
+                  id={question.name}
+                  value={initialClientValues[question.name]}
+                  onChange={handleInputChange}
+                />
+              );
+            })}
+          </div>
+          {NewClientDropDown.map((question) => {
+            if (question.name === "company") {
+              return (
+                <MultipleChoice title={question.label} helpText={question.text}>
+                  {console.log(`did this render`)}
+                  <SelectDropdown
+                    options={documents.companies}
+                    onChange={handleDocumentValueChange}
+                    name={question.name}
+                  />
+                </MultipleChoice>
+              );
+            }
+            if (question.name === "template")
+              return (
+                <MultipleChoice title={question.label} helpText={question.text}>
+                  {console.log(`did this render`)}
+                  <SelectDropdown
+                    options={documents.templates}
+                    onChange={handleDocumentValueChange}
+                    name={question.name}
+                  />
+                </MultipleChoice>
+              );
           })}
-        </div>
-        {NewClientDropDown.map((question) => {
-          if (question.name === "company") {
-            return (
-              <MultipleChoice title={question.label} helpText={question.text}>
-                {console.log(`did this render`)}
-                <SelectDropdown
-                  options={documents.companies}
-                  onChange={handleDocumentValueChange}
-                  name={question.name}
-                />
-              </MultipleChoice>
-            );
-          }
-          if (question.name === "template")
-            return (
-              <MultipleChoice title={question.label} helpText={question.text}>
-                {console.log(`did this render`)}
-                <SelectDropdown
-                  options={documents.templates}
-                  onChange={handleDocumentValueChange}
-                  name={question.name}
-                />
-              </MultipleChoice>
-            );
-        })}
-        <SubmitButton
-          text="Submit"
-          onClick={() => console.log(`here comes the log`)}
-        />
-      </Form>
-    )
-  );
+          <SubmitButton
+            text="Submit"
+            onClick={() => console.log(`here comes the log`)}
+          />
+        </Form>
+      )
+    );
+  }
 }
 
 export default NewClient;
