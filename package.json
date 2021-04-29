@@ -33,7 +33,7 @@
     "eject": "react-scripts eject",
     "build:css": "postcss src/assets/tailwind.css -o src/assets/main.css",
     "watch:css": "postcss src/assets/tailwind.css -o src/assets/main.css",
-    "build:netlify": "env-cmd -f .env.production npm run build:css && react-scripts build",
+    "build:netlify": "env-cmd -f .env npm run build:css && react-scripts build",
     "local": "env-cmd -f .env.local npm start"
   },
   "eslintConfig": {

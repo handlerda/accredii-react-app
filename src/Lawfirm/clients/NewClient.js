@@ -6,6 +6,7 @@ import SelectDropdown from "../../Components/Controls/SelectDropdown";
 import SubmitButton from "../../Components/Controls/SubmitButton";
 import TextInput from "../../Components/Controls/TextInput";
 import NoData from "../../Components/NoData";
+import Paper from "../../Components/Paper";
 import FormHeader from "../../Form/FormHeader";
 import { Form, UseForm } from "../../Form/UseForm";
 import {
@@ -108,10 +109,14 @@ function NewClient({ attorney_id, lawfirm_id }) {
           className="space-y-8 divide-y divide-gray-200"
           onSubmit={handleSubmit}
         >
-          <FormHeader
-            header="Add a new investor"
-            body="Please fill out the following information to invite a new investor. They will be sent an email to login"
-          />
+          <Paper>
+            <div className="pb-5 mt-5">
+              <FormHeader
+                header="Add a new investor"
+                body="Please fill out the following information to invite a new investor. They will be sent an email to login"
+              />
+            </div>
+          </Paper>
 
           <div class="space-y-6 sm:space-y-5">
             {NewClientInputs.map((question) => {

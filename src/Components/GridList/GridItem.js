@@ -75,45 +75,12 @@ function GridItem({
       </li>
     );
   }
-  if (status === "Awaiting Lawfirm" && type === "investor") {
-    return (
-      <li class="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
-        <div class="w-full flex items-center justify-between p-6 space-x-6">
-          <div class="flex-1 truncate">
-            <div class="flex items-center space-x-3">
-              <h3 class="text-gray-900 text-sm font-medium truncate">{name}</h3>
-              <span class={statusClass}>{status}</span>
-            </div>
-            <p class="mt-1 text-gray-500 text-sm truncate">{title}</p>
-          </div>
-        </div>
-        <div>
-          <div class="-mt-px flex divide-x divide-gray-200">
-            <div class="w-0 flex-1 flex">
-              <Link
-                to={link_to_left}
-                class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
-              >
-                <span class="ml-3">{text_to_left}</span>
-              </Link>
-            </div>
-            {id !== null && (
-              <div class="-ml-px w-0 flex-1 flex">
-                <button
-                  onClick={handleS3Link}
-                  class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500"
-                >
-                  <span class="ml-3">{text_to_middle}</span>
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      </li>
-    );
-  }
 
-  if (status === "Awaiting Lawfirm" && type === "attorney") {
+  if (
+    (status === "Awaiting Lawfirm" && type === "attorney") ||
+    (status === "Awaiting Investor" && type === "investor") ||
+    (status === "Awaiting Company" && type === "company")
+  ) {
     return (
       <li class="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
         <div class="w-full flex items-center justify-between p-6 space-x-6">
@@ -213,33 +180,6 @@ function GridItem({
       </li>
     );
   }
-  if (status === "Awaiting Investor" && type === "attorney") {
-    return (
-      <li class="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
-        <div class="w-full flex items-center justify-between p-6 space-x-6">
-          <div class="flex-1 truncate">
-            <div class="flex items-center space-x-3">
-              <h3 class="text-gray-900 text-sm font-medium truncate">{name}</h3>
-              <span class={statusClass}>{status}</span>
-            </div>
-            <p class="mt-1 text-gray-500 text-sm truncate">{title}</p>
-          </div>
-        </div>
-        <div>
-          <div class="-mt-px flex divide-x divide-gray-200">
-            <div class="-ml-px w-0 flex-1 flex">
-              <div
-                to={"link_to_right"}
-                class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500"
-              >
-                <span class="ml-3">Waiting for investor</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </li>
-    );
-  }
   if (status === "Awaiting Lawfirm" && type === "investor") {
     return (
       <li class="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
@@ -267,7 +207,10 @@ function GridItem({
       </li>
     );
   }
-  if (status === "Awaiting Investor" && type === "company") {
+  if (
+    (status === "Awaiting Investor" && type === "company") ||
+    (status === "Awaiting Investor" && type === "attorney")
+  ) {
     return (
       <li class="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
         <div class="w-full flex items-center justify-between p-6 space-x-6">
@@ -339,7 +282,10 @@ function GridItem({
       </li>
     );
   }
-  if (status === "Awaiting Company" && type === "investor") {
+  if (
+    (status === "Awaiting Company" && type === "investor") ||
+    (status === "Awaiting Company" && type === "attorney")
+  ) {
     return (
       <li class="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
         <div class="w-full flex items-center justify-between p-6 space-x-6">

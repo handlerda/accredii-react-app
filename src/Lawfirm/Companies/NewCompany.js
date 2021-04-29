@@ -7,6 +7,7 @@ import TextInput from "../../Components/Controls/TextInput";
 import { createNewCompany, createNewDocument } from "../../Service/Backend";
 import NoData from "../../Components/NoData";
 import { useHistory } from "react-router";
+import Paper from "../../Components/Paper";
 const initialValues = {};
 
 //loop
@@ -58,10 +59,14 @@ function NewCompany({ attorney_id, lawfirm_id }) {
         className="space-y-8 divide-y divide-gray-200"
         onSubmit={handleSubmit}
       >
-        <FormHeader
-          header="Add a new company"
-          body="Please fill out the following information to add a new company."
-        />
+        <Paper>
+          <div className="pb-5 mt-5">
+            <FormHeader
+              header="Add a new company"
+              body="Please fill out the following information to add a new company."
+            />
+          </div>
+        </Paper>
 
         <div class="space-y-6 sm:space-y-5">
           {NewCompanyInputs.map((question) => {

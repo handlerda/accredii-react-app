@@ -16,6 +16,7 @@ import { data } from "autoprefixer";
 import NoData from "../../Components/NoData";
 import { useHistory } from "react-router";
 import Checkbox from "../../Components/Controls/Checkbox";
+import Paper from "../../Components/Paper";
 
 const initialValues = {};
 //loop through the values
@@ -87,58 +88,71 @@ function NewDocument({ id }) {
   console.log(`attorney info`, attorneyInfo);
   return (
     attorneyInfo && (
-      <Form
-        className="space-y-8 divide-y divide-gray-200"
-        onSubmit={handleSubmit}
-      >
-        <FormHeader
-          header="Send a document to an investor"
-          body="Please fill out the following information to send a new document to an investor. They will notified once you submit."
-        />
+      <>
+        <Paper>
+          <div className="pb-5 mt-5">
+            <FormHeader
+              header="Send a document to an investor"
+              body="Please fill out the following information to send a new document to an investor. They will be notified once you click submit."
+            />
+          </div>
+        </Paper>
+        <Form
+          className="space-y-8 divide-y divide-gray-200"
+          onSubmit={handleSubmit}
+        >
+          {NewDocumentDropDown.map((question) => {
+            console.log(question);
+            switch (question.name) {
+              case "investors":
+                return (
+                  <MultipleChoice
+                    title={question.label}
+                    helpText={question.text}
+                  >
+                    <SelectDropdown
+                      options={attorneyInfo.investors}
+                      onChange={handleInputChange}
+                      name={question.name}
+                    />
+                  </MultipleChoice>
+                );
 
-        {NewDocumentDropDown.map((question) => {
-          console.log(question);
-          switch (question.name) {
-            case "investors":
-              return (
-                <MultipleChoice title={question.label} helpText={question.text}>
-                  <SelectDropdown
-                    options={attorneyInfo.investors}
-                    onChange={handleInputChange}
-                    name={question.name}
-                  />
-                </MultipleChoice>
-              );
+              case "companies":
+                console.log(`here from companies,`, attorneyInfo.companies);
+                return (
+                  <MultipleChoice
+                    title={question.label}
+                    helpText={question.text}
+                  >
+                    <SelectDropdown
+                      options={attorneyInfo.companies}
+                      onChange={handleInputChange}
+                      name={question.name}
+                    />
+                  </MultipleChoice>
+                );
 
-            case "companies":
-              console.log(`here from companies,`, attorneyInfo.companies);
-              return (
-                <MultipleChoice title={question.label} helpText={question.text}>
-                  <SelectDropdown
-                    options={attorneyInfo.companies}
-                    onChange={handleInputChange}
-                    name={question.name}
-                  />
-                </MultipleChoice>
-              );
+              case "templates":
+                console.log(`here from templates,`, data.templates);
+                return (
+                  <MultipleChoice
+                    title={question.label}
+                    helpText={question.text}
+                  >
+                    <SelectDropdown
+                      options={attorneyInfo.templates}
+                      onChange={handleInputChange}
+                      name={question.name}
+                    />
+                  </MultipleChoice>
+                );
+              default:
+                return <div></div>;
+            }
+          })}
 
-            case "templates":
-              console.log(`here from templates,`, data.templates);
-              return (
-                <MultipleChoice title={question.label} helpText={question.text}>
-                  <SelectDropdown
-                    options={attorneyInfo.templates}
-                    onChange={handleInputChange}
-                    name={question.name}
-                  />
-                </MultipleChoice>
-              );
-            default:
-              return <div></div>;
-          }
-        })}
-
-        {/* <TextInput
+          {/* <TextInput
           type="file"
           name="new_doc_upload"
           label="Add a new file"
@@ -146,11 +160,12 @@ function NewDocument({ id }) {
           id={"new_doc_upload"}
           hidden={true}
         /> */}
-        <SubmitButton
-          text="Submit"
-          onClick={() => console.log(`here comes the log`)}
-        />
-      </Form>
+          <SubmitButton
+            text="Submit"
+            onClick={() => console.log(`here comes the log`)}
+          />
+        </Form>
+      </>
     )
   );
 }

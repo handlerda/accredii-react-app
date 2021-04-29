@@ -57,6 +57,7 @@ export default function Details({ type }) {
   const history = useHistory();
   const { documentId } = useParams();
   console.log(documentId);
+  console.log(type);
   //this will be nested. It will make sense to call this from the parent component
   useEffect(() => {
     async function getDocumentData() {
@@ -87,7 +88,10 @@ export default function Details({ type }) {
               </div>
             </div>
             <div className="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 md:mt-0 md:flex-row md:space-x-3">
-              {documentData.status !== "completed" && (
+              {((type === "investor" &&
+                documentData.status === "awaiting_investor") ||
+                (type === "company" &&
+                  documentData.status === "awaiting_company")) && (
                 <button
                   type="button"
                   className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500"
@@ -211,7 +215,7 @@ export default function Details({ type }) {
                 </div>
               </section>
             </div>
-            <Paper>
+            <Paper wrapperCSS="">
               <Feed documentData={documentData} />
             </Paper>
           </div>
