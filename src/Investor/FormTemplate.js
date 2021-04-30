@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import Checkbox from "../Components/Controls/Checkbox";
 import MultipleChoice from "../Components/Controls/MultipleChoice";
 import TextInput from "../Components/Controls/TextInput";
-import FormHeader from "../Form/FormHeader";
-import { UseForm, Form } from "../Form/UseForm";
+import FormHeader from "../Components/Form/FormHeader";
+import { UseForm, Form } from "../Components/Form/UseForm";
 import { getInvestor, updateInvestor } from "../Service/Backend";
 import {
   InvestorMCQuestions,
@@ -13,7 +13,7 @@ import axios from "axios";
 import SubmitButton from "../Components/Controls/SubmitButton";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useHistory } from "react-router";
-import NoData from "../Components/NoData";
+import Popup from "../Components/Popup";
 function FormTemplate(props) {
   const { user } = useAuth0();
   const history = useHistory();
@@ -51,7 +51,7 @@ function FormTemplate(props) {
   console.log(`here is investor info`, values);
   if (successSubmit === true) {
     return (
-      <NoData
+      <Popup
         title="Your information has been saved"
         text="You can update specific document information on the document"
         buttonText="Take me to documents"

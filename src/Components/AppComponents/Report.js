@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Table from "../../Components/Table/Table";
+import Table from "../Table/Table";
 import { getDocuments } from "../../Service/Backend";
-import NoData from "../NoData";
+import Popup from "../Popup";
 
 function Report({ tableHeaders, type, id, keys, content }) {
   //hit api on load
@@ -17,7 +17,7 @@ function Report({ tableHeaders, type, id, keys, content }) {
 
   if (documentStatus === false) {
     return (
-      <NoData
+      <Popup
         title="Looks like you are a new user!"
         text="Please create a new document or wait to get invited to a fund"
         buttonText="Go back"

@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import GridListContainer from "../../GridList/GridListContainer";
 import { getDocuments } from "../../../Service/Backend";
 import GridItem from "../../GridList/GridItem";
-import NoData from "../../NoData";
-import Piechart from "../../Dashboard/Piechart";
+import Popup from "../../Popup";
 function Documents({ type, id }) {
   const [documents, setDocuments] = useState(null);
   useEffect(() => {
@@ -18,7 +17,7 @@ function Documents({ type, id }) {
 
   if (documents === false) {
     return (
-      <NoData
+      <Popup
         title="No Documents"
         text="Please create a new document or wait to get invited to a fund"
         buttonText="Go back"

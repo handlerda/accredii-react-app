@@ -7,7 +7,7 @@ import HelloSign from "hellosign-embedded";
 import { useHistory, useParams } from "react-router";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
-import { Form, UseForm } from "../../../Form/UseForm";
+import { Form, UseForm } from "../../../Components/Form/UseForm";
 import TextInput from "../../Controls/TextInput";
 
 function DocumentSignContainer({ user_id, type }) {

@@ -5,10 +5,10 @@ import MultipleChoice from "../../Components/Controls/MultipleChoice";
 import SelectDropdown from "../../Components/Controls/SelectDropdown";
 import SubmitButton from "../../Components/Controls/SubmitButton";
 import TextInput from "../../Components/Controls/TextInput";
-import NoData from "../../Components/NoData";
+import Popup from "../../Components/Popup";
 import Paper from "../../Components/Paper";
-import FormHeader from "../../Form/FormHeader";
-import { Form, UseForm } from "../../Form/UseForm";
+import FormHeader from "../../Components/Form/FormHeader";
+import { Form, UseForm } from "../../Components/Form/UseForm";
 import {
   insertInvestor,
   getAttorneyInfo,
@@ -84,18 +84,18 @@ function NewClient({ attorney_id, lawfirm_id }) {
   console.log(values, documentValues);
   if (submitSuccess === false) {
     return (
-      <NoData
+      <Popup
         title="The investor was not able to be created"
         text="This is because the investor already exists"
         buttonText="Take me back"
         handleClick={() => history.push(`/attorney/documents`)}
-      ></NoData>
+      />
     );
   }
 
   if (submitSuccess === true) {
     return (
-      <NoData
+      <Popup
         title="The investor and document were created"
         text="The investor will be notified via email"
         buttonText="Take me home"
