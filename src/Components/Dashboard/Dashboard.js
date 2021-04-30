@@ -25,9 +25,9 @@ import {
 } from "@heroicons/react/solid";
 import ProfileHeader from "./ProfileHeader";
 import StatusGroup from "./StatusGroup";
-import Report from "../Portal/Report";
+import Report from "../AppComponents/Report";
 import { getDocuments } from "../../Service/Backend";
-import NoData from "../NoData";
+import Popup from "../Popup";
 
 const tableHeaders = [
   { name: "Title" },
@@ -175,11 +175,11 @@ export default function Dashboard({ user_id, type }) {
     );
   } else {
     return (
-      <NoData
+      <Popup
         title="Looks like you are new"
         text="Create a document or wait to get added to a subscription"
         buttonText="Click me"
-      ></NoData>
+      />
     );
   }
 }

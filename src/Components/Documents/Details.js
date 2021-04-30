@@ -13,7 +13,7 @@ import {
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import Feed from "./Feed";
 import Paper from "../Paper";
-import FormHeader from "../../Form/FormHeader";
+import FormHeader from "../Form/FormHeader";
 import Information from "./Information";
 import { getDocumentInfo } from "../../Service/Backend";
 import { useHistory, useParams } from "react-router";

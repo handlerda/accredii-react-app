@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Form, UseForm } from "../../Form/UseForm";
-import FormHeader from "../../Form/FormHeader";
+import { Form, UseForm } from "../../Components/Form/UseForm";
+import FormHeader from "../../Components/Form/FormHeader";
 import { NewDocumentDropDown } from "../LawfirmQuestions";
 import MultipleChoice from "../../Components/Controls/MultipleChoice";
 import SelectDropdown from "../../Components/Controls/SelectDropdown";
 import SubmitButton from "../../Components/Controls/SubmitButton";
-import TextInput from "../../Components/Controls/TextInput";
-import { toBase64 } from "../../Service/FileParsing";
 import {
   uploadNewForm,
   getAttorneyInfo,
   createNewDocument,
 } from "../../Service/Backend";
 import { data } from "autoprefixer";
-import NoData from "../../Components/NoData";
+import Popup from "../../Components/Popup";
 import { useHistory } from "react-router";
-import Checkbox from "../../Components/Controls/Checkbox";
 import Paper from "../../Components/Paper";
-
+import { toBase64 } from "../../Service/FileParsing";
 const initialValues = {};
 //loop through the values
 
@@ -66,22 +63,22 @@ function NewDocument({ id }) {
 
   if (submitSuccess === true) {
     return (
-      <NoData
+      <Popup
         title="The document has been sent!"
         text="The investor has been notified"
         buttonText="Take me back"
         handleClick={() => history.push(`/attorney/`)}
-      ></NoData>
+      />
     );
   }
   if (submitSuccess === false) {
     return (
-      <NoData
+      <Popup
         title="There was an error!"
         text="The engineering team has been notified"
         buttonText="Take me back"
         handleClick={() => history.push(`/attorney/`)}
-      ></NoData>
+      />
     );
   }
 

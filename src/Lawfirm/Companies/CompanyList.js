@@ -1,5 +1,5 @@
 import React from "react";
-import Report from "../../Components/Portal/Report";
+import Report from "../../Components/AppComponents/Report";
 
 const api_names = [
   "name",

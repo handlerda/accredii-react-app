@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Form, UseForm } from "../../Form/UseForm";
-import FormHeader from "../../Form/FormHeader";
+import { Form, UseForm } from "../../Components/Form/UseForm";
+import FormHeader from "../../Components/Form/FormHeader";
 import { NewCompanyInputs } from "../LawfirmQuestions";
 import SubmitButton from "../../Components/Controls/SubmitButton";
 import TextInput from "../../Components/Controls/TextInput";
 import { createNewCompany, createNewDocument } from "../../Service/Backend";
-import NoData from "../../Components/NoData";
+import Popup from "../../Components/Popup";
 import { useHistory } from "react-router";
 import Paper from "../../Components/Paper";
 const initialValues = {};
@@ -35,23 +35,23 @@ function NewCompany({ attorney_id, lawfirm_id }) {
 
   if (submitSuccess === false) {
     return (
-      <NoData
+      <Popup
         title="The company was not able to be created"
         text="Our engineering team is on it"
         buttonText="Take me back"
         handleClick={() => history.push(`/attorney/documents`)}
-      ></NoData>
+      />
     );
   }
 
   if (submitSuccess === true) {
     return (
-      <NoData
+      <Popup
         title="The company has been created"
         text="The company has been notified"
         buttonText="Take me back"
         handleClick={() => history.push(`/attorney/documents`)}
-      ></NoData>
+      />
     );
   } else {
     return (

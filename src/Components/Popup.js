@@ -4,7 +4,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
 import { useHistory } from "react-router-dom";
 
-function NoData({ title, text, buttonText, handleClick }) {
+function Popup({ title, text, buttonText, handleClick }) {
   const [open, setOpen] = useState(true);
   const history = useHistory();
 
@@ -83,4 +83,4 @@ function NoData({ title, text, buttonText, handleClick }) {
   );
 }
 
-export default NoData;
+export default Popup;
