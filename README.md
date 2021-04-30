@@ -1,70 +1,53 @@
-# Getting Started with Create React App
+# Accredii Front End Web App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The Accredii front end web app is the public facing web browser app when a user goes to accredii.com
 
-## Available Scripts
+## Directory Overview
 
-In the project directory, you can run:
+The web app has many top level `src` directories: 
 
-### `yarn start`
+### Accredii Specific Apps
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+* ### Company
+    * `CompanyAppContainer.js` (handles authentication from Auth0)
+        * `CompanyApp.js` (renders if user is authenticated)
+        * `CompanyRoutes.js` (route handler for all company routes)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+* ### Lawfirm
+    * `LawfirmAppContainer.js` (handles authentication from Auth0)
+        * `LawfirmApp.js` (renders if user is authenticated)
+        * `LawfirmRoutes.js` (route handler for all `attorney` routes)
 
-### `yarn test`
+* ### Investor
+    * `InvestorAppContainer.js` (handles authentication from Auth0)
+        * `InvestorApp.js` (renders if user is authenticated)
+        * `InvestorRoutes.js` (route handler for all `investor` routes)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Accredii Helper Directories 
 
-### `yarn build`
+* ### Assets
+    * `main.css` contains tailwind.css bundle
+    *  `tailwind.css` contains `tailwind` imports
+    
+* ### Components 
+    * `/Controls` (handle's control html elements (inputs, textboxes, buttons)
+    * `/Dashboard` (handle's dashboard elements on the `/` and other pages
+    * `/Documents` (handle's all of the jsx files that render `/document/:id` page
+    ---- MORE TO ADD HERE -----
+    
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* ### LandingPage
+    #### This is static contnent. Will be migrated to a server framework for SEO purposes
+    *  `/Compoents` (inside files make up `landingPage.js`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* ### Service
+    * `backend.js` includes all HTTP callouts to the protected Accredii API.
+    * `fileParsing.js` includes the logic for base64 encoding / decoding uploaded files. 
+    
+    
+    
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
