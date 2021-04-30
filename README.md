@@ -47,7 +47,7 @@ The web app has many top level `src` directories:
 
   #### This is static content. Will be migrated to a server framework for SEO purposes
 
-  - `/Compoents` (inside files make up `landingPage.js`
+  - `/Components` (inside files make up `landingPage.js`
 
 - ### Service
 

@@ -1,22 +1,11 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { Menu, Popover, Transition } from "@headlessui/react";
-import {
-  ArrowNarrowLeftIcon,
-  CheckIcon,
-  HomeIcon,
-  PaperClipIcon,
-  QuestionMarkCircleIcon,
-  SearchIcon,
-  ThumbUpIcon,
-  UserIcon,
-} from "@heroicons/react/solid";
-import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+
 import Feed from "./Feed";
 import Paper from "../Paper";
-import FormHeader from "../Form/FormHeader";
 import Information from "./Information";
 import { getDocumentInfo } from "../../Service/Backend";
 import { useHistory, useParams } from "react-router";
+import { QuestionMarkCircleIcon } from "@heroicons/react/outline";
 
 const user = {
   name: "Whitney Francis",
