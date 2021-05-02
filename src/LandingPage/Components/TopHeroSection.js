@@ -69,13 +69,6 @@ function TopHeroSection() {
                 </div>
                 <div className="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
                   <Link
-                    to="/fund"
-                    className="font-medium text-indigo-600  hover:text-indigo-500"
-                  >
-                    Fund Login
-                  </Link>
-
-                  <Link
                     to="/company"
                     className="font-medium text-indigo-600  hover:text-indigo-500"
                   >
@@ -86,13 +79,13 @@ function TopHeroSection() {
                     to="/investor"
                     className="font-medium text-indigo-600 hover:text-indigo-500"
                   >
-                    Investor Log in
+                    Investor Login
                   </Link>
                   <Link
                     to="/attorney"
                     className="font-medium text-indigo-600 hover:text-indigo-500"
                   >
-                    Firm Log in
+                    Firm Login
                   </Link>
                 </div>
               </nav>

@@ -9,6 +9,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
 import { Form, UseForm } from "../../../Components/Form/UseForm";
 import TextInput from "../../Controls/TextInput";
+import Popup from "../../Popup";
 
 function DocumentSignContainer({ user_id, type }) {
   let counter = 0;
@@ -30,9 +31,12 @@ function DocumentSignContainer({ user_id, type }) {
           documentId,
           type
         );
-        if (signedURL.status === "ask") {
+        if (signedURL.status === "document") {
+          console.log(signedURL);
           setSigning("ask");
           setQuestions(signedURL);
+        } else if (signedURL.status === "investor") {
+          setSigning("moreInfo");
         } else {
           setHelloSignData(signedURL);
           console.log(`here is the raw payload from the render`, signedURL);
@@ -68,6 +72,8 @@ function DocumentSignContainer({ user_id, type }) {
       console.log(`signedURL from the sign`, signedURL);
       setHelloSignData(signedURL);
       setSigning("sign");
+    } else {
+      setSigning("moreInfo");
     }
     // setOpen(false);
     // history.push(`/hello`);
@@ -197,6 +203,16 @@ function DocumentSignContainer({ user_id, type }) {
   }
   if (sign === "loading") {
     return <h1>Loading</h1>;
+  }
+  if (sign === "moreInfo") {
+    return (
+      <Popup
+        title="You need to fill out some more questions"
+        text="You have general investor questions to fill out"
+        buttonText="Fill out info"
+        handleClick={() => history.push("/investor/info")}
+      ></Popup>
+    );
   }
 }
 
