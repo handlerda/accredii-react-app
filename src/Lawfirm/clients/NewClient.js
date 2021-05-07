@@ -109,14 +109,12 @@ function NewClient({ attorney_id, lawfirm_id }) {
           className="space-y-8 divide-y divide-gray-200"
           onSubmit={handleSubmit}
         >
-          <Paper>
-            <div className="pb-5 mt-5">
-              <FormHeader
-                header="Add a new investor"
-                body="Please fill out the following information to invite a new investor. They will be sent an email to login"
-              />
-            </div>
-          </Paper>
+          <div className="pb-5 mt-5 mb-10">
+            <FormHeader
+              header="Add a new investor"
+              body="Please fill out the following information to invite a new investor. They will be sent an email to login"
+            />
+          </div>
 
           <div class="space-y-6 sm:space-y-5">
             {NewClientInputs.map((question) => {

@@ -1,5 +1,8 @@
 import React from "react";
+import { useHistory } from "react-router";
 import Report from "../../Components/AppComponents/Report";
+import FormHeader from "../../Components/Form/FormHeader";
+import NewButton from "../../Components/Controls/NewButton";
 
 const api_names = [
   "name",
@@ -18,14 +21,26 @@ const tableHeaders = [
 ];
 
 function CompanyList({ id, type }) {
+  const history = useHistory();
   return (
-    <Report
-      content="by_company"
-      tableHeaders={tableHeaders}
-      keys={api_names}
-      id={id}
-      type={type}
-    ></Report>
+    <div>
+      <div className="mt-4">
+        <NewButton
+          text="New Company"
+          onClick={() => history.push(`/attorney/companies/new`)}
+        ></NewButton>
+      </div>
+
+      <div>
+        <Report
+          content="by_company"
+          tableHeaders={tableHeaders}
+          keys={api_names}
+          id={id}
+          type={type}
+        ></Report>
+      </div>
+    </div>
   );
 }
 

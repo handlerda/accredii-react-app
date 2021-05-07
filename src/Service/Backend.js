@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const api_path = process.env.REACT_APP_SERVER_URI_PROD;
+const api_path = process.env.REACT_APP_SERVER_URI_LOCAL;
 const getDocuments = async (type, id) => {
   console.log(type, id);
   const url = `${api_path}${type}/status?id=${id}`;

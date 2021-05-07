@@ -86,18 +86,16 @@ function NewDocument({ id }) {
   return (
     attorneyInfo && (
       <>
-        <Paper>
-          <div className="pb-5 mt-5">
+        <Form
+          className="space-y-8 divide-y divide-gray-200"
+          onSubmit={handleSubmit}
+        >
+          <div className="pb-5 mt-8 mb-10">
             <FormHeader
               header="Send a document to an investor"
               body="Please fill out the following information to send a new document to an investor. They will be notified once you click submit."
             />
           </div>
-        </Paper>
-        <Form
-          className="space-y-8 divide-y divide-gray-200"
-          onSubmit={handleSubmit}
-        >
           {NewDocumentDropDown.map((question) => {
             console.log(question);
             switch (question.name) {

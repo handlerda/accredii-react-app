@@ -19,7 +19,6 @@ const tableHeaders = [
   { name: "Law Firm" },
   { name: "Client" },
   { name: "Status" },
-  { name: "Action" },
 ];
 
 const api_names = [
@@ -28,7 +27,6 @@ const api_names = [
   "lawfirm_name",
   "investor_name",
   "status",
-  "sign",
 ];
 function LawfirmRoutes() {
   const { logout } = useAuth0();
@@ -74,10 +72,6 @@ function LawfirmRoutes() {
         <h1>Hello from a client id </h1>
       </Route>
       <Route exact path={`/attorney/companies`}>
-        <NewButton
-          text="New Company"
-          onClick={() => history.push(`/attorney/companies/new`)}
-        ></NewButton>
         <CompanyList type="attorney" id={user.sub} />
       </Route>
       <Route exact path={`/attorney/companies/new`}>
