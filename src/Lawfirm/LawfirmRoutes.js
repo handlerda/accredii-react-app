@@ -12,6 +12,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Dashboard from "../Components/Dashboard/Dashboard";
 import Popup from "../Components/Popup";
 import Details from "../Components/Documents/Details";
+import FormHeader from "../Components/Form/FormHeader";
 
 const tableHeaders = [
   { name: "Title" },
@@ -40,6 +41,10 @@ function LawfirmRoutes() {
         <Dashboard type="attorney" user_id={user.sub} />
       </Route>
       <Route exact path={`/attorney/documents`}>
+        <FormHeader
+          header="Document Overview"
+          body="View document status or click the green button to send a new document an investor"
+        />
         <NewButton
           text="New Document"
           onClick={() => history.push(`/attorney/documents/new`)}

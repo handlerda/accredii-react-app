@@ -26,7 +26,6 @@ function CompanyApp() {
           <MobileItems label="Dashboard" link="/company" />
           <MobileItems label="Investors" link="/company/investors" />
           <MobileItems label="Documents" link="/company/documents" />
-          <MobileItems label="Legal" link="/company/legal" />
           <MobileItems label="Reports" link="/company/reports" />
         </MobileContainer>
 
@@ -35,7 +34,6 @@ function CompanyApp() {
           <Items label="Dashboard" link="/company" />
           <Items label="Investors" link="/company/investors" />
           <Items label="Documents" link="/company/documents" />
-          <Items label="Legal" link="/company/legal" />
           <Items label="Reports" link="/company/reports" />
           <Items label="Logout" link="/company/logout" />
         </Container>

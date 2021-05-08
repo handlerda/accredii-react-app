@@ -24,12 +24,17 @@ function CompanyList({ id, type }) {
   const history = useHistory();
   return (
     <div>
-      <div className="mt-4">
-        <NewButton
-          text="New Company"
-          onClick={() => history.push(`/attorney/companies/new`)}
-        ></NewButton>
+      <div>
+        <FormHeader
+          header="Company Overview"
+          body="View document status or click the green button to add a new company"
+        />
       </div>
+
+      <NewButton
+        text="New Company"
+        onClick={() => history.push(`/attorney/companies/new`)}
+      ></NewButton>
 
       <div>
         <Report
