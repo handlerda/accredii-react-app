@@ -23,6 +23,8 @@
     "react-scripts": "4.0.3",
     "react-vis": "^1.11.7",
     "recharts": "^2.0.9",
+    "redux": "^4.1.0",
+    "redux-thunk": "^2.3.0",
     "tailwindcss": "^1.9.6",
     "web-vitals": "^1.0.1"
   },

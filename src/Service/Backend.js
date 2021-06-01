@@ -10,6 +10,10 @@ const getDocuments = async (type, id) => {
   return documentJson;
 };
 
+// skip redux
+
+// will have generate for company, investor
+
 const generateInvestorEmbeddedDocument = async (id, documentId, type) => {
   const queryParams =
     type === "investor"
