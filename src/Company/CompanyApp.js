@@ -30,7 +30,7 @@ function CompanyApp() {
         </MobileContainer>
 
         {/* <!-- Static sidebar for desktop --> */}
-        <Container>
+        <Container img="https://static01.nyt.com/images/2019/05/02/fashion/02JACK-1/02JACK-1-superJumbo.jpg?quality=90&auto=webp">
           <Items label="Dashboard" link="/company" />
           <Items label="Investors" link="/company/investors" />
           <Items label="Documents" link="/company/documents" />

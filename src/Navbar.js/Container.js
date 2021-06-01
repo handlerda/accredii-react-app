@@ -1,6 +1,10 @@
 import React from "react";
 
-function Container({ children, name }) {
+function Container({
+  children,
+  name,
+  img = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixqx=k8FzvM2dHs&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+}) {
   return (
     <div className="hidden md:flex md:flex-shrink-0">
       <div className="flex flex-col w-64">
@@ -24,7 +28,7 @@ function Container({ children, name }) {
                 <div>
                   <img
                     className="inline-block h-9 w-9 rounded-full"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixqx=k8FzvM2dHs&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    src={img}
                     alt=""
                   />
                 </div>
