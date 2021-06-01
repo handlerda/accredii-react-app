@@ -1,9 +1,14 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
+import documentReducer from "./document";
+import investorReducer from "./investor";
 
 // root reducer
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({
+  investor: investorReducer,
+  document: documentReducer,
+});
 
 // add enhancer for prod / dev
 let enhancer;

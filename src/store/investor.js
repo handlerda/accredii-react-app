@@ -150,3 +150,5 @@ const investorReducer = (state = inititalState, action) => {
       return state;
   }
 };
+
+export default investorReducer;
