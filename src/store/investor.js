@@ -82,13 +82,12 @@ export const insertInvestor =
       lawfirm_id,
       data,
     };
-    const newInvestor = (
-      await axios.post(
-        `${api_path}investor/new`,
-        JSON.stringify(investorPayload)
-      )
-    ).data;
-    dispatch(addNewInvestor(newInvestor));
+    const newInvestor = await axios.post(
+      `${api_path}investor/new`,
+      JSON.stringify(investorPayload)
+    );
+    const response = newInvestor.data;
+    dispatch(addNewInvestor(response));
     return newInvestor;
   };
 

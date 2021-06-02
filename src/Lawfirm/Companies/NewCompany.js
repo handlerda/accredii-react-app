@@ -4,10 +4,11 @@ import FormHeader from "../../Components/Form/FormHeader";
 import { NewCompanyInputs } from "../LawfirmQuestions";
 import SubmitButton from "../../Components/Controls/SubmitButton";
 import TextInput from "../../Components/Controls/TextInput";
-import { createNewCompany, createNewDocument } from "../../Service/Backend";
 import Popup from "../../Components/Popup";
 import { useHistory } from "react-router";
 import Paper from "../../Components/Paper";
+import { useDispatch, useSelector } from "react-redux";
+import { createNewCompany } from "../../store/company";
 const initialValues = {};
 
 //loop
@@ -17,19 +18,20 @@ NewCompanyInputs.forEach((question) => {
 
 function NewCompany({ attorney_id, lawfirm_id }) {
   const { values, handleInputChange } = UseForm(initialValues);
-  const [submitSuccess, setSubmitSucess] = useState(null);
+  const [submitSuccess, setSubmitSuccess] = useState(null);
   const history = useHistory();
+  const company = useSelector((state) => state.company);
+  console.log(company);
+  const dispatch = useDispatch();
   async function handleSubmit(e) {
     e.preventDefault();
     values.attorney_id = attorney_id;
     values.lawfirm_id = lawfirm_id;
     console.log(submitSuccess);
-    const data = await createNewCompany(values);
-    //this is hard coded for now
-    //will set client state to success even if there is an error
+    const data = await dispatch(createNewCompany);
 
     if (data.status === true) {
-      setSubmitSucess(true);
+      setSubmitSuccess(true);
     }
   }
 
