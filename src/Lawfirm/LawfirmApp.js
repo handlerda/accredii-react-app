@@ -1,27 +1,35 @@
-import { SearchIcon, UserIcon } from "@heroicons/react/outline";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Searchbar from "../Components/Dashboard/Searchbar";
 import Container from "../Navbar.js/Container";
 import Items from "../Navbar.js/Items";
 import MobileContainer from "../Navbar.js/Mobile/MobileContainer";
 import MobileItems from "../Navbar.js/Mobile/MobileItems";
 import { getDocuments } from "../Service/Backend";
+import attorneyReducer, { getAttorneyStatus } from "../store/attorney";
 import LawfirmRoutes from "./LawfirmRoutes";
 
 function LawfirmApp() {
-  const [data, setData] = useState(null);
+  const dispatch = useDispatch();
+  const attorney = useSelector((state) => state.attorney);
+  const [loaded, setLoaded] = useState(false);
+
   const user = {};
   user.sub = "848290340";
   useEffect(() => {
     const getStatus = async () => {
-      const data = await getDocuments("attorney", user.sub);
-      if (data.data.docs.length) setData(data);
-      else setData(false);
+      const data = await dispatch(getAttorneyStatus(user.sub));
+      console.log(data);
+      setLoaded(true);
+      return data;
     };
     getStatus();
-  }, []);
+  }, [dispatch]);
+  if (!loaded) {
+    return <h1>loading</h1>;
+  }
   return (
-    data && (
+    loaded && (
       <div className="h-screen flex overflow-hidden bg-white">
         <MobileContainer>
           <MobileItems label="Dashboard" link="/attorney" />
@@ -68,7 +76,7 @@ function LawfirmApp() {
             tabIndex="0"
           >
             <div className="bg-white">
-              <Searchbar type="attorney" name={data.name} />
+              <Searchbar type="attorney" name={attorney.status.name} />
             </div>
 
             <div className="py-1 ">

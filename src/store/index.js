@@ -2,12 +2,15 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import documentReducer from "./document";
 import investorReducer from "./investor";
-
+import companyReducer from "./company";
+import attorneyReducer from "./attorney";
 // root reducer
 
 const rootReducer = combineReducers({
   investor: investorReducer,
   document: documentReducer,
+  company: companyReducer,
+  attorney: attorneyReducer,
 });
 
 // add enhancer for prod / dev

@@ -5,16 +5,15 @@ import { NewDocumentDropDown } from "../LawfirmQuestions";
 import MultipleChoice from "../../Components/Controls/MultipleChoice";
 import SelectDropdown from "../../Components/Controls/SelectDropdown";
 import SubmitButton from "../../Components/Controls/SubmitButton";
-import {
-  uploadNewForm,
-  getAttorneyInfo,
-  createNewDocument,
-} from "../../Service/Backend";
+import { uploadNewForm } from "../../Service/Backend";
 import { data } from "autoprefixer";
 import Popup from "../../Components/Popup";
 import { useHistory } from "react-router";
 import Paper from "../../Components/Paper";
 import { toBase64 } from "../../Service/FileParsing";
+import { useDispatch, useSelector } from "react-redux";
+import { getAttorneyInfo } from "../../store/attorney";
+import { createNewDocument } from "../../store/document";
 const initialValues = {};
 //loop through the values
 
@@ -22,18 +21,21 @@ NewDocumentDropDown.map((question) => {
   initialValues[question.name] = "";
 });
 function NewDocument({ id }) {
+  const dispatch = useDispatch();
   const history = useHistory();
+  const attorneyInfo = useSelector((state) => state.attorney.info);
+  console.log(attorneyInfo);
   //set document state
   const [file, setFile] = useState();
   const [submitSuccess, setSuccess] = useState(null);
-  const [attorneyInfo, setAttorneyInfo] = useState(null);
+  const [loaded, setLoaded] = useState(false);
   const { values, handleInputChange } = UseForm(initialValues);
 
   useEffect(() => {
     async function getAttorneyData() {
-      const data = await getAttorneyInfo(id);
-      console.log(data);
-      setAttorneyInfo(data);
+      const data = await dispatch(getAttorneyInfo(id));
+      setLoaded(true);
+      return data;
     }
     getAttorneyData();
   }, []);
@@ -49,13 +51,15 @@ function NewDocument({ id }) {
   async function handleSubmit(e) {
     e.preventDefault();
     //IF VALUES === "" (NOT CLICKED) DEFAULT TO FIRST ID
-    const response = await createNewDocument(
-      values.investors || attorneyInfo.investors[0].id,
-      id,
-      attorneyInfo.lawfirm_id,
-      values.companies || attorneyInfo.companies[0].id,
-      "",
-      values.templates || attorneyInfo.templates[0].id
+    const response = await dispatch(
+      createNewDocument(
+        values.investors || attorneyInfo.investors[0].id,
+        id,
+        attorneyInfo.lawfirm_id,
+        values.companies || attorneyInfo.companies[0].id,
+        "",
+        values.templates || attorneyInfo.templates[0].id
+      )
     );
     if (response.status === true) setSuccess(true);
     if (response.status === false) setSuccess(false);
@@ -81,10 +85,8 @@ function NewDocument({ id }) {
       />
     );
   }
-
-  console.log(`attorney info`, attorneyInfo);
   return (
-    attorneyInfo && (
+    loaded && (
       <>
         <Form
           className="space-y-8 divide-y divide-gray-200"
@@ -114,7 +116,6 @@ function NewDocument({ id }) {
                 );
 
               case "companies":
-                console.log(`here from companies,`, attorneyInfo.companies);
                 return (
                   <MultipleChoice
                     title={question.label}
@@ -129,7 +130,6 @@ function NewDocument({ id }) {
                 );
 
               case "templates":
-                console.log(`here from templates,`, data.templates);
                 return (
                   <MultipleChoice
                     title={question.label}
@@ -146,15 +146,6 @@ function NewDocument({ id }) {
                 return <div></div>;
             }
           })}
-
-          {/* <TextInput
-          type="file"
-          name="new_doc_upload"
-          label="Add a new file"
-          onChange={newDocument}
-          id={"new_doc_upload"}
-          hidden={true}
-        /> */}
           <SubmitButton
             text="Submit"
             onClick={() => console.log(`here comes the log`)}
