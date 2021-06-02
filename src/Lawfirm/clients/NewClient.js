@@ -9,26 +9,25 @@ import Popup from "../../Components/Popup";
 import Paper from "../../Components/Paper";
 import FormHeader from "../../Components/Form/FormHeader";
 import { Form, UseForm } from "../../Components/Form/UseForm";
-import { getAttorneyInfo } from "../../Service/Backend";
+import {
+  insertInvestor,
+  getAttorneyInfo,
+  createNewDocument,
+} from "../../Service/Backend";
 import { NewClientInputs, NewClientDropDown } from "../LawfirmQuestions";
-import { useDispatch, useSelector } from "react-redux";
-import { insertInvestor } from "../../store/investor";
-import { createNewDocument } from "../../store/document";
 
 function NewClient({ attorney_id, lawfirm_id }) {
   const [documents, setDocuments] = useState(null);
   const [submitSuccess, setSubmitSuccess] = useState(null);
-  const dispatch = useDispatch();
-  const attorney = useSelector((state) => state.attorney.info);
-  console.log(attorney);
   const history = useHistory();
   useEffect(() => {
-    if (!attorney) {
-      (async () => {
-        await dispatch(getAttorneyInfo(attorney_id));
-      })();
+    async function getDocuments() {
+      const data = await getAttorneyInfo(attorney_id);
+      console.log(data);
+      setDocuments(data);
     }
-  }, [dispatch]);
+    getDocuments();
+  }, []);
 
   const initialClientValues = {};
   const initialDocumentValues = {};
@@ -44,25 +43,24 @@ function NewClient({ attorney_id, lawfirm_id }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const newInvestor = await dispatch(
-        insertInvestor(values, attorney_id, "auth0|39420394")
+      const newInvestor = await insertInvestor(
+        values,
+        attorney_id,
+        "auth0|39420394"
       );
-      console.log(newInvestor);
-      // console.log(`ids are coming below:`);
-      // console.log(documents.companies);
-      // console.log(documents.templates);
+      console.log(`ids are coming below:`);
+      console.log(documents.companies);
+      console.log(documents.templates);
       if (newInvestor.status === false) {
         setSubmitSuccess(false);
       } else {
-        const createDocument = await dispatch(
-          createNewDocument(
-            newInvestor.id,
-            attorney_id,
-            lawfirm_id,
-            documentValues["company"] || documents.companies[0].id,
-            "",
-            documentValues["template"] || documents.templates[0].id
-          )
+        const createDocument = await createNewDocument(
+          newInvestor.id,
+          attorney_id,
+          lawfirm_id,
+          documentValues["company"] || documents.companies[0].id,
+          "",
+          documentValues["template"] || documents.templates[0].id
         );
         if (createDocument.status === true) {
           setSubmitSuccess(true);
@@ -106,7 +104,7 @@ function NewClient({ attorney_id, lawfirm_id }) {
     );
   } else {
     return (
-      attorney && (
+      documents && (
         <Form
           className="space-y-8 divide-y divide-gray-200"
           onSubmit={handleSubmit}
@@ -136,10 +134,10 @@ function NewClient({ attorney_id, lawfirm_id }) {
               return (
                 <MultipleChoice title={question.label} helpText={question.text}>
                   <SelectDropdown
-                    options={attorney.companies}
+                    options={documents.companies}
                     onChange={handleDocumentValueChange}
                     name={question.name}
-                    defaultValue={attorney.templates[0].id}
+                    defaultValue={documents.templates[0].id}
                   />
                 </MultipleChoice>
               );
@@ -148,10 +146,10 @@ function NewClient({ attorney_id, lawfirm_id }) {
               return (
                 <MultipleChoice title={question.label} helpText={question.text}>
                   <SelectDropdown
-                    options={attorney.templates}
+                    options={documents.templates}
                     onChange={handleDocumentValueChange}
                     name={question.name}
-                    defaultValue={attorney.templates[0].id}
+                    defaultValue={documents.templates[0].id}
                   />
                 </MultipleChoice>
               );
