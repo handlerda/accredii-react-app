@@ -7,23 +7,32 @@ import { useAuth0 } from "@auth0/auth0-react";
 import InvestorRoutes from "./InvestorRoutes";
 import Searchbar from "../Components/Dashboard/Searchbar";
 import { getDocuments } from "../Service/Backend";
+import { useDispatch, useSelector } from "react-redux";
+import { getInvestorStatus } from "../store/investor";
 
 function InvestorApp() {
   const { isAuthenticated, isLoading, loginWithRedirect, user } = useAuth0();
+  console.log(user);
   const [data, setData] = useState(null);
+  const dispatch = useDispatch();
+  const [loaded, setLoaded] = useState(false);
+  const investor = useSelector((state) => state.investor.status);
   useEffect(() => {
     const getStatus = async () => {
-      const data = await getDocuments("investor", user.sub);
-      if (data.data.docs.length) setData(data);
-      else setData(false);
+      const data = await dispatch(getInvestorStatus(user.sub));
+      console.log(data);
+      setLoaded(true);
+      return data;
     };
     getStatus();
-  }, []);
+  }, [dispatch]);
 
-  if (data) {
+  if (!loaded) {
+    return <h1>loading</h1>;
   }
+
   return (
-    data && (
+    loaded && (
       <div className="h-screen flex overflow-hidden bg-white">
         <MobileContainer>
           <MobileItems label="Dashboard" link="/investor" />
@@ -69,7 +78,7 @@ function InvestorApp() {
             tabIndex="0"
           >
             <div className="bg-white">
-              <Searchbar type="investor" name={data.name} />
+              <Searchbar type="investor" name={investor.name} />
             </div>
 
             <div className="py-1 ">

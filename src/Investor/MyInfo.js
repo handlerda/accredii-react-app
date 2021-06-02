@@ -1,23 +1,32 @@
 import React, { useEffect, useState } from "react";
 import FormTemplate from "./FormTemplate";
-import { getInvestor } from "../Service/Backend";
+//import { getInvestor } from "../Service/Backend";
+import { useDispatch, useSelector } from "react-redux";
+import { getInvestor } from "../store/investor";
 
 function MyInfo({ id }) {
-  const [investorInfo, setInvestorInfo] = useState(null);
+  const investor = useSelector((state) => state.investor.details);
+  const [loaded, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  console.log(investor);
 
   useEffect(() => {
     const getInvestorInfo = async (id) => {
-      const response = await getInvestor(id);
-      console.log(response);
-      const data = await response;
-      setInvestorInfo(data[0]);
+      const response = await dispatch(getInvestor(id));
+      setLoading(true);
+      return response;
     };
     getInvestorInfo(id);
-  }, []);
+  }, [dispatch]);
+  console.log(`here from investor`, investor);
+
+  if (!loaded) {
+    return <h1>Loading</h1>;
+  }
   return (
-    investorInfo && (
+    investor && (
       <div className="pt-6">
-        <FormTemplate data={investorInfo} />
+        <FormTemplate data={investor[0]} />
       </div>
     )
   );

@@ -4,7 +4,7 @@ import MultipleChoice from "../Components/Controls/MultipleChoice";
 import TextInput from "../Components/Controls/TextInput";
 import FormHeader from "../Components/Form/FormHeader";
 import { UseForm, Form } from "../Components/Form/UseForm";
-import { getInvestor, updateInvestor } from "../Service/Backend";
+import { getInvestor } from "../Service/Backend";
 import {
   InvestorMCQuestions,
   InvestorInputQuestions,
@@ -14,9 +14,13 @@ import SubmitButton from "../Components/Controls/SubmitButton";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useHistory } from "react-router";
 import Popup from "../Components/Popup";
+import { useDispatch } from "react-redux";
+import { updateInvestor } from "../store/investor";
 function FormTemplate(props) {
   const { user } = useAuth0();
   const history = useHistory();
+  const dispatch = useDispatch();
+
   const [successSubmit, setSuccessSubmit] = useState(null);
 
   const data = props.data;
@@ -42,7 +46,7 @@ function FormTemplate(props) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const data = await updateInvestor(user.sub, values);
+    const data = await dispatch(updateInvestor(user.sub, values));
     if (data.status === true) {
       setSuccessSubmit(true);
     }
@@ -118,10 +122,7 @@ function FormTemplate(props) {
             </div>
           );
         })}
-        <SubmitButton
-          onClick={() => console.log(`the button was clicked`)}
-          text="Save"
-        ></SubmitButton>
+        <SubmitButton text="Save"></SubmitButton>
       </Form>
     )
   );
