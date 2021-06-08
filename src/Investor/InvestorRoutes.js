@@ -30,7 +30,6 @@ const api_names = [
 function InvestorRoutes() {
   const history = useHistory();
   const { user, logout } = useAuth0();
-  console.log(user);
   return (
     <Switch>
       <Route exact path={`/investor`}>

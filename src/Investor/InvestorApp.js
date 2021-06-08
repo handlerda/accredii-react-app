@@ -11,22 +11,29 @@ import { useDispatch, useSelector } from "react-redux";
 import { getInvestorStatus } from "../store/investor";
 
 function InvestorApp() {
-  const { isAuthenticated, isLoading, loginWithRedirect, user } = useAuth0();
+  const { isAuthenticated, isLoading, loginWithRedirect, user, logout } =
+    useAuth0();
   console.log(user);
   const [data, setData] = useState(null);
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
   const investor = useSelector((state) => state.investor.status);
+  console.log(investor);
   useEffect(() => {
     const getStatus = async () => {
       const data = await dispatch(getInvestorStatus(user.sub));
-      console.log(data);
-      setLoaded(true);
+      if (!data.error) setLoaded(true);
+      if (data.error) setCurrentUser(false);
       return data;
     };
     getStatus();
   }, [dispatch]);
 
+  if (currentUser === false) {
+    logout();
+    return <h1>There is no user</h1>;
+  }
   if (!loaded) {
     return <h1>loading</h1>;
   }
