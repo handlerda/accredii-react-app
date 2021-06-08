@@ -7,20 +7,32 @@ import CompanyRoutes from "./CompanyRoutes";
 import { useAuth0 } from "@auth0/auth0-react";
 import { getDocuments } from "../Service/Backend";
 import Searchbar from "../Components/Dashboard/Searchbar";
+import { useDispatch, useSelector } from "react-redux";
+import { getCompanyStatus } from "../store/company";
 
 function CompanyApp() {
-  const { user } = useAuth0();
-  const [data, setData] = useState(null);
+  const { user, logout } = useAuth0();
+  const dispatch = useDispatch();
+  const company = useSelector((state) => state.company.status);
+  const [loaded, setLoaded] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
   useEffect(() => {
     const getStatus = async () => {
-      const data = await getDocuments("company", user.sub);
-      if (data.status === true) setData(data);
-      else setData(false);
+      const data = await dispatch(getCompanyStatus(user.sub));
+      if (!data.error) setLoaded(true);
+      if (data.error) setCurrentUser(false);
+      return data;
     };
     getStatus();
-  }, []);
+  }, [dispatch]);
+
+  if (currentUser === false) {
+    logout();
+    return <h1>You are not a valid company</h1>;
+  }
+
   return (
-    data && (
+    loaded && (
       <div className="h-screen flex overflow-hidden bg-white">
         <MobileContainer>
           <MobileItems label="Dashboard" link="/company" />

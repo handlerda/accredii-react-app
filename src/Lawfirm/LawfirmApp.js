@@ -8,23 +8,32 @@ import MobileItems from "../Navbar.js/Mobile/MobileItems";
 import { getDocuments } from "../Service/Backend";
 import attorneyReducer, { getAttorneyStatus } from "../store/attorney";
 import LawfirmRoutes from "./LawfirmRoutes";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function LawfirmApp() {
+  const { logout } = useAuth0();
   const dispatch = useDispatch();
   const attorney = useSelector((state) => state.attorney);
   const [loaded, setLoaded] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
 
   const user = {};
   user.sub = "848290340";
   useEffect(() => {
     const getStatus = async () => {
       const data = await dispatch(getAttorneyStatus(user.sub));
-      console.log(data);
-      setLoaded(true);
+      if (!data.error) setLoaded(true);
+      if (data.error) setCurrentUser(false);
       return data;
     };
     getStatus();
   }, [dispatch]);
+
+  if (currentUser === false) {
+    logout();
+    return <h1>You are not a valid user</h1>;
+  }
+
   if (!loaded) {
     return <h1>loading</h1>;
   }
