@@ -1,12 +1,13 @@
-# Accredii Front End Web App
+# What is Accredii 
 
-The Accredii front end web app is the public facing web browser app when a user goes to accredii.com
+What is Accredii: Accredii is an innovative Investor Management System (IMS) that enables law firms, companies, investors, and funds to manage the accreditation process including all documents and subscriptions. Accredii empowers attorneys to easily create custom subscription agreements and distribute them to investors and companies while managing the entire workflow. . The days of manually building subscription agreements are over. Accredii abstracts the complexities of fund agreements into a simple portal, allowing all parties to gain insight into the state of each agreement. Due to our centralized architecture, our system remembers an investor’s responses to a subscription and can automatically populate subsequent subscriptions.  Nearly every accredited investor understands the frustration of filling out repetitive personal information for different agreements and Accredii eliminates this problem and greatly improves the investor experience.   The Accredii IMS seamlessly connects investors and companies to their attorneys via an API and user-friendly robust portal. 
+
 
 ## Directory Overview
 
 The web app has many top level `src` directories:
 
-### Accredii Specific Apps
+### Accredii Directory Structure 
 
 - ### Company
 
