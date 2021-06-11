@@ -32,7 +32,7 @@ function InvestorApp() {
 
   if (currentUser === false) {
     logout();
-    return <h1>There is no user</h1>;
+    return <h1>You are not a valid user</h1>;
   }
   if (!loaded) {
     return <h1>loading</h1>;

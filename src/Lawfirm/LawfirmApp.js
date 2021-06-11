@@ -22,12 +22,13 @@ function LawfirmApp() {
   useEffect(() => {
     const getStatus = async () => {
       const data = await dispatch(getAttorneyStatus(user.sub));
+      console.log(data);
       if (!data.error) setLoaded(true);
       if (data.error) setCurrentUser(false);
       return data;
     };
     getStatus();
-  }, [dispatch]);
+  }, []);
 
   if (currentUser === false) {
     logout();

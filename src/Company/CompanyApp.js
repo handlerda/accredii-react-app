@@ -13,9 +13,9 @@ import { getCompanyStatus } from "../store/company";
 function CompanyApp() {
   const { user, logout } = useAuth0();
   const dispatch = useDispatch();
-  const company = useSelector((state) => state.company.status);
   const [loaded, setLoaded] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
+  const company = useSelector((state) => state.company.status);
   useEffect(() => {
     const getStatus = async () => {
       const data = await dispatch(getCompanyStatus(user.sub));
@@ -76,7 +76,7 @@ function CompanyApp() {
             tabIndex="0"
           >
             <div className="bg-white">
-              <Searchbar name={data.name} type="company" />
+              <Searchbar name={company.name} type="company" />
             </div>
 
             <div className="py-1 ">
