@@ -7,6 +7,7 @@ function Documents({ type, id }) {
   const [documents, setDocuments] = useState(null);
   useEffect(() => {
     const getStatus = async () => {
+      // eventually change this to redux
       const data = await getDocuments(type, id);
       if (data.data.stats.total > 0) setDocuments(data.data);
       else setDocuments(false);

@@ -49,6 +49,7 @@ function LawfirmRoutes() {
           text="New Document"
           onClick={() => history.push(`/attorney/documents/new`)}
         ></NewButton>
+
         <Documents type="attorney" id={user.sub}></Documents>
       </Route>
       <Route exact path={`/attorney/documents/new`}>
