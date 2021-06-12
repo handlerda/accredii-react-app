@@ -3,16 +3,34 @@ import GridListContainer from "../../GridList/GridListContainer";
 import { getDocuments } from "../../../Service/Backend";
 import GridItem from "../../GridList/GridItem";
 import Popup from "../../Popup";
+import { useDispatch, useSelector } from "react-redux";
 function Documents({ type, id }) {
-  const [documents, setDocuments] = useState(null);
-  useEffect(() => {
-    const getStatus = async () => {
-      const data = await getDocuments(type, id);
-      if (data.data.stats.total > 0) setDocuments(data.data);
-      else setDocuments(false);
-    };
-    getStatus();
-  }, []);
+  // const [documents, setDocuments] = useState(null);
+  // const dispatch = useDispatch()
+  const documents = useSelector((state) => state.type.status);
+  // useEffect(() => {
+  // set up switch statement for documents
+  // switch case for either case
+  // switch (type) {
+  //   case "investor":
+  //     break;
+
+  //   case "attorney":
+  //     break;
+
+  //   case "company":
+  //     break;
+  //   default:
+  //     break;
+  // }
+
+  //   const getStatus = async () => {
+  //     const data = await getDocuments(type, id);
+  //     if (data.data.stats.total > 0) setDocuments(data.data);
+  //     else setDocuments(false);
+  //   };
+  //   getStatus();
+  // }, []);
   console.log(documents);
 
   if (documents === false) {
