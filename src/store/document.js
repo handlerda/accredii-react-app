@@ -4,6 +4,7 @@ const GET_DOCUMENT_INFO = "document/info";
 const UPDATE_DOCUMENT = "document/update";
 const CREATE_NEW_DOCUMENT = "document/create/new";
 const GET_VIEWABLE_DOCUMENT = "document/get/viewable";
+const RESET_DOCUMENT = "document/reset";
 const api_path = process.env.REACT_APP_SERVER_URI_PROD;
 
 //helper functions
@@ -119,6 +120,8 @@ const documentReducer = (state = inititalState, action) => {
     case GET_VIEWABLE_DOCUMENT:
       newState = Object.assign({}, state);
       newState.viewableDocument = action.payload;
+      return newState;
+    case RESET_DOCUMENT:
       return newState;
     default:
       return state;
