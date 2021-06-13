@@ -5,34 +5,32 @@ import GridItem from "../../GridList/GridItem";
 import Popup from "../../Popup";
 import { useDispatch, useSelector } from "react-redux";
 function Documents({ type, id }) {
-  // const [documents, setDocuments] = useState(null);
+  //console.log(type);
+  const [documents, setDocuments] = useState(null);
   // const dispatch = useDispatch()
-  const documents = useSelector((state) => state.type.status);
-  // useEffect(() => {
-  // set up switch statement for documents
-  // switch case for either case
-  // switch (type) {
-  //   case "investor":
-  //     break;
+  const reduxValue = useSelector((state) => state);
+  console.log(`here from documents`, reduxValue);
+  useEffect(() => {
+    function documentChecker(data) {
+      // if data will return data
+      // if no data will set status to false
+      data.stats.total > 0 ? setDocuments(data) : setDocuments(false);
+    }
 
-  //   case "attorney":
-  //     break;
-
-  //   case "company":
-  //     break;
-  //   default:
-  //     break;
-  // }
-
-  //   const getStatus = async () => {
-  //     const data = await getDocuments(type, id);
-  //     if (data.data.stats.total > 0) setDocuments(data.data);
-  //     else setDocuments(false);
-  //   };
-  //   getStatus();
-  // }, []);
-  console.log(documents);
-
+    switch (type) {
+      case "investor":
+        documentChecker(reduxValue.investor.status.data);
+        break;
+      case "attorney":
+        documentChecker(reduxValue.attorney.status.data);
+        break;
+      case "company":
+        documentChecker(reduxValue.company.status.data);
+        break;
+      default:
+        break;
+    }
+  }, [documents]);
   if (documents === false) {
     return (
       <Popup
