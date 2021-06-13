@@ -8,21 +8,16 @@ function AdminApp() {
   return (
     <div className="h-screen flex overflow-hidden bg-white">
       <MobileContainer>
-        <MobileItems label="Dashboard" link="/attorney" />
-        <MobileItems label="Clients" link="/attorney/clients" />
-        <MobileItems label="Companies" link="/attorney/companies" />
-        <MobileItems label="Documents" link="/attorney/documents" />
-        <MobileItems label="Reports" link="/attorney/reports" />
+        <MobileItems label="Dashboard" link="/admin" />
+        <MobileItems label="New Lawfirm" link="/admin/lawfirm/new" />
+        <MobileItems label="New Lawfirm" link="/admin/attorney/new" />
       </MobileContainer>
 
       {/* <!-- Static sidebar for desktop --> */}
       <Container img="https://media-exp1.licdn.com/dms/image/C4E03AQGLtyzMNWNkjQ/profile-displayphoto-shrink_200_200/0/1516353342859?e=1626307200&v=beta&t=GeoaTf5EGTnTQsCZc48Phjv5hsywtWoXObI9UF4aatY">
-        <Items label="Dashboard" link="/attorney" />
-        <Items label="Clients" link="/attorney/clients" />
-        <Items label="Companies" link="/attorney/companies" />
-        <Items label="Documents" link="/attorney/documents" />
-        <Items label="Reports" link="/attorney/reports" />
-        <Items label="Logout" link="/attorney/logout" />
+        <Items label="Dashboard" link="/admin" />
+        <Items label="New Lawfirm" link="/admin/lawfirm/new" />
+        <Items label="New Attorney" link="/admin/attorney/new" />
       </Container>
       <div className="flex flex-col w-0 flex-1 overflow-hidden">
         <div className="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
