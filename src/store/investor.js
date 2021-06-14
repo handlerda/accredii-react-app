@@ -58,20 +58,29 @@ const reset = () => {
   };
 };
 
-export const getInvestorStatus = (id) => async (dispatch) => {
-  const url = `${api_path}/investor/status?id=${id}`;
-  const response = await axios(url);
+export const getInvestorStatus = (id, token) => async (dispatch) => {
+  const url = `${api_path}investor/documents?auth0_id=${id}`;
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   const investorStatus = response.data;
   dispatch(getStatus(investorStatus));
   return investorStatus;
 };
 
-export const getInvestor = (investor_id) => async (dispatch) => {
-  const url = `${api_path}investor?id=${investor_id}`;
-  const response = await axios(url);
-  const investorDetails = response.data.investor_data;
-  dispatch(getDetails(investorDetails));
-  return investorDetails;
+export const getInvestor = (investor_id, token) => async (dispatch) => {
+  const url = `${api_path}investor?auth0_id=${investor_id}`;
+  const response = await axios(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const investorDetails = response;
+  console.log(investorDetails);
+  dispatch(getDetails(investorDetails.data));
+  return investorDetails.data;
 };
 
 export const generateInvestorDocument =

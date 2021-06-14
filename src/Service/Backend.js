@@ -1,11 +1,15 @@
 import axios from "axios";
 
 const api_path = process.env.REACT_APP_SERVER_URI_PROD;
-const getDocuments = async (type, id) => {
+const getDocuments = async (type, id, token) => {
   console.log(type, id);
-  const url = `${api_path}${type}/status?id=${id}`;
-  console.log(url);
-  const getDocuments = await axios(url);
+  const url = `${api_path}${type}/documents?auth0_id=${id}`;
+  const getDocuments = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  console.log(getDocuments);
   const documentJson = await getDocuments.data;
   return documentJson;
 };

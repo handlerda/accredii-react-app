@@ -1,5 +1,6 @@
 import { Fragment, useState, useEffect } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import {
   BellIcon,
@@ -50,11 +51,17 @@ const api_names = [
 export default function Dashboard({ user_id, type }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [documentStatus, setDocumentStatus] = useState(null);
+  const { getAccessTokenSilently, getIdTokenClaims } = useAuth0();
   useEffect(() => {
     const getStatus = async () => {
-      const data = await getDocuments(type, user_id);
+      const accessToken = await getAccessTokenSilently({
+        audience: "https://accredii.com/investor",
+        scope: "investor:all",
+      });
+      console.log(accessToken);
+      const data = await getDocuments(type, user_id, accessToken);
       console.log(data);
-      if (data.data.stats.total === 0) setDocumentStatus(false);
+      if (data.stats.total === 0) setDocumentStatus(false);
       else setDocumentStatus(data);
     };
     getStatus();
@@ -145,10 +152,10 @@ export default function Dashboard({ user_id, type }) {
               <div className="mt-2">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                   {/* Card */}
-                  {documentStatus.data.stats.total > 0 && (
-                    <StatusGroup doc_stats={documentStatus.data.stats} />
+                  {documentStatus.stats.total > 0 && (
+                    <StatusGroup doc_stats={documentStatus.stats} />
                   )}
-                  {documentStatus.data.stats.total === 0 && (
+                  {documentStatus.stats.total === 0 && (
                     <h1>Add better css for no docs / new user</h1>
                   )}
                 </div>

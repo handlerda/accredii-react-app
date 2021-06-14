@@ -16,16 +16,15 @@ function Documents({ type, id }) {
       // if no data will set status to false
       data.stats.total > 0 ? setDocuments(data) : setDocuments(false);
     }
-
     switch (type) {
       case "investor":
-        documentChecker(reduxValue.investor.status.data);
+        documentChecker(reduxValue.investor.status);
         break;
       case "attorney":
-        documentChecker(reduxValue.attorney.status.data);
+        documentChecker(reduxValue.attorney.status);
         break;
       case "company":
-        documentChecker(reduxValue.company.status.data);
+        documentChecker(reduxValue.company.status);
         break;
       default:
         break;
@@ -41,13 +40,9 @@ function Documents({ type, id }) {
       />
     );
   }
-  console.log(`here from documents`);
   return (
     documents && (
       <div>
-        {/* <div>
-          <Piechart formattedData={documents} key="value" />
-        </div> */}
         <div>
           <GridListContainer>
             {documents.docs.map((doc) => {

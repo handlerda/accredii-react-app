@@ -11,8 +11,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { getInvestorStatus } from "../store/investor";
 
 function InvestorApp() {
-  const { isAuthenticated, isLoading, loginWithRedirect, user, logout } =
-    useAuth0();
+  const {
+    isAuthenticated,
+    isLoading,
+    loginWithRedirect,
+    user,
+    logout,
+    getAccessTokenSilently,
+    getAccessTokenWithPopup,
+    getIdTokenClaims,
+  } = useAuth0();
   console.log(user);
   const [data, setData] = useState(null);
   const dispatch = useDispatch();
@@ -22,7 +30,12 @@ function InvestorApp() {
   console.log(investor);
   useEffect(() => {
     const getStatus = async () => {
-      const data = await dispatch(getInvestorStatus(user.sub));
+      // GET JWT TOKEN
+      const accessToken = await getAccessTokenSilently({
+        audience: "https://accredii.com/investor",
+        scope: "investor:all",
+      });
+      const data = await dispatch(getInvestorStatus(user.sub, accessToken));
       if (!data.error) setLoaded(true);
       if (data.error) setCurrentUser(false);
       return data;

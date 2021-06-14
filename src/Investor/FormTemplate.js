@@ -4,41 +4,37 @@ import MultipleChoice from "../Components/Controls/MultipleChoice";
 import TextInput from "../Components/Controls/TextInput";
 import FormHeader from "../Components/Form/FormHeader";
 import { UseForm, Form } from "../Components/Form/UseForm";
-import { getInvestor } from "../Service/Backend";
 import {
   InvestorMCQuestions,
   InvestorInputQuestions,
 } from "./InvestorQuestions";
-import axios from "axios";
 import SubmitButton from "../Components/Controls/SubmitButton";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useHistory } from "react-router";
 import Popup from "../Components/Popup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateInvestor } from "../store/investor";
-function FormTemplate(props) {
+function FormTemplate() {
   const { user } = useAuth0();
   const history = useHistory();
   const dispatch = useDispatch();
 
   const [successSubmit, setSuccessSubmit] = useState(null);
+  const data = useSelector((state) => state.investor.details);
 
-  const data = props.data;
-  console.log();
+  console.log(`here comes data`, data);
   const initialValues = {};
 
   //loop over all the input questions
   InvestorInputQuestions.forEach((question) => {
-    initialValues[question.name] = props.data[question.name] || "";
+    initialValues[question.name] = data[question.name] || "";
   });
 
   //loop over all the multile choice questions
   InvestorMCQuestions.forEach((question) => {
     const questionName = question.choices[0].question_name;
-    if (props.data[questionName]) {
-      console.log(`prop data`, props.data[questionName]);
-      console.log(props.data[questionName]["value"]);
-      initialValues[questionName] = props.data[questionName]["value"] || "";
+    if (data[questionName]) {
+      initialValues[questionName] = data[questionName]["value"] || "";
     }
   });
 
