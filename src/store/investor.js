@@ -6,6 +6,7 @@ const GENERATE_INVESTOR_DOCUMENT = "investor/generateDocument";
 const ADD_NEW_INVESTOR = "investor/addInvestor";
 const UPDATE_INVESTOR = "investor/updateDetails";
 const GENERATE_INVESTOR_EMBEDDED_DOCUMENT = "investor/generateEmbedded";
+const RESET_INVESTOR = "investor/reset";
 
 // helpers
 const getStatus = (payload) => {
@@ -47,6 +48,13 @@ const generateInvestorEmbedded = (payload) => {
   return {
     type: GENERATE_INVESTOR_EMBEDDED_DOCUMENT,
     payload,
+  };
+};
+
+const reset = () => {
+  return {
+    payload: null,
+    type: RESET_INVESTOR,
   };
 };
 
@@ -144,6 +152,8 @@ const investorReducer = (state = inititalState, action) => {
     case GENERATE_INVESTOR_EMBEDDED_DOCUMENT:
       newState = Object.assign({}, state);
       newState.generatedEmbedded = action.payload;
+      return newState;
+    case RESET_INVESTOR:
       return newState;
     default:
       return state;

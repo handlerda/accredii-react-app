@@ -2,6 +2,7 @@ import axios from "axios";
 const CREATE_NEW_COMPANY = "company/addNew";
 const CREATE_NEW_EMBEDDED_DOCUMENT = "company/newEmbedded";
 const GET_COMPANY_STATUS = "company/getStatus";
+
 const api_path = process.env.REACT_APP_SERVER_URI_PROD;
 
 // helpers

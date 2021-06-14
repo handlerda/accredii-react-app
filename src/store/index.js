@@ -13,6 +13,7 @@ const rootReducer = combineReducers({
   attorney: attorneyReducer,
 });
 
+
 // add enhancer for prod / dev
 let enhancer;
 if (process.env.NODE_ENV === "production") {
