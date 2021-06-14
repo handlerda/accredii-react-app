@@ -1,12 +1,31 @@
-# Accredii Front End Web App
+## What is Accredii 
 
-The Accredii front end web app is the public facing web browser app when a user goes to accredii.com
+What is Accredii: Accredii is an innovative Investor Management System (IMS) that enables law firms, companies, investors, and funds to manage the accreditation process including all documents and subscriptions. Accredii empowers attorneys to easily create custom subscription agreements and distribute them to investors and companies while managing the entire workflow. . The days of manually building subscription agreements are over. Accredii abstracts the complexities of fund agreements into a simple portal, allowing all parties to gain insight into the state of each agreement. Due to our centralized architecture, our system remembers an investor’s responses to a subscription and can automatically populate subsequent subscriptions.  Nearly every accredited investor understands the frustration of filling out repetitive personal information for different agreements and Accredii eliminates this problem and greatly improves the investor experience.   The Accredii IMS seamlessly connects investors and companies to their attorneys via an API and user-friendly robust portal. 
+
+
+## Application Highlights:
+
+#### Attorney Dashboard: `path: /`  (if authenticated)
+The below image is a screenshot of what an attorney will see on their homepage. They will be able to create agreements / subscriptions, add investors / companies, view high level document information, and drill into spacific documents. 
+
+![image](https://user-images.githubusercontent.com/48835180/121745892-382ef600-cac2-11eb-92b9-591b205133ad.png)
+
+#### Document Status Cards: `path: /documents`  (if authenticated)
+The below image allows users to see the status of their documents a row of formatted cards. 
+
+![image](https://user-images.githubusercontent.com/48835180/121746709-84c70100-cac3-11eb-8750-e5a977523b5d.png)
+
+#### Document Detail Page: `path: /documents/:documentId` (if authenticated)
+The below image shows the document detail page for the spacific document / subscription. The attorney can see the document status, details, history, and download the current version from S3. 
+
+![image](https://user-images.githubusercontent.com/48835180/121747157-2ea68d80-cac4-11eb-8467-48fc50e32fc4.png)
+
 
 ## Directory Overview
 
 The web app has many top level `src` directories:
 
-### Accredii Specific Apps
+### Accredii Directory Structure 
 
 - ### Company
 
@@ -54,7 +73,12 @@ The web app has many top level `src` directories:
   - `backend.js` (includes all HTTP callouts to the protected Accredii API.)
   - `fileParsing.js` (includes the logic for base64 encoding / decoding uploaded files.)
 
-- ### Navbar
+- ## Navbar
   - `/Mobile` (Mobile navbar functionality nested in this directory)
   - `/Container.js` (acts as a container for the navbar)
   - `/Items.js` (handle's each component of the navbar)
+
+
+### Backend API 
+
+Our backend API is a python flask web app with a mongoDB database. API documentation can be viewed [here](https://accredii.readme.io/reference)
