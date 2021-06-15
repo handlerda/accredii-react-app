@@ -1,9 +1,11 @@
 import { PaperClipIcon } from "@heroicons/react/outline";
 
 import React from "react";
+import { useSelector } from "react-redux";
 import { getViewableDocument } from "../../Service/Backend";
-
-function Information({ documentData }) {
+function Information() {
+  const documentData = useSelector((state) => state.document.documentInfo);
+  console.log(documentData);
   async function handleS3Link() {
     const link = await getViewableDocument(documentData.doc_obj_id);
     window.open(link.url);
@@ -83,7 +85,7 @@ function Information({ documentData }) {
               <dt className="text-sm font-medium text-gray-500">
                 Document Questions
               </dt>
-              {Object.keys(documentData.required_questions).length === 0 && (
+              {documentData.required_questions === undefined && (
                 <dd className="mt-1 text-sm text-gray-900">
                   There are no document questions
                 </dd>

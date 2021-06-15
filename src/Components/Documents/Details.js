@@ -3,9 +3,10 @@ import React, { useState, useEffect, Fragment } from "react";
 import Feed from "./Feed";
 import Paper from "../Paper";
 import Information from "./Information";
-import { getDocumentInfo } from "../../Service/Backend";
 import { useHistory, useParams } from "react-router";
 import { QuestionMarkCircleIcon } from "@heroicons/react/outline";
+import { useSelector, useDispatch } from "react-redux";
+import { getDocumentInfo } from "../../store/document";
 
 const user = {
   name: "Whitney Francis",
@@ -20,43 +21,45 @@ const comments = [
     name: "Leslie Alexander",
     date: "4d ago",
     imageId: "1494790108377-be9c29b29330",
-    body:
-      "Ducimus quas delectus ad maxime totam doloribus reiciendis ex. Tempore dolorem maiores. Similique voluptatibus tempore non ut.",
+    body: "Ducimus quas delectus ad maxime totam doloribus reiciendis ex. Tempore dolorem maiores. Similique voluptatibus tempore non ut.",
   },
   {
     id: 2,
     name: "Michael Foster",
     date: "4d ago",
     imageId: "1519244703995-f4e0f30006d5",
-    body:
-      "Et ut autem. Voluptatem eum dolores sint necessitatibus quos. Quis eum qui dolorem accusantium voluptas voluptatem ipsum. Quo facere iusto quia accusamus veniam id explicabo et aut.",
+    body: "Et ut autem. Voluptatem eum dolores sint necessitatibus quos. Quis eum qui dolorem accusantium voluptas voluptatem ipsum. Quo facere iusto quia accusamus veniam id explicabo et aut.",
   },
   {
     id: 3,
     name: "Dries Vincent",
     date: "4d ago",
     imageId: "1506794778202-cad84cf45f1d",
-    body:
-      "Expedita consequatur sit ea voluptas quo ipsam recusandae. Ab sint et voluptatem repudiandae voluptatem et eveniet. Nihil quas consequatur autem. Perferendis rerum et.",
+    body: "Expedita consequatur sit ea voluptas quo ipsam recusandae. Ab sint et voluptatem repudiandae voluptatem et eveniet. Nihil quas consequatur autem. Perferendis rerum et.",
   },
 ];
 
 export default function Details({ type }) {
-  const [documentData, setDocumentData] = useState(null);
+  // const [documentData, setDocumentData] = useState(null);
   const history = useHistory();
   const { documentId } = useParams();
-  console.log(documentId);
-  console.log(type);
+  const documentData = useSelector((state) => state.document.documentInfo);
+  const dispatch = useDispatch();
+  const [loaded, setLoaded] = useState(false);
+  // console.log(documentId);
+  // console.log(type);
   //this will be nested. It will make sense to call this from the parent component
   useEffect(() => {
     async function getDocumentData() {
-      const data = await getDocumentInfo(documentId);
-      setDocumentData(data);
+      const data = await dispatch(getDocumentInfo(documentId));
+      console.log(`here is the data`, data);
+      if (!data.error) setLoaded(true);
+      if (data.error) setLoaded(false);
     }
     getDocumentData();
-  }, []);
+  }, [dispatch]);
   return (
-    documentData && (
+    loaded && (
       <div className="min-h-screen ">
         <main className="py-10">
           {/* Page header */}

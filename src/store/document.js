@@ -55,9 +55,10 @@ export const uploadNewForm = (form_data) => async (dispatch) => {
 };
 
 export const getDocumentInfo = (doc_id) => async (dispatch) => {
-  const url = `${api_path}document?id=${doc_id}`;
+  const url = `${api_path}document?doc_obj_id=${doc_id}`;
   const response = await axios.get(url);
   const documentDetails = response.data;
+  console.log(documentDetails);
   dispatch(getDocumentDetailsHelper(documentDetails));
   return documentDetails;
 };
