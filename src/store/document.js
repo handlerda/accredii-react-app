@@ -92,13 +92,19 @@ export const createNewDocument =
     return newDocument;
   };
 
-export const getViewableDocument = (id) => async (dispatch) => {
-  const url = `${api_path}document/view?id=${id}`;
-  const response = await axios.get(url);
+export const getViewableDocument = (id, token) => async (dispatch) => {
+  const url = `${api_path}document/view?doc_obj_id=${id}`;
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  console.log(response);
+  console.log(`hello world`);
   //should return the res.url and dispatch in the component
-  //window.open(response.url);
   dispatch(getViewableDocumentHelper(response));
-  return response;
+  console.log(response);
+  return response.data;
 };
 
 const inititalState = { document: null };

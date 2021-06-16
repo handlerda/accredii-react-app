@@ -112,9 +112,10 @@ export const updateInvestor =
   (investor_id, data, token) => async (dispatch) => {
     const investorPayload = {
       // we will add an id in the backend and return the id in the payload
-      user_id: investor_id,
+      auth0_id: investor_id,
       data,
     };
+    console.log(`here is the investor payload`, investorPayload);
     const response = await axios.post(
       `${api_path}investor/update`,
       investorPayload,

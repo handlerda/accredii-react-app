@@ -47,7 +47,7 @@ export const generateInvestorEmbeddedDocument =
   };
 
 export const getCompanyStatus = (id) => async (dispatch) => {
-  const url = `${api_path}company/status?id=${id}`;
+  const url = `${api_path}company/documents?auth0_id=${id}`;
   const response = await axios(url);
   const companyStatus = response.data;
   dispatch(getCompanyStatusHelper(companyStatus));

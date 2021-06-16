@@ -55,7 +55,6 @@ export default function Details({ type }) {
         audience: "https://accredii.com/authorization",
         scope: "document:all",
       });
-      console.log(`here is the access token`, accessToken);
       const data = await dispatch(getDocumentInfo(documentId, accessToken));
       if (!data.error) setLoaded(true);
       if (data.error) setLoaded(false);

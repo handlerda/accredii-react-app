@@ -1,14 +1,23 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { PaperClipIcon } from "@heroicons/react/outline";
 
 import React from "react";
-import { useSelector } from "react-redux";
-import { getViewableDocument } from "../../Service/Backend";
+import { useDispatch, useSelector } from "react-redux";
+import { getViewableDocument } from "../../store/document";
+
 function Information() {
+  const dispatch = useDispatch();
   const documentData = useSelector((state) => state.document.documentInfo);
-  console.log(documentData);
+  const { getAccessTokenWithPopup } = useAuth0();
   async function handleS3Link() {
-    const link = await getViewableDocument(documentData.doc_obj_id);
-    window.open(link.url);
+    const accessToken = await getAccessTokenWithPopup({
+      audience: "https://accredii.com/authorization",
+      scope: "document:all",
+    });
+    const link = await dispatch(
+      getViewableDocument(documentData.doc_obj_id, accessToken)
+    );
+    window.open(link.view_url);
   }
   return (
     <section aria-labelledby="applicant-information-title">

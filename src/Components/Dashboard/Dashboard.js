@@ -29,6 +29,7 @@ import StatusGroup from "./StatusGroup";
 import Report from "../AppComponents/Report";
 import { getDocuments } from "../../Service/Backend";
 import Popup from "../Popup";
+import { useSelector } from "react-redux";
 
 const tableHeaders = [
   { name: "Title" },
@@ -50,22 +51,29 @@ const api_names = [
 
 export default function Dashboard({ user_id, type }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [documentStatus, setDocumentStatus] = useState(null);
-  const { getAccessTokenSilently, getIdTokenClaims } = useAuth0();
+  const [documentStatus, setDocuments] = useState(null);
+  const reduxValue = useSelector((state) => state);
+  console.log(`here from documents`, reduxValue);
   useEffect(() => {
-    const getStatus = async () => {
-      const accessToken = await getAccessTokenSilently({
-        audience: "https://accredii.com/authorization",
-        scope: `${type}:all`,
-      });
-      console.log(accessToken);
-      const data = await getDocuments(type, user_id, accessToken);
-      console.log(data);
-      if (data.stats.total === 0) setDocumentStatus(false);
-      else setDocumentStatus(data);
-    };
-    getStatus();
-  }, []);
+    function documentChecker(data) {
+      // if data will return data
+      // if no data will set status to false
+      data.stats.total > 0 ? setDocuments(data) : setDocuments(false);
+    }
+    switch (type) {
+      case "investor":
+        documentChecker(reduxValue.investor.status);
+        break;
+      case "attorney":
+        documentChecker(reduxValue.attorney.status);
+        break;
+      case "company":
+        documentChecker(reduxValue.company.status);
+        break;
+      default:
+        break;
+    }
+  }, [documentStatus]);
 
   if (documentStatus !== false) {
     return (
