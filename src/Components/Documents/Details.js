@@ -7,6 +7,7 @@ import { useHistory, useParams } from "react-router";
 import { QuestionMarkCircleIcon } from "@heroicons/react/outline";
 import { useSelector, useDispatch } from "react-redux";
 import { getDocumentInfo } from "../../store/document";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const user = {
   name: "Whitney Francis",
@@ -42,17 +43,20 @@ const comments = [
 export default function Details({ type }) {
   // const [documentData, setDocumentData] = useState(null);
   const history = useHistory();
+  const { getAccessTokenSilently, getAccessTokenWithPopup } = useAuth0();
   const { documentId } = useParams();
   const documentData = useSelector((state) => state.document.documentInfo);
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
-  // console.log(documentId);
-  // console.log(type);
-  //this will be nested. It will make sense to call this from the parent component
+
   useEffect(() => {
     async function getDocumentData() {
-      const data = await dispatch(getDocumentInfo(documentId));
-      console.log(`here is the data`, data);
+      const accessToken = await getAccessTokenWithPopup({
+        audience: "https://accredii.com/authorization",
+        scope: "document:all",
+      });
+      console.log(`here is the access token`, accessToken);
+      const data = await dispatch(getDocumentInfo(documentId, accessToken));
       if (!data.error) setLoaded(true);
       if (data.error) setLoaded(false);
     }

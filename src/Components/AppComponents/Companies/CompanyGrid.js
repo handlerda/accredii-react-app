@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { getDocuments } from "../../../Service/Backend";
 import GridItem from "../../GridList/GridItem";
 import GridListContainer from "../../GridList/GridListContainer";
 import Report from "../Report";
 
 function CompanyGrid({ type, id }) {
-  const [companies, setCompanies] = useState(null);
-  useEffect(() => {
-    const getStatus = async () => {
-      const data = await getDocuments(type, id);
-      setCompanies(data.data.by_company);
-    };
-    getStatus();
-  }, []);
+  const companies = useSelector((state) => state.companies.status);
+  // useEffect(() => {
+  //   const getStatus = async () => {
+  //     const data = await getDocuments(type, id);
+  //     setCompanies(data.data.by_company);
+  //   };
+  //   getStatus();
+  // }, []);
   console.log(companies);
   return (
     companies && (

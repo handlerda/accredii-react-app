@@ -22,7 +22,7 @@ function LawfirmApp() {
   useEffect(() => {
     const getStatus = async () => {
       const data = await dispatch(getAttorneyStatus(user.sub));
-      console.log(data);
+      console.log(data, `this loaded`);
       if (!data.error) setLoaded(true);
       if (data.error) setCurrentUser(false);
       return data;

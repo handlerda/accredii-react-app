@@ -15,7 +15,7 @@ function MyInfo({ id }) {
   useEffect(() => {
     const getInvestorInfo = async (id) => {
       const accessToken = await getAccessTokenSilently({
-        audience: "https://accredii.com/investor",
+        audience: "https://accredii.com/authorization",
         scope: "investor:all",
       });
       const response = await dispatch(getInvestor(id, accessToken));
@@ -24,7 +24,6 @@ function MyInfo({ id }) {
     };
     getInvestorInfo(id);
   }, [dispatch]);
-  console.log(`here from investor`, investor);
 
   if (!loaded) {
     return <h1>Loading</h1>;

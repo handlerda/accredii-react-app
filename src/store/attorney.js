@@ -18,7 +18,7 @@ const getAttorneyInfoHelper = (payload) => {
 };
 
 export const getAttorneyStatus = (id) => async (dispatch) => {
-  const url = `${api_path}attorney/status?id=${id}`;
+  const url = `${api_path}attorney/documents?auth0_id=${id}`;
   const response = await axios(url);
   const status = await response.data;
   dispatch(getAttorneyStatusHelper(status));

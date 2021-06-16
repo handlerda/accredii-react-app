@@ -22,8 +22,6 @@ function DocumentSignContainer({ user_id, type }) {
   const hsClient = useRef();
   const hsNode = useRef(null);
   useEffect(() => {
-    counter++;
-    console.log(`how many times did I run counter ${counter}`);
     const embeddedSigningData = async () => {
       try {
         const signedURL = await generateInvestorEmbeddedDocument(

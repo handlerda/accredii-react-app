@@ -108,20 +108,26 @@ export const insertInvestor =
     return newInvestor;
   };
 
-export const updateInvestor = (investor_id, data) => async (dispatch) => {
-  const investorPayload = {
-    // we will add an id in the backend and return the id in the payload
-    user_id: investor_id,
-    data,
+export const updateInvestor =
+  (investor_id, data, token) => async (dispatch) => {
+    const investorPayload = {
+      // we will add an id in the backend and return the id in the payload
+      user_id: investor_id,
+      data,
+    };
+    const response = await axios.post(
+      `${api_path}investor/update`,
+      investorPayload,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const updatedInvestor = response.data;
+    dispatch(updateCurrentInvestor(updatedInvestor));
+    return updatedInvestor;
   };
-  const response = await axios.post(
-    `${api_path}investor/update`,
-    investorPayload
-  );
-  const updatedInvestor = response.data;
-  dispatch(updateCurrentInvestor(updatedInvestor));
-  return updatedInvestor;
-};
 
 export const generateInvestorEmbeddedDocument =
   (id, documentId) => async (dispatch) => {

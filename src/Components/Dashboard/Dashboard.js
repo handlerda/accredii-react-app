@@ -55,8 +55,8 @@ export default function Dashboard({ user_id, type }) {
   useEffect(() => {
     const getStatus = async () => {
       const accessToken = await getAccessTokenSilently({
-        audience: "https://accredii.com/investor",
-        scope: "investor:all",
+        audience: "https://accredii.com/authorization",
+        scope: `${type}:all`,
       });
       console.log(accessToken);
       const data = await getDocuments(type, user_id, accessToken);

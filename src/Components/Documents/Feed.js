@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { CheckIcon, ThumbUpIcon, UserIcon } from "@heroicons/react/solid";
-import { getDocumentInfo } from "../../Service/Backend";
+import React from "react";
+import { UserIcon } from "@heroicons/react/solid";
 import { CursorClickIcon, PencilAltIcon } from "@heroicons/react/outline";
 
 function Feed({ documentData }) {

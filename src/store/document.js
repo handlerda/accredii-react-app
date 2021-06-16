@@ -54,9 +54,13 @@ export const uploadNewForm = (form_data) => async (dispatch) => {
   return upload;
 };
 
-export const getDocumentInfo = (doc_id) => async (dispatch) => {
+export const getDocumentInfo = (doc_id, token) => async (dispatch) => {
   const url = `${api_path}document?doc_obj_id=${doc_id}`;
-  const response = await axios.get(url);
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   const documentDetails = response.data;
   console.log(documentDetails);
   dispatch(getDocumentDetailsHelper(documentDetails));

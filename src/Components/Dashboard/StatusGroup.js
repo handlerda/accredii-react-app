@@ -1,8 +1,6 @@
 import React from "react";
-import { ArrowSmDownIcon, ArrowSmUpIcon } from "@heroicons/react/solid";
 
 function StatusGroup({ doc_stats }) {
-  console.log(doc_stats);
   const stats = [
     {
       name: "Waiting on investors to sign",
@@ -20,10 +18,6 @@ function StatusGroup({ doc_stats }) {
       previousStat: `${doc_stats.total} total documents`,
     },
   ];
-
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
 
   return (
     <div>

@@ -31,10 +31,12 @@ function InvestorApp() {
   useEffect(() => {
     const getStatus = async () => {
       // GET JWT TOKEN
-      const accessToken = await getAccessTokenSilently({
-        audience: "https://accredii.com/investor",
+      console.log(`did this run`);
+      const accessToken = await getAccessTokenWithPopup({
+        audience: "https://accredii.com/authorization",
         scope: "investor:all",
       });
+      console.log(accessToken);
       const data = await dispatch(getInvestorStatus(user.sub, accessToken));
       if (!data.error) setLoaded(true);
       if (data.error) setCurrentUser(false);
