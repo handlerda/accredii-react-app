@@ -11,18 +11,19 @@ import LawfirmRoutes from "./LawfirmRoutes";
 import { useAuth0 } from "@auth0/auth0-react";
 
 function LawfirmApp() {
-  const { logout } = useAuth0();
+  const { logout, user, getAccessTokenWithPopup } = useAuth0();
   const dispatch = useDispatch();
   const attorney = useSelector((state) => state.attorney);
   const [loaded, setLoaded] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
 
-  const user = {};
-  user.sub = "848290340";
   useEffect(() => {
     const getStatus = async () => {
-      const data = await dispatch(getAttorneyStatus(user.sub));
-      console.log(data, `this loaded`);
+      const accessToken = await getAccessTokenWithPopup({
+        audience: "https://accredii.com/authorization",
+        scope: "attorney:all",
+      });
+      const data = await dispatch(getAttorneyStatus(user.sub, accessToken));
       if (!data.error) setLoaded(true);
       if (data.error) setCurrentUser(false);
       return data;

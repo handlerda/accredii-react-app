@@ -46,9 +46,13 @@ export const generateInvestorEmbeddedDocument =
     return generatedDocumentData;
   };
 
-export const getCompanyStatus = (id) => async (dispatch) => {
+export const getCompanyStatus = (id, accessToken) => async (dispatch) => {
   const url = `${api_path}company/documents?auth0_id=${id}`;
-  const response = await axios(url);
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
   const companyStatus = response.data;
   dispatch(getCompanyStatusHelper(companyStatus));
   return companyStatus;

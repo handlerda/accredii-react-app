@@ -30,9 +30,7 @@ const api_names = [
   "status",
 ];
 function LawfirmRoutes() {
-  const { logout } = useAuth0();
-  const user = {};
-  user.sub = "848290340";
+  const { logout, user } = useAuth0();
   const history = useHistory();
 
   return (
