@@ -54,38 +54,34 @@ function NewClient({ attorney_id, lawfirm_id }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let newInvestor;
     const accessToken = await getAccessTokenWithPopup({
       audience: "https://accredii.com/authorization",
       scope: "attorney:all",
     });
     try {
-      const newInvestor = await dispatch(
+      newInvestor = await dispatch(
         insertInvestor(values, attorney_id, user.sub, accessToken)
       );
-      console.log(`ids are coming below:`);
-      console.log(documents.companies);
-      console.log(documents.templates);
       if (newInvestor.status === false) {
         setSubmitSuccess(false);
       } else {
+        console.log(newInvestor);
         const createDocument = await dispatch(
           createNewDocument(
-            newInvestor.id,
+            newInvestor.data.auth0_id,
             attorney_id,
-            lawfirm_id,
             documentValues["company"] || documents.companies[0].id,
-            "",
             documentValues["template"] || documents.templates[0].id,
             accessToken
           )
         );
-        if (createDocument.status === true) {
+        console.log(`here comes create document`);
+        console.log(createDocument);
+        if (createDocument === 201) {
           setSubmitSuccess(true);
           console.log(submitSuccess);
-        }
-        if (createDocument.status === false) {
-          return setSubmitSuccess(false);
-        }
+        } else setSubmitSuccess(false);
       }
       // get payload and create a document for the user
     } catch (error) {

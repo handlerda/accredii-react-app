@@ -87,14 +87,18 @@ export const createNewDocument =
         template_id: template_id,
       },
     };
-    const response = await axios.post(url, JSON.stringify(data), {
-      headers: {
-        Authorization: `Bearer $${token}`,
-      },
-    });
-    const newDocument = response.data;
-    dispatch(createNewDocumentHelper(newDocument));
-    return newDocument;
+    try {
+      const response = await axios.post(url, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      dispatch(createNewDocumentHelper(response.data));
+      return response.status;
+    } catch (error) {
+      dispatch(createNewDocumentHelper(error.response));
+      return error.response.status;
+    }
   };
 
 export const getViewableDocument = (id, token) => async (dispatch) => {

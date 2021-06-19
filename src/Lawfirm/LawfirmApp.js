@@ -6,7 +6,10 @@ import Items from "../Navbar.js/Items";
 import MobileContainer from "../Navbar.js/Mobile/MobileContainer";
 import MobileItems from "../Navbar.js/Mobile/MobileItems";
 import { getDocuments } from "../Service/Backend";
-import attorneyReducer, { getAttorneyStatus } from "../store/attorney";
+import attorneyReducer, {
+  getAttorneyInfo,
+  getAttorneyStatus,
+} from "../store/attorney";
 import LawfirmRoutes from "./LawfirmRoutes";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -23,8 +26,11 @@ function LawfirmApp() {
         audience: "https://accredii.com/authorization",
         scope: "attorney:all",
       });
-      const status = await dispatch(getAttorneyStatus(user.sub, accessToken));
-      if (status === 200) {
+      console.log(accessToken);
+      const documentStatus = await dispatch(
+        getAttorneyStatus(user.sub, accessToken)
+      );
+      if (documentStatus === 200) {
         setCurrentUser(true);
         setLoaded(true);
       } else {

@@ -112,16 +112,19 @@ export const insertInvestor =
     const investorPayload = {
       data,
     };
-    console.log(`here comes the payload`);
+    console.log(investorPayload);
+    console.log(`here comes the payload`, investorPayload);
     const newInvestor = await axios.post(
       `${api_path}investor`,
-      JSON.stringify(investorPayload),
+      investorPayload,
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       }
     );
+
+    console.log(newInvestor);
     const response = newInvestor.data;
     dispatch(addNewInvestor(response));
     return newInvestor;

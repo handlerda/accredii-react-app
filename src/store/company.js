@@ -26,15 +26,20 @@ const getCompanyStatusHelper = (payload) => {
   };
 };
 
-export const createNewCompany = (data) => async (dispatch) => {
-  const url = `${api_path}company/new`;
-  const payload = {
-    data,
-  };
-  const response = await axios.post(url, payload);
-  const newCompany = response.data;
-  dispatch(createNewCompanyHelper(newCompany));
-  return response.data;
+export const createNewCompany = (data, accessToken) => async (dispatch) => {
+  const url = `${api_path}company`;
+  try {
+    const response = await axios.post(url, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    dispatch(createNewCompanyHelper(response.data));
+    return response.status;
+  } catch (error) {
+    dispatch(createNewCompanyHelper(error.response));
+    return error.response.status;
+  }
 };
 
 export const generateInvestorEmbeddedDocument =
