@@ -38,18 +38,20 @@ function InvestorApp() {
       });
       console.log(accessToken);
       const data = await dispatch(getInvestorStatus(user.sub, accessToken));
-      if (!data.error) setLoaded(true);
-      if (data.error) setCurrentUser(false);
-      return data;
+      // console.log(`here`);
+      // console.log(data);
+      if (!data.errorCode) setLoaded(true);
+      if (data.status === 400) setCurrentUser(false);
+      // return data;
     };
     getStatus();
   }, [dispatch]);
 
-  if (currentUser === false) {
+  if (investor.status === 400) {
     logout();
     return <h1>You are not a valid user</h1>;
   }
-  if (!loaded) {
+  if (loaded) {
     return <h1>loading</h1>;
   }
 

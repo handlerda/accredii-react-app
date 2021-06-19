@@ -60,14 +60,21 @@ const reset = () => {
 
 export const getInvestorStatus = (id, token) => async (dispatch) => {
   const url = `${api_path}investor/documents?auth0_id=${id}`;
-  const response = await axios.get(url, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const investorStatus = response.data;
-  dispatch(getStatus(investorStatus));
-  return investorStatus;
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch(getStatus(response.data));
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      console.log(error.response.status);
+      dispatch(getStatus(error.response));
+      return error.response.status;
+    }
+  }
 };
 
 export const getInvestor = (investor_id, token) => async (dispatch) => {
@@ -88,6 +95,7 @@ export const generateInvestorDocument =
     const url = `${api_path}document?investor_id=${investor_id}&lawfirm_id=${lawfirm_id}`;
     const response = await axios(url);
     const newDocument = response.data;
+    console.log(newDocument);
     dispatch(generateDocument(newDocument));
     return newDocument;
   };
