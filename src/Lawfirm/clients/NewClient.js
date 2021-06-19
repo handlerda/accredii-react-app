@@ -9,11 +9,13 @@ import Popup from "../../Components/Popup";
 import Paper from "../../Components/Paper";
 import FormHeader from "../../Components/Form/FormHeader";
 import { Form, UseForm } from "../../Components/Form/UseForm";
-import { insertInvestor, createNewDocument } from "../../Service/Backend";
+
 import { NewClientInputs, NewClientDropDown } from "../LawfirmQuestions";
 import { useSelector, useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import { getAttorneyInfo } from "../../store/attorney";
+import { insertInvestor } from "../../store/investor";
+import { createNewDocument } from "../../store/document";
 function NewClient({ attorney_id, lawfirm_id }) {
   const { user, getAccessTokenWithPopup } = useAuth0();
   const dispatch = useDispatch();
@@ -52,21 +54,30 @@ function NewClient({ attorney_id, lawfirm_id }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const accessToken = await getAccessTokenWithPopup({
+      audience: "https://accredii.com/authorization",
+      scope: "attorney:all",
+    });
     try {
-      const newInvestor = await insertInvestor(values, attorney_id, user.sub);
+      const newInvestor = await dispatch(
+        insertInvestor(values, attorney_id, user.sub, accessToken)
+      );
       console.log(`ids are coming below:`);
       console.log(documents.companies);
       console.log(documents.templates);
       if (newInvestor.status === false) {
         setSubmitSuccess(false);
       } else {
-        const createDocument = await createNewDocument(
-          newInvestor.id,
-          attorney_id,
-          lawfirm_id,
-          documentValues["company"] || documents.companies[0].id,
-          "",
-          documentValues["template"] || documents.templates[0].id
+        const createDocument = await dispatch(
+          createNewDocument(
+            newInvestor.id,
+            attorney_id,
+            lawfirm_id,
+            documentValues["company"] || documents.companies[0].id,
+            "",
+            documentValues["template"] || documents.templates[0].id,
+            accessToken
+          )
         );
         if (createDocument.status === true) {
           setSubmitSuccess(true);

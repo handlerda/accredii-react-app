@@ -76,17 +76,22 @@ export const updateDocument = (payload) => async (dispatch) => {
 };
 
 export const createNewDocument =
-  (
-    investor_id,
-    attorney_id,
-    lawfirm_id,
-    company_id = "",
-    company_name = "",
-    template_id = ""
-  ) =>
+  (investor_id, attorney_id, company_id = "", template_id = "", token) =>
   async (dispatch) => {
-    const url = `${api_path}document/new?investor_id=${investor_id}&attorney_id=${attorney_id}&lawfirm_id=${lawfirm_id}&company_id=${company_id}&company_name=${company_name}&template_id=${template_id}`;
-    const response = await axios.get(url);
+    const url = `${api_path}document`;
+    const data = {
+      data: {
+        investor_auth0_id: investor_id,
+        attorney_auth0_id: attorney_id,
+        company_auth0_id: company_id,
+        template_id: template_id,
+      },
+    };
+    const response = await axios.post(url, JSON.stringify(data), {
+      headers: {
+        Authorization: `Bearer $${token}`,
+      },
+    });
     const newDocument = response.data;
     dispatch(createNewDocumentHelper(newDocument));
     return newDocument;

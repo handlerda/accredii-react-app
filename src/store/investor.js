@@ -93,15 +93,25 @@ export const generateInvestorDocument =
   };
 
 export const insertInvestor =
-  (data, attorney_id, lawfirm_id) => async (dispatch) => {
+  (data, attorney_id, lawfirm_id, token) => async (dispatch) => {
+    // const investorPayload = {
+    //   attorney_id,
+    //   lawfirm_id,
+    //   data,
+    // };
+    data["attorney_id"] = attorney_id;
     const investorPayload = {
-      attorney_id,
-      lawfirm_id,
       data,
     };
+    console.log(`here comes the payload`);
     const newInvestor = await axios.post(
-      `${api_path}investor/new`,
-      JSON.stringify(investorPayload)
+      `${api_path}investor`,
+      JSON.stringify(investorPayload),
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     const response = newInvestor.data;
     dispatch(addNewInvestor(response));
