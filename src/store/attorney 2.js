@@ -29,16 +29,11 @@ export const getAttorneyStatus = (id, token) => async (dispatch) => {
   return status;
 };
 
-export const getAttorneyInfo = (attorney_id, token) => async (dispatch) => {
-  const url = `${api_path}attorney?auth0_id=${attorney_id}`;
-  const response = await axios.get(url, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const getAttorneyInfo = (attorney_id) => async (dispatch) => {
+  const url = `${api_path}lawfirm/info?id=${attorney_id}`;
+  const response = await axios.get(url);
   const attorneyInfo = response.data;
   dispatch(getAttorneyInfoHelper(attorneyInfo));
-  return attorneyInfo;
 };
 
 const inititalState = { attorney: null };

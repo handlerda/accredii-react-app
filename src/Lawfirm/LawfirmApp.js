@@ -29,7 +29,7 @@ function LawfirmApp() {
       return data;
     };
     getStatus();
-  }, []);
+  }, [dispatch]);
 
   if (currentUser === false) {
     logout();
