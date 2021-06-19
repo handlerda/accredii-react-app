@@ -67,7 +67,8 @@ export const getInvestorStatus = (id, token) => async (dispatch) => {
       },
     });
     dispatch(getStatus(response.data));
-    return response.data;
+    console.log(response);
+    return response.status;
   } catch (error) {
     if (error.response) {
       console.log(error.response.status);

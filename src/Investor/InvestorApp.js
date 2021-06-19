@@ -24,10 +24,9 @@ function InvestorApp() {
   console.log(user);
   const [data, setData] = useState(null);
   const dispatch = useDispatch();
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const investor = useSelector((state) => state.investor.status);
-  console.log(investor);
   useEffect(() => {
     const getStatus = async () => {
       // GET JWT TOKEN
@@ -37,21 +36,22 @@ function InvestorApp() {
         scope: "investor:all",
       });
       console.log(accessToken);
-      const data = await dispatch(getInvestorStatus(user.sub, accessToken));
-      // console.log(`here`);
-      // console.log(data);
-      if (!data.errorCode) setLoaded(true);
-      if (data.status === 400) setCurrentUser(false);
-      // return data;
+      const status = await dispatch(getInvestorStatus(user.sub, accessToken));
+      if (status === 200) {
+        setCurrentUser(true);
+        setLoaded(true);
+      } else {
+        setCurrentUser(false);
+      }
     };
     getStatus();
   }, [dispatch]);
-
-  if (investor.status === 400) {
+  if (currentUser === false) {
     logout();
+    console.log(`this ran`);
     return <h1>You are not a valid user</h1>;
   }
-  if (loaded) {
+  if (!loaded) {
     return <h1>loading</h1>;
   }
 

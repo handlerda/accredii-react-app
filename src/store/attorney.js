@@ -19,14 +19,18 @@ const getAttorneyInfoHelper = (payload) => {
 
 export const getAttorneyStatus = (id, token) => async (dispatch) => {
   const url = `${api_path}attorney/documents?auth0_id=${id}`;
-  const response = await axios.get(url, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const status = await response.data;
-  dispatch(getAttorneyStatusHelper(status));
-  return status;
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch(getAttorneyStatusHelper(response.data));
+    return response.status;
+  } catch (error) {
+    dispatch(getAttorneyStatusHelper(error.response));
+    return error.response.status;
+  }
 };
 
 export const getAttorneyInfo = (attorney_id, token) => async (dispatch) => {

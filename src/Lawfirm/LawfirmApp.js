@@ -23,10 +23,13 @@ function LawfirmApp() {
         audience: "https://accredii.com/authorization",
         scope: "attorney:all",
       });
-      const data = await dispatch(getAttorneyStatus(user.sub, accessToken));
-      if (!data.error) setLoaded(true);
-      if (data.error) setCurrentUser(false);
-      return data;
+      const status = await dispatch(getAttorneyStatus(user.sub, accessToken));
+      if (status === 200) {
+        setCurrentUser(true);
+        setLoaded(true);
+      } else {
+        setCurrentUser(false);
+      }
     };
     getStatus();
   }, [dispatch]);
