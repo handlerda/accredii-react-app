@@ -74,9 +74,8 @@ export const updateDocument = (payload, token) => async (dispatch) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  const updatedDocument = response.data;
-  dispatch(updateDocumentDetailsHelper(updateDocument));
-  return updatedDocument;
+  dispatch(updateDocumentDetailsHelper(response.data));
+  return response.status;
 };
 
 export const createNewDocument =

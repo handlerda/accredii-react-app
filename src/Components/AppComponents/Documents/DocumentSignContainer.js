@@ -75,8 +75,8 @@ function DocumentSignContainer({ user_id, type }) {
       },
     };
     console.log(`the submit was called`);
-    const data = await dispatch(updateDocument(payload, accessToken));
-    if (data.status === `update successful`) {
+    const status = await dispatch(updateDocument(payload, accessToken));
+    if (status === 201) {
       const signedURL =
         type === "investor"
           ? await dispatch(
