@@ -23,7 +23,7 @@ function DocumentSignContainer({ user_id, type }) {
   const hsClient = useRef();
   const hsNode = useRef(null);
   const dispatch = useDispatch();
-  const { user, getAccessTokenWithPopup } = useAuth0();
+  const { getAccessTokenWithPopup } = useAuth0();
   useEffect(() => {
     const embeddedSigningData = async () => {
       try {

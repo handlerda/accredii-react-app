@@ -1,8 +1,10 @@
 import React from "react";
+import { Route, Switch } from "react-router-dom";
 import Container from "../Navbar.js/Container";
 import Items from "../Navbar.js/Items";
 import MobileContainer from "../Navbar.js/Mobile/MobileContainer";
 import MobileItems from "../Navbar.js/Mobile/MobileItems";
+import NewLawfirm from "./NewLawfirm";
 
 function AdminApp() {
   return (
@@ -52,7 +54,11 @@ function AdminApp() {
 
           <div className="py-1 ">
             <div className="max-w-7xl py-6 mx-auto px-4 sm:px-6 ">
-              {/* <LawfirmRoutes /> */}
+              <Switch>
+                <Route exact path={`/admin/lawfirm/new`}>
+                  <NewLawfirm />
+                </Route>
+              </Switch>
             </div>
           </div>
         </main>
