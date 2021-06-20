@@ -153,10 +153,14 @@ export const updateInvestor =
   };
 
 export const generateInvestorEmbeddedDocument =
-  (id, documentId) => async (dispatch) => {
+  (documentId, token) => async (dispatch) => {
     // investor only -- the query params will be diffrent for non investors
-    const url = `${api_path}investor/sign?id=${id}&doc_obj_id=${documentId}`;
-    const response = await axios(url);
+    const url = `${api_path}investor/sign?doc_obj_id=${documentId}`;
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const generatedEmbeddedDocument = response.data;
     dispatch(generateInvestorEmbedded(generatedEmbeddedDocument));
     return generatedEmbeddedDocument;

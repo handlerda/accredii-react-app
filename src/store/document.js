@@ -67,9 +67,13 @@ export const getDocumentInfo = (doc_id, token) => async (dispatch) => {
   return documentDetails;
 };
 
-export const updateDocument = (payload) => async (dispatch) => {
+export const updateDocument = (payload, token) => async (dispatch) => {
   const url = `${api_path}document/update`;
-  const response = await axios.post(url, payload);
+  const response = await axios.post(url, payload, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   const updatedDocument = response.data;
   dispatch(updateDocumentDetailsHelper(updateDocument));
   return updatedDocument;

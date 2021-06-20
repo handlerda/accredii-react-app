@@ -22,10 +22,9 @@ function CompanyApp() {
         audience: "https://accredii.com/authorization",
         scope: "company:all",
       });
-      const data = await dispatch(getCompanyStatus(user.sub, accessToken));
-      if (!data.error) setLoaded(true);
-      if (data.error) setCurrentUser(false);
-      return data;
+      const status = await dispatch(getCompanyStatus(user.sub, accessToken));
+      if (status === 200) setLoaded(true);
+      else setCurrentUser(false);
     };
     getStatus();
   }, [dispatch]);

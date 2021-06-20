@@ -42,25 +42,34 @@ export const createNewCompany = (data, accessToken) => async (dispatch) => {
   }
 };
 
-export const generateInvestorEmbeddedDocument =
-  (id, documentId, type) => async (dispatch) => {
+export const generateCompanyEmbeddedDocument =
+  (documentId, accessToken) => async (dispatch) => {
     const url = `${api_path}company/sign?doc_obj_id=${documentId}`;
-    const documentDataURL = await axios(url);
+    const documentDataURL = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     const generatedDocumentData = documentDataURL.data;
     dispatch(newEmbeddedHelper(generatedDocumentData));
     return generatedDocumentData;
   };
 
 export const getCompanyStatus = (id, accessToken) => async (dispatch) => {
-  const url = `${api_path}company/documents?auth0_id=${id}`;
-  const response = await axios.get(url, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-  const companyStatus = response.data;
-  dispatch(getCompanyStatusHelper(companyStatus));
-  return companyStatus;
+  try {
+    const url = `${api_path}company/documents?auth0_id=${id}`;
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    console.log(response);
+    dispatch(getCompanyStatusHelper(response.data));
+    return response.status;
+  } catch (error) {
+    dispatch(getCompanyStatusHelper(error.response));
+    return error.response.status;
+  }
 };
 
 const inititalState = { company: null };

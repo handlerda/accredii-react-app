@@ -1,8 +1,4 @@
 import React, { useState, useEffect, Fragment, useRef } from "react";
-import {
-  generateInvestorEmbeddedDocument,
-  updateDocument,
-} from "../../../Service/Backend";
 import HelloSign from "hellosign-embedded";
 import { useHistory, useParams } from "react-router";
 import { Dialog, Transition } from "@headlessui/react";
@@ -10,9 +6,14 @@ import { ExclamationIcon } from "@heroicons/react/outline";
 import { Form, UseForm } from "../../../Components/Form/UseForm";
 import TextInput from "../../Controls/TextInput";
 import Popup from "../../Popup";
+import { generateInvestorEmbeddedDocument } from "../../../store/investor";
+
+import { useDispatch } from "react-redux";
+import { generateCompanyEmbeddedDocument } from "../../../store/company";
+import { updateDocument } from "../../../store/document";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function DocumentSignContainer({ user_id, type }) {
-  let counter = 0;
   const [sign, setSigning] = useState("loading");
   const [helloSignData, setHelloSignData] = useState(null);
   const [questions, setQuestions] = useState(null);
@@ -21,15 +22,26 @@ function DocumentSignContainer({ user_id, type }) {
   const history = useHistory();
   const hsClient = useRef();
   const hsNode = useRef(null);
+  const dispatch = useDispatch();
+  const { user, getAccessTokenWithPopup } = useAuth0();
   useEffect(() => {
     const embeddedSigningData = async () => {
       try {
-        const signedURL = await generateInvestorEmbeddedDocument(
-          user_id,
-          documentId,
-          type
-        );
-        if (signedURL.status === "document") {
+        const accessToken = await getAccessTokenWithPopup({
+          audience: "https://accredii.com/authorization",
+          scope: "attorney:all",
+        });
+        // if investor
+        const signedURL =
+          type === "investor"
+            ? await dispatch(
+                generateInvestorEmbeddedDocument(documentId, accessToken)
+              )
+            : await dispatch(
+                generateCompanyEmbeddedDocument(documentId, accessToken)
+              );
+        console.log(signedURL);
+        if (signedURL.unanswered_document_questions) {
           console.log(signedURL);
           setSigning("ask");
           setQuestions(signedURL);
@@ -52,21 +64,27 @@ function DocumentSignContainer({ user_id, type }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
+    const accessToken = await getAccessTokenWithPopup({
+      audience: "https://accredii.com/authorization",
+      scope: "attorney:all",
+    });
     const payload = {
-      doc_obj_id: documentId,
       data: {
+        doc_obj_id: documentId,
         amount: values.amount,
       },
     };
     console.log(`the submit was called`);
-    const data = await updateDocument(payload);
+    const data = await dispatch(updateDocument(payload, accessToken));
     if (data.status === `update successful`) {
-      const signedURL = await generateInvestorEmbeddedDocument(
-        user_id,
-        documentId,
-        type
-      );
+      const signedURL =
+        type === "investor"
+          ? await dispatch(
+              generateInvestorEmbeddedDocument(documentId, accessToken)
+            )
+          : await dispatch(
+              generateCompanyEmbeddedDocument(documentId, accessToken)
+            );
       console.log(`signedURL from the sign`, signedURL);
       setHelloSignData(signedURL);
       setSigning("sign");
@@ -80,10 +98,6 @@ function DocumentSignContainer({ user_id, type }) {
   const { values, handleInputChange } = UseForm(initialValues);
 
   if (sign === "sign") {
-    // console.log(`hello from counter ${counter}`);
-    // console.log(helloSignData.sign_url);
-    // console.log(helloSignData.client_id);
-    // console.log(`hello sign data client id`, helloSignData);
     hsClient.current = new HelloSign({
       clientId: helloSignData.client_id,
       debug: true,
@@ -168,19 +182,22 @@ function DocumentSignContainer({ user_id, type }) {
                         We just have a few more questions
                       </Dialog.Title>
                       <Form onSubmit={handleSubmit}>
+                        {console.log(typeof questions)}
                         {console.log(questions)}
-                        {questions.document.map((question) => {
-                          console.log(question);
-                          return (
-                            <TextInput
-                              label={question.accredii_version}
-                              id={question.label}
-                              name={question.label}
-                              onChange={handleInputChange}
-                              value={initialValues["amount"]}
-                            ></TextInput>
-                          );
-                        })}
+                        {questions.unanswered_document_questions.map(
+                          (question) => {
+                            console.log(question);
+                            return (
+                              <TextInput
+                                label={question.accredii_version}
+                                id={question.label}
+                                name={question.label}
+                                onChange={handleInputChange}
+                                value={initialValues["amount"]}
+                              ></TextInput>
+                            );
+                          }
+                        )}
                         <button
                           type="submit"
                           className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm mt-8"
