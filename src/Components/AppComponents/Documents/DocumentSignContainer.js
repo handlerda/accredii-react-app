@@ -23,11 +23,11 @@ function DocumentSignContainer({ user_id, type }) {
   const hsClient = useRef();
   const hsNode = useRef(null);
   const dispatch = useDispatch();
-  const { getAccessTokenWithPopup } = useAuth0();
+  const { getAccessTokenSilently } = useAuth0();
   useEffect(() => {
     const embeddedSigningData = async () => {
       try {
-        const accessToken = await getAccessTokenWithPopup({
+        const accessToken = await getAccessTokenSilently({
           audience: "https://accredii.com/authorization",
           scope: "attorney:all",
         });
@@ -64,7 +64,7 @@ function DocumentSignContainer({ user_id, type }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const accessToken = await getAccessTokenWithPopup({
+    const accessToken = await getAccessTokenSilently({
       audience: "https://accredii.com/authorization",
       scope: "attorney:all",
     });

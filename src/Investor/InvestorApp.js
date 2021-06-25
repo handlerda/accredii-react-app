@@ -18,7 +18,7 @@ function InvestorApp() {
     user,
     logout,
     getAccessTokenSilently,
-    getAccessTokenWithPopup,
+    getAccessTokenSilently,
     getIdTokenClaims,
   } = useAuth0();
   console.log(user);
@@ -31,7 +31,7 @@ function InvestorApp() {
     const getStatus = async () => {
       // GET JWT TOKEN
       console.log(`did this run`);
-      const accessToken = await getAccessTokenWithPopup({
+      const accessToken = await getAccessTokenSilently({
         audience: "https://accredii.com/authorization",
         scope: "investor:all",
       });

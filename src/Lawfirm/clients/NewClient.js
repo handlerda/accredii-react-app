@@ -17,7 +17,7 @@ import { getAttorneyInfo } from "../../store/attorney";
 import { insertInvestor } from "../../store/investor";
 import { createNewDocument } from "../../store/document";
 function NewClient({ attorney_id, lawfirm_id }) {
-  const { user, getAccessTokenWithPopup } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
   const dispatch = useDispatch();
   const documents = useSelector((state) => state.attorney.info);
   const [submitSuccess, setSubmitSuccess] = useState(null);
@@ -28,7 +28,7 @@ function NewClient({ attorney_id, lawfirm_id }) {
   console.log("i ran");
   useEffect(() => {
     async function attorneyInfo() {
-      const accessToken = await getAccessTokenWithPopup({
+      const accessToken = await getAccessTokenSilently({
         audience: "https://accredii.com/authorization",
         scope: "attorney:all",
       });
@@ -55,7 +55,7 @@ function NewClient({ attorney_id, lawfirm_id }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let newInvestor;
-    const accessToken = await getAccessTokenWithPopup({
+    const accessToken = await getAccessTokenSilently({
       audience: "https://accredii.com/authorization",
       scope: "attorney:all",
     });

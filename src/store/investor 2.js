@@ -6,6 +6,7 @@ const GENERATE_INVESTOR_DOCUMENT = "investor/generateDocument";
 const ADD_NEW_INVESTOR = "investor/addInvestor";
 const UPDATE_INVESTOR = "investor/updateDetails";
 const GENERATE_INVESTOR_EMBEDDED_DOCUMENT = "investor/generateEmbedded";
+const RESET_INVESTOR = "investor/reset";
 
 // helpers
 const getStatus = (payload) => {
@@ -50,20 +51,44 @@ const generateInvestorEmbedded = (payload) => {
   };
 };
 
-export const getInvestorStatus = (id) => async (dispatch) => {
-  const url = `${api_path}/investor/status?id=${id}`;
-  const response = await axios(url);
-  const investorStatus = response.data;
-  dispatch(getStatus(investorStatus));
-  return investorStatus;
+const reset = () => {
+  return {
+    payload: null,
+    type: RESET_INVESTOR,
+  };
 };
 
-export const getInvestor = (investor_id) => async (dispatch) => {
-  const url = `${api_path}investor?id=${investor_id}`;
-  const response = await axios(url);
-  const investorDetails = response.data.investor_data;
-  dispatch(getDetails(investorDetails));
-  return investorDetails;
+export const getInvestorStatus = (id, token) => async (dispatch) => {
+  const url = `${api_path}investor/documents?auth0_id=${id}`;
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch(getStatus(response.data));
+    console.log(response);
+    return response.status;
+  } catch (error) {
+    if (error.response) {
+      console.log(error.response.status);
+      dispatch(getStatus(error.response));
+      return error.response.status;
+    }
+  }
+};
+
+export const getInvestor = (investor_id, token) => async (dispatch) => {
+  const url = `${api_path}investor?auth0_id=${investor_id}`;
+  const response = await axios(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const investorDetails = response;
+  console.log(investorDetails);
+  dispatch(getDetails(investorDetails.data));
+  return investorDetails.data;
 };
 
 export const generateInvestorDocument =
@@ -71,46 +96,71 @@ export const generateInvestorDocument =
     const url = `${api_path}document?investor_id=${investor_id}&lawfirm_id=${lawfirm_id}`;
     const response = await axios(url);
     const newDocument = response.data;
+    console.log(newDocument);
     dispatch(generateDocument(newDocument));
     return newDocument;
   };
 
 export const insertInvestor =
-  (data, attorney_id, lawfirm_id) => async (dispatch) => {
+  (data, attorney_id, lawfirm_id, token) => async (dispatch) => {
+    // const investorPayload = {
+    //   attorney_id,
+    //   lawfirm_id,
+    //   data,
+    // };
+    data["attorney_id"] = attorney_id;
     const investorPayload = {
-      attorney_id,
-      lawfirm_id,
       data,
     };
+    console.log(investorPayload);
+    console.log(`here comes the payload`, investorPayload);
     const newInvestor = await axios.post(
-      `${api_path}investor/new`,
-      JSON.stringify(investorPayload)
+      `${api_path}investor`,
+      investorPayload,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
+
+    console.log(newInvestor);
     const response = newInvestor.data;
     dispatch(addNewInvestor(response));
     return newInvestor;
   };
 
-export const updateInvestor = (investor_id, data) => async (dispatch) => {
-  const investorPayload = {
-    // we will add an id in the backend and return the id in the payload
-    user_id: investor_id,
-    data,
+export const updateInvestor =
+  (investor_id, data, token) => async (dispatch) => {
+    const investorPayload = {
+      // we will add an id in the backend and return the id in the payload
+      auth0_id: investor_id,
+      data,
+    };
+    console.log(`here is the investor payload`, investorPayload);
+    const response = await axios.post(
+      `${api_path}investor/update`,
+      investorPayload,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const updatedInvestor = response.data;
+    dispatch(updateCurrentInvestor(updatedInvestor));
+    return updatedInvestor;
   };
-  const response = await axios.post(
-    `${api_path}investor/update`,
-    investorPayload
-  );
-  const updatedInvestor = response.data;
-  dispatch(updateCurrentInvestor(updatedInvestor));
-  return updatedInvestor;
-};
 
 export const generateInvestorEmbeddedDocument =
-  (id, documentId) => async (dispatch) => {
+  (documentId, token) => async (dispatch) => {
     // investor only -- the query params will be diffrent for non investors
-    const url = `${api_path}investor/sign?id=${id}&doc_obj_id=${documentId}`;
-    const response = await axios(url);
+    const url = `${api_path}investor/sign?doc_obj_id=${documentId}`;
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const generatedEmbeddedDocument = response.data;
     dispatch(generateInvestorEmbedded(generatedEmbeddedDocument));
     return generatedEmbeddedDocument;
@@ -144,6 +194,8 @@ const investorReducer = (state = inititalState, action) => {
     case GENERATE_INVESTOR_EMBEDDED_DOCUMENT:
       newState = Object.assign({}, state);
       newState.generatedEmbedded = action.payload;
+      return newState;
+    case RESET_INVESTOR:
       return newState;
     default:
       return state;

@@ -18,7 +18,7 @@ NewCompanyInputs.forEach((question) => {
 });
 
 function NewCompany({ attorney_id, lawfirm_id }) {
-  const { user, getAccessTokenWithPopup } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
   const { values, handleInputChange } = UseForm(initialValues);
   const [submitSuccess, setSubmitSuccess] = useState(null);
   const history = useHistory();
@@ -27,7 +27,7 @@ function NewCompany({ attorney_id, lawfirm_id }) {
   async function handleSubmit(e) {
     e.preventDefault();
     console.log(`this ran`);
-    const accessToken = await getAccessTokenWithPopup({
+    const accessToken = await getAccessTokenSilently({
       audience: "https://accredii.com/authorization",
       scope: "attorney:all",
     });

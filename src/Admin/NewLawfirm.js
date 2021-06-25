@@ -52,9 +52,12 @@ function NewLawfirm() {
           id="lawfirm-address"
           onChange={handleInputChange}
         ></TextInput>
-        <button onClick={addAttorney}>Add Attorney</button>
+        <div className="pl-4/6 pt-5 m-7">
+          <button type="submit" className="bg-pink-500">
+            Add lawfirm
+          </button>
+        </div>
       </Form>
-      {displayAttorneyForm && <NewAttorney />}
     </>
   );
 }

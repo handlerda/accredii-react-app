@@ -1,4 +1,5 @@
 import React from "react";
+import SubmitButton from "../Components/Controls/SubmitButton";
 import TextInput from "../Components/Controls/TextInput";
 import { Form, UseForm } from "../Components/Form/UseForm";
 
@@ -42,6 +43,11 @@ function NewAttorney() {
         id="phone_number"
         onChange={handleInputChange}
       ></TextInput>
+      <div className="pl-4/6 pt-5 m-7">
+        <button type="submit" className="bg-pink-500">
+          Add Attorney
+        </button>
+      </div>
     </Form>
   );
 }

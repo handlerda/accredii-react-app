@@ -18,7 +18,7 @@ function GridItem({
   type,
 }) {
   const dispatch = useDispatch();
-  const { getAccessTokenWithPopup } = useAuth0();
+  const { getAccessTokenSilently } = useAuth0();
   const statusClass = status.includes("awaiting")
     ? `flex-shrink-0 inline-block px-2 py-0.5 text-yellow-800 text-xs font-medium bg-yellow-100 rounded-full`
     : `flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full`;
@@ -39,7 +39,7 @@ function GridItem({
   }
 
   async function handleS3Link() {
-    const accessToken = await getAccessTokenWithPopup({
+    const accessToken = await getAccessTokenSilently({
       audience: "https://accredii.com/authorization",
       scope: "document:all",
     });

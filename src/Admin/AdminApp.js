@@ -1,9 +1,11 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+import FormHeader from "../Components/Form/FormHeader";
 import Container from "../Navbar.js/Container";
 import Items from "../Navbar.js/Items";
 import MobileContainer from "../Navbar.js/Mobile/MobileContainer";
 import MobileItems from "../Navbar.js/Mobile/MobileItems";
+import NewAttorney from "./NewAttorney";
 import NewLawfirm from "./NewLawfirm";
 
 function AdminApp() {
@@ -56,7 +58,22 @@ function AdminApp() {
             <div className="max-w-7xl py-6 mx-auto px-4 sm:px-6 ">
               <Switch>
                 <Route exact path={`/admin/lawfirm/new`}>
-                  <NewLawfirm />
+                  <FormHeader
+                    header="New Lawfirm"
+                    body="Add a new lawfirm to the database"
+                  />
+                  <div className="pt-15">
+                    <NewLawfirm />
+                  </div>
+                </Route>
+                <Route exact path={`/admin/attorney/new`}>
+                  <FormHeader
+                    header="New Attorney"
+                    body="Add a new lawfirm to the database"
+                  />
+                  <div className="pt-15">
+                    <NewAttorney />
+                  </div>
                 </Route>
               </Switch>
             </div>

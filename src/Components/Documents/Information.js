@@ -8,9 +8,9 @@ import { getViewableDocument } from "../../store/document";
 function Information() {
   const dispatch = useDispatch();
   const documentData = useSelector((state) => state.document.documentInfo);
-  const { getAccessTokenWithPopup } = useAuth0();
+  const { getAccessTokenSilently } = useAuth0();
   async function handleS3Link() {
-    const accessToken = await getAccessTokenWithPopup({
+    const accessToken = await getAccessTokenSilently({
       audience: "https://accredii.com/authorization",
       scope: "document:all",
     });

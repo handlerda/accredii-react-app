@@ -23,7 +23,7 @@ NewDocumentDropDown.map((question) => {
   initialValues[question.name] = "";
 });
 function NewDocument({ id }) {
-  const { user, getAccessTokenWithPopup } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
   const dispatch = useDispatch();
   const history = useHistory();
   const attorneyInfo = useSelector((state) => state.attorney.info);
@@ -36,7 +36,7 @@ function NewDocument({ id }) {
 
   useEffect(() => {
     async function getAttorneyData() {
-      const accessToken = await getAccessTokenWithPopup({
+      const accessToken = await getAccessTokenSilently({
         audience: "https://accredii.com/authorization",
         scope: "attorney:all",
       });
@@ -58,7 +58,7 @@ function NewDocument({ id }) {
   async function handleSubmit(e) {
     e.preventDefault();
     //IF VALUES === "" (NOT CLICKED) DEFAULT TO FIRST ID
-    const accessToken = await getAccessTokenWithPopup({
+    const accessToken = await getAccessTokenSilently({
       audience: "https://accredii.com/authorization",
       scope: "attorney:all",
     });

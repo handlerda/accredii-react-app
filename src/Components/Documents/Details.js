@@ -43,7 +43,7 @@ const comments = [
 export default function Details({ type }) {
   // const [documentData, setDocumentData] = useState(null);
   const history = useHistory();
-  const { getAccessTokenSilently, getAccessTokenWithPopup } = useAuth0();
+  const { getAccessTokenSilently, getAccessTokenSilently } = useAuth0();
   const { documentId } = useParams();
   const documentData = useSelector((state) => state.document.documentInfo);
   const dispatch = useDispatch();
@@ -51,7 +51,7 @@ export default function Details({ type }) {
 
   useEffect(() => {
     async function getDocumentData() {
-      const accessToken = await getAccessTokenWithPopup({
+      const accessToken = await getAccessTokenSilently({
         audience: "https://accredii.com/authorization",
         scope: "document:all",
       });

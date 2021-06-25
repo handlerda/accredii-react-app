@@ -15,7 +15,7 @@ import Popup from "../Components/Popup";
 import { useDispatch, useSelector } from "react-redux";
 import { updateInvestor } from "../store/investor";
 function FormTemplate() {
-  const { user, getAccessTokenWithPopup } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -43,7 +43,7 @@ function FormTemplate() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const accessToken = await getAccessTokenWithPopup({
+    const accessToken = await getAccessTokenSilently({
       audience: "https://accredii.com/authorization",
       scope: "investor:all",
     });
