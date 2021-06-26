@@ -18,7 +18,7 @@ function InvestorApp() {
     user,
     logout,
     getAccessTokenSilently,
-    getAccessTokenSilently,
+
     getIdTokenClaims,
   } = useAuth0();
   console.log(user);
