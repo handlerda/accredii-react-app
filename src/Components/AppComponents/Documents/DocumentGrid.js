@@ -5,24 +5,11 @@ import GridItem from "../../GridList/GridItem";
 import Popup from "../../Popup";
 import { useDispatch, useSelector } from "react-redux";
 function Documents({ type, id }) {
-  //console.log(type);
+  //
   const [documents, setDocuments] = useState(null);
   // const dispatch = useDispatch()
   const reduxValue = useSelector((state) => state);
-  console.log(`here from documents`, reduxValue);
   useEffect(() => {
-<<<<<<< HEAD
-    const getStatus = async () => {
-      // eventually change this to redux
-      const data = await getDocuments(type, id);
-      if (data.data.stats.total > 0) setDocuments(data.data);
-      else setDocuments(false);
-    };
-    getStatus();
-  }, []);
-  console.log(documents);
-
-=======
     function documentChecker(data) {
       // if data will return data
       // if no data will set status to false
@@ -42,7 +29,6 @@ function Documents({ type, id }) {
         break;
     }
   }, [documents]);
->>>>>>> version2
   if (documents === false) {
     return (
       <Popup
@@ -59,7 +45,6 @@ function Documents({ type, id }) {
         <div>
           <GridListContainer>
             {documents.docs.map((doc) => {
-              console.log(doc);
               return (
                 <GridItem
                   name={doc.investor_name}
