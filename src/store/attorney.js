@@ -17,19 +17,32 @@ const getAttorneyInfoHelper = (payload) => {
   };
 };
 
-export const getAttorneyStatus = (id) => async (dispatch) => {
-  const url = `${api_path}attorney/status?id=${id}`;
-  const response = await axios(url);
-  const status = await response.data;
-  dispatch(getAttorneyStatusHelper(status));
-  return status;
+export const getAttorneyStatus = (id, token) => async (dispatch) => {
+  const url = `${api_path}attorney/documents?auth0_id=${id}`;
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch(getAttorneyStatusHelper(response.data));
+    return response.status;
+  } catch (error) {
+    dispatch(getAttorneyStatusHelper(error.response));
+    return error.response.status;
+  }
 };
 
-export const getAttorneyInfo = (attorney_id) => async (dispatch) => {
-  const url = `${api_path}lawfirm/info?id=${attorney_id}`;
-  const response = await axios.get(url);
+export const getAttorneyInfo = (attorney_id, token) => async (dispatch) => {
+  const url = `${api_path}attorney?auth0_id=${attorney_id}`;
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   const attorneyInfo = response.data;
   dispatch(getAttorneyInfoHelper(attorneyInfo));
+  return attorneyInfo;
 };
 
 const inititalState = { attorney: null };

@@ -69,7 +69,7 @@ const NewCompanyInputs = [
     text: "Please enter the primary company contact's physical address",
   },
   {
-    name: "phone_number",
+    name: "phone",
     label: "Phone Number",
     text: "Please enter the primary company contact's phone number",
   },

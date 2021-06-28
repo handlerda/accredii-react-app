@@ -11,17 +11,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCompanyStatus } from "../store/company";
 
 function CompanyApp() {
-  const { user, logout } = useAuth0();
+  const { user, logout, getAccessTokenSilently } = useAuth0();
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const company = useSelector((state) => state.company.status);
   useEffect(() => {
     const getStatus = async () => {
-      const data = await dispatch(getCompanyStatus(user.sub));
-      if (!data.error) setLoaded(true);
-      if (data.error) setCurrentUser(false);
-      return data;
+      const accessToken = await getAccessTokenSilently({
+        audience: "https://accredii.com/authorization",
+        scope: "company:all",
+      });
+      const status = await dispatch(getCompanyStatus(user.sub, accessToken));
+      if (status === 200) setLoaded(true);
+      else setCurrentUser(false);
     };
     getStatus();
   }, [dispatch]);

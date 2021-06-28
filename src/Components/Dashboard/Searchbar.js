@@ -9,8 +9,6 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 
 function Searchbar({ type, name }) {
-  console.log(`here is the type, ${type}`);
-  const { user } = useAuth0();
   return (
     <div className="flex-1 px-2 flex ">
       <div className="flex-1 flex">

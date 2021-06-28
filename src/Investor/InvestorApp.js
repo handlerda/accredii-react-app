@@ -11,27 +11,44 @@ import { useDispatch, useSelector } from "react-redux";
 import { getInvestorStatus } from "../store/investor";
 
 function InvestorApp() {
-  const { isAuthenticated, isLoading, loginWithRedirect, user, logout } =
-    useAuth0();
-  console.log(user);
+  const {
+    isAuthenticated,
+    isLoading,
+    loginWithRedirect,
+    user,
+    logout,
+    getAccessTokenSilently,
+
+    getIdTokenClaims,
+  } = useAuth0();
+
   const [data, setData] = useState(null);
   const dispatch = useDispatch();
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const investor = useSelector((state) => state.investor.status);
-  console.log(investor);
   useEffect(() => {
     const getStatus = async () => {
-      const data = await dispatch(getInvestorStatus(user.sub));
-      if (!data.error) setLoaded(true);
-      if (data.error) setCurrentUser(false);
-      return data;
+      // GET JWT TOKEN
+
+      const accessToken = await getAccessTokenSilently({
+        audience: "https://accredii.com/authorization",
+        scope: "investor:all",
+      });
+
+      const status = await dispatch(getInvestorStatus(user.sub, accessToken));
+      if (status === 200) {
+        setCurrentUser(true);
+        setLoaded(true);
+      } else {
+        setCurrentUser(false);
+      }
     };
     getStatus();
   }, [dispatch]);
-
   if (currentUser === false) {
     logout();
+
     return <h1>You are not a valid user</h1>;
   }
   if (!loaded) {

@@ -9,6 +9,7 @@ import { useHistory } from "react-router";
 import Paper from "../../Components/Paper";
 import { useDispatch, useSelector } from "react-redux";
 import { createNewCompany } from "../../store/company";
+import { useAuth0 } from "@auth0/auth0-react";
 const initialValues = {};
 
 //loop
@@ -17,21 +18,28 @@ NewCompanyInputs.forEach((question) => {
 });
 
 function NewCompany({ attorney_id, lawfirm_id }) {
+  const { user, getAccessTokenSilently } = useAuth0();
   const { values, handleInputChange } = UseForm(initialValues);
   const [submitSuccess, setSubmitSuccess] = useState(null);
   const history = useHistory();
-  const company = useSelector((state) => state.company);
-  console.log(company);
   const dispatch = useDispatch();
+
   async function handleSubmit(e) {
     e.preventDefault();
+    console.log(`this ran`);
+    const accessToken = await getAccessTokenSilently({
+      audience: "https://accredii.com/authorization",
+      scope: "attorney:all",
+    });
     values.attorney_id = attorney_id;
-    values.lawfirm_id = lawfirm_id;
-    console.log(submitSuccess);
-    const data = await dispatch(createNewCompany);
-
-    if (data.status === true) {
+    const newCompany = {
+      data: values,
+    };
+    const status = await dispatch(createNewCompany(newCompany, accessToken));
+    if (status === 201) {
       setSubmitSuccess(true);
+    } else {
+      setSubmitSuccess(false);
     }
   }
 
@@ -83,10 +91,7 @@ function NewCompany({ attorney_id, lawfirm_id }) {
             );
           })}
         </div>
-        <SubmitButton
-          text="Submit"
-          onClick={() => console.log(`here comes the log`)}
-        />
+        <SubmitButton text="Submit" />
       </Form>
     );
   }

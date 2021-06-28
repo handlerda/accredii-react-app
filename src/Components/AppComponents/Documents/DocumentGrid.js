@@ -3,9 +3,15 @@ import GridListContainer from "../../GridList/GridListContainer";
 import { getDocuments } from "../../../Service/Backend";
 import GridItem from "../../GridList/GridItem";
 import Popup from "../../Popup";
+import { useDispatch, useSelector } from "react-redux";
 function Documents({ type, id }) {
+  //console.log(type);
   const [documents, setDocuments] = useState(null);
+  // const dispatch = useDispatch()
+  const reduxValue = useSelector((state) => state);
+  console.log(`here from documents`, reduxValue);
   useEffect(() => {
+<<<<<<< HEAD
     const getStatus = async () => {
       // eventually change this to redux
       const data = await getDocuments(type, id);
@@ -16,6 +22,27 @@ function Documents({ type, id }) {
   }, []);
   console.log(documents);
 
+=======
+    function documentChecker(data) {
+      // if data will return data
+      // if no data will set status to false
+      data.stats.total > 0 ? setDocuments(data) : setDocuments(false);
+    }
+    switch (type) {
+      case "investor":
+        documentChecker(reduxValue.investor.status);
+        break;
+      case "attorney":
+        documentChecker(reduxValue.attorney.status);
+        break;
+      case "company":
+        documentChecker(reduxValue.company.status);
+        break;
+      default:
+        break;
+    }
+  }, [documents]);
+>>>>>>> version2
   if (documents === false) {
     return (
       <Popup
@@ -26,13 +53,9 @@ function Documents({ type, id }) {
       />
     );
   }
-  console.log(`here from documents`);
   return (
     documents && (
       <div>
-        {/* <div>
-          <Piechart formattedData={documents} key="value" />
-        </div> */}
         <div>
           <GridListContainer>
             {documents.docs.map((doc) => {

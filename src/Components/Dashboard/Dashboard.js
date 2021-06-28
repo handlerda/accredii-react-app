@@ -1,5 +1,6 @@
 import { Fragment, useState, useEffect } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import {
   BellIcon,
@@ -28,6 +29,7 @@ import StatusGroup from "./StatusGroup";
 import Report from "../AppComponents/Report";
 import { getDocuments } from "../../Service/Backend";
 import Popup from "../Popup";
+import { useSelector } from "react-redux";
 
 const tableHeaders = [
   { name: "Title" },
@@ -49,16 +51,29 @@ const api_names = [
 
 export default function Dashboard({ user_id, type }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [documentStatus, setDocumentStatus] = useState(null);
+  const [documentStatus, setDocuments] = useState(null);
+  const reduxValue = useSelector((state) => state);
+
   useEffect(() => {
-    const getStatus = async () => {
-      const data = await getDocuments(type, user_id);
-      console.log(data);
-      if (data.data.stats.total === 0) setDocumentStatus(false);
-      else setDocumentStatus(data);
-    };
-    getStatus();
-  }, []);
+    function documentChecker(data) {
+      // if data will return data
+      // if no data will set status to false
+      data.stats.total > 0 ? setDocuments(data) : setDocuments(false);
+    }
+    switch (type) {
+      case "investor":
+        documentChecker(reduxValue.investor.status);
+        break;
+      case "attorney":
+        documentChecker(reduxValue.attorney.status);
+        break;
+      case "company":
+        documentChecker(reduxValue.company.status);
+        break;
+      default:
+        break;
+    }
+  }, [documentStatus]);
 
   if (documentStatus !== false) {
     return (
@@ -145,10 +160,10 @@ export default function Dashboard({ user_id, type }) {
               <div className="mt-2">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                   {/* Card */}
-                  {documentStatus.data.stats.total > 0 && (
-                    <StatusGroup doc_stats={documentStatus.data.stats} />
+                  {documentStatus.stats.total > 0 && (
+                    <StatusGroup doc_stats={documentStatus.stats} />
                   )}
-                  {documentStatus.data.stats.total === 0 && (
+                  {documentStatus.stats.total === 0 && (
                     <h1>Add better css for no docs / new user</h1>
                   )}
                 </div>
@@ -183,52 +198,3 @@ export default function Dashboard({ user_id, type }) {
     );
   }
 }
-
-// import React, { useEffect, useState } from "react";
-// import { getDocuments } from "../../Service/Backend";
-// import Piechart from "./Piechart";
-
-// function Dashboard({ type, id }) {
-//   const [data, setData] = useState(null);
-//   useEffect(() => {
-//     const getStatus = async () => {
-//       const data = await getDocuments(type, id);
-//       if (data.data.docs.length) setData(data.data);
-//       else setData(false);
-//     };
-//     getStatus();
-//   }, []);
-//   console.log(data);
-//   const generalStats = [];
-//   if (data !== null) {
-//     console.log(`we made it`);
-//     generalStats.push({
-//       name: "awaiting_company",
-//       value: data.stats.awaiting_company,
-//     });
-//     generalStats.push({
-//       name: "awaiting_investor",
-//       value: data.stats.awaiting_investor,
-//     });
-//     generalStats.push({
-//       name: "awaiting_lawfirm",
-//       value: data.stats.awaiting_lawfirm,
-//     });
-//     generalStats.push({
-//       name: "completed",
-//       value: data.stats.completed,
-//     });
-//     generalStats.push({
-//       name: "total",
-//       value: data.stats.total,
-//     });
-//   }
-//   if (!data) {
-//     return <h1>loading</h1>;
-//   }
-//   return data && <Piechart formattedData={generalStats} key="value" />;
-
-//   //   return <Piechart data={data} key />;
-// }
-
-// export default Dashboard;

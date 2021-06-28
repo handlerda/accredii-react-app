@@ -1,12 +1,23 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { PaperClipIcon } from "@heroicons/react/outline";
 
 import React from "react";
-import { getViewableDocument } from "../../Service/Backend";
+import { useDispatch, useSelector } from "react-redux";
+import { getViewableDocument } from "../../store/document";
 
-function Information({ documentData }) {
+function Information() {
+  const dispatch = useDispatch();
+  const documentData = useSelector((state) => state.document.documentInfo);
+  const { getAccessTokenSilently } = useAuth0();
   async function handleS3Link() {
-    const link = await getViewableDocument(documentData.doc_obj_id);
-    window.open(link.url);
+    const accessToken = await getAccessTokenSilently({
+      audience: "https://accredii.com/authorization",
+      scope: "document:all",
+    });
+    const link = await dispatch(
+      getViewableDocument(documentData.doc_obj_id, accessToken)
+    );
+    window.open(link.view_url);
   }
   return (
     <section aria-labelledby="applicant-information-title">
@@ -83,7 +94,7 @@ function Information({ documentData }) {
               <dt className="text-sm font-medium text-gray-500">
                 Document Questions
               </dt>
-              {Object.keys(documentData.required_questions).length === 0 && (
+              {documentData.required_questions === undefined && (
                 <dd className="mt-1 text-sm text-gray-900">
                   There are no document questions
                 </dd>

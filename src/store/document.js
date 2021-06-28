@@ -4,6 +4,7 @@ const GET_DOCUMENT_INFO = "document/info";
 const UPDATE_DOCUMENT = "document/update";
 const CREATE_NEW_DOCUMENT = "document/create/new";
 const GET_VIEWABLE_DOCUMENT = "document/get/viewable";
+const RESET_DOCUMENT = "document/reset";
 const api_path = process.env.REACT_APP_SERVER_URI_PROD;
 
 //helper functions
@@ -53,46 +54,68 @@ export const uploadNewForm = (form_data) => async (dispatch) => {
   return upload;
 };
 
-export const getDocumentInfo = (doc_id) => async (dispatch) => {
-  const url = `${api_path}document?id=${doc_id}`;
-  const response = await axios.get(url);
+export const getDocumentInfo = (doc_id, token) => async (dispatch) => {
+  const url = `${api_path}document?doc_obj_id=${doc_id}`;
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   const documentDetails = response.data;
+
   dispatch(getDocumentDetailsHelper(documentDetails));
   return documentDetails;
 };
 
-export const updateDocument = (payload) => async (dispatch) => {
+export const updateDocument = (payload, token) => async (dispatch) => {
   const url = `${api_path}document/update`;
-  const response = await axios.post(url, payload);
-  const updatedDocument = response.data;
-  dispatch(updateDocumentDetailsHelper(updateDocument));
-  return updatedDocument;
+  const response = await axios.post(url, payload, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  dispatch(updateDocumentDetailsHelper(response.data));
+  return response.status;
 };
 
 export const createNewDocument =
-  (
-    investor_id,
-    attorney_id,
-    lawfirm_id,
-    company_id = "",
-    company_name = "",
-    template_id = ""
-  ) =>
+  (investor_id, attorney_id, company_id = "", template_id = "", token) =>
   async (dispatch) => {
-    const url = `${api_path}document/new?investor_id=${investor_id}&attorney_id=${attorney_id}&lawfirm_id=${lawfirm_id}&company_id=${company_id}&company_name=${company_name}&template_id=${template_id}`;
-    const response = await axios.get(url);
-    const newDocument = response.data;
-    dispatch(createNewDocumentHelper(newDocument));
-    return newDocument;
+    const url = `${api_path}document`;
+    const data = {
+      data: {
+        investor_auth0_id: investor_id,
+        attorney_auth0_id: attorney_id,
+        company_auth0_id: company_id,
+        template_id: template_id,
+      },
+    };
+    try {
+      const response = await axios.post(url, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      dispatch(createNewDocumentHelper(response.data));
+      return response.status;
+    } catch (error) {
+      dispatch(createNewDocumentHelper(error.response));
+      return error.response.status;
+    }
   };
 
-export const getViewableDocument = (id) => async (dispatch) => {
-  const url = `${api_path}document/view?id=${id}`;
-  const response = await axios.get(url);
+export const getViewableDocument = (id, token) => async (dispatch) => {
+  const url = `${api_path}document/view?doc_obj_id=${id}`;
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
   //should return the res.url and dispatch in the component
-  //window.open(response.url);
   dispatch(getViewableDocumentHelper(response));
-  return response;
+
+  return response.data;
 };
 
 const inititalState = { document: null };
@@ -119,6 +142,8 @@ const documentReducer = (state = inititalState, action) => {
     case GET_VIEWABLE_DOCUMENT:
       newState = Object.assign({}, state);
       newState.viewableDocument = action.payload;
+      return newState;
+    case RESET_DOCUMENT:
       return newState;
     default:
       return state;

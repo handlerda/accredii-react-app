@@ -4,41 +4,36 @@ import MultipleChoice from "../Components/Controls/MultipleChoice";
 import TextInput from "../Components/Controls/TextInput";
 import FormHeader from "../Components/Form/FormHeader";
 import { UseForm, Form } from "../Components/Form/UseForm";
-import { getInvestor } from "../Service/Backend";
 import {
   InvestorMCQuestions,
   InvestorInputQuestions,
 } from "./InvestorQuestions";
-import axios from "axios";
 import SubmitButton from "../Components/Controls/SubmitButton";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useHistory } from "react-router";
 import Popup from "../Components/Popup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateInvestor } from "../store/investor";
-function FormTemplate(props) {
-  const { user } = useAuth0();
+function FormTemplate() {
+  const { user, getAccessTokenSilently } = useAuth0();
   const history = useHistory();
   const dispatch = useDispatch();
 
   const [successSubmit, setSuccessSubmit] = useState(null);
+  const data = useSelector((state) => state.investor.details);
 
-  const data = props.data;
-  console.log();
   const initialValues = {};
 
   //loop over all the input questions
   InvestorInputQuestions.forEach((question) => {
-    initialValues[question.name] = props.data[question.name] || "";
+    initialValues[question.name] = data[question.name] || "";
   });
 
   //loop over all the multile choice questions
   InvestorMCQuestions.forEach((question) => {
     const questionName = question.choices[0].question_name;
-    if (props.data[questionName]) {
-      console.log(`prop data`, props.data[questionName]);
-      console.log(props.data[questionName]["value"]);
-      initialValues[questionName] = props.data[questionName]["value"] || "";
+    if (data[questionName]) {
+      initialValues[questionName] = data[questionName]["value"] || "";
     }
   });
 
@@ -46,13 +41,16 @@ function FormTemplate(props) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const data = await dispatch(updateInvestor(user.sub, values));
+    const accessToken = await getAccessTokenSilently({
+      audience: "https://accredii.com/authorization",
+      scope: "investor:all",
+    });
+    const data = await dispatch(updateInvestor(user.sub, values, accessToken));
     if (data.status === true) {
       setSuccessSubmit(true);
     }
   }
 
-  console.log(`here is investor info`, values);
   if (successSubmit === true) {
     return (
       <Popup
@@ -101,8 +99,8 @@ function FormTemplate(props) {
                 helpText={question.helpText}
               >
                 {question.choices.map((choice) => {
-                  // console.log(`here is the choice`, choice);
-                  // console.log(data[choice.question_name]["value"], choice);
+                  //
+                  //
 
                   return (
                     <Checkbox

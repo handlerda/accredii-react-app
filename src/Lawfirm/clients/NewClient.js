@@ -9,24 +9,35 @@ import Popup from "../../Components/Popup";
 import Paper from "../../Components/Paper";
 import FormHeader from "../../Components/Form/FormHeader";
 import { Form, UseForm } from "../../Components/Form/UseForm";
-import {
-  insertInvestor,
-  getAttorneyInfo,
-  createNewDocument,
-} from "../../Service/Backend";
-import { NewClientInputs, NewClientDropDown } from "../LawfirmQuestions";
 
+import { NewClientInputs, NewClientDropDown } from "../LawfirmQuestions";
+import { useSelector, useDispatch } from "react-redux";
+import { useAuth0 } from "@auth0/auth0-react";
+import { getAttorneyInfo } from "../../store/attorney";
+import { insertInvestor } from "../../store/investor";
+import { createNewDocument } from "../../store/document";
 function NewClient({ attorney_id, lawfirm_id }) {
-  const [documents, setDocuments] = useState(null);
+  const { user, getAccessTokenSilently } = useAuth0();
+  const dispatch = useDispatch();
+  const documents = useSelector((state) => state.attorney.info);
   const [submitSuccess, setSubmitSuccess] = useState(null);
+  const [loaded, isLoaded] = useState(false);
+  //const dat
   const history = useHistory();
+
   useEffect(() => {
-    async function getDocuments() {
-      const data = await getAttorneyInfo(attorney_id);
-      console.log(data);
-      setDocuments(data);
+    async function attorneyInfo() {
+      const accessToken = await getAccessTokenSilently({
+        audience: "https://accredii.com/authorization",
+        scope: "attorney:all",
+      });
+
+      const data = await dispatch(getAttorneyInfo(user.sub, accessToken));
+
+      isLoaded(true);
+      return data;
     }
-    getDocuments();
+    attorneyInfo();
   }, []);
 
   const initialClientValues = {};
@@ -42,38 +53,34 @@ function NewClient({ attorney_id, lawfirm_id }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let newInvestor;
+    const accessToken = await getAccessTokenSilently({
+      audience: "https://accredii.com/authorization",
+      scope: "attorney:all",
+    });
     try {
-      const newInvestor = await insertInvestor(
-        values,
-        attorney_id,
-        "auth0|39420394"
+      newInvestor = await dispatch(
+        insertInvestor(values, attorney_id, user.sub, accessToken)
       );
-      console.log(`ids are coming below:`);
-      console.log(documents.companies);
-      console.log(documents.templates);
       if (newInvestor.status === false) {
         setSubmitSuccess(false);
       } else {
-        const createDocument = await createNewDocument(
-          newInvestor.id,
-          attorney_id,
-          lawfirm_id,
-          documentValues["company"] || documents.companies[0].id,
-          "",
-          documentValues["template"] || documents.templates[0].id
+        const createDocument = await dispatch(
+          createNewDocument(
+            newInvestor.data.auth0_id,
+            attorney_id,
+            documentValues["company"] || documents.companies[0].id,
+            documentValues["template"] || documents.templates[0].id,
+            accessToken
+          )
         );
-        if (createDocument.status === true) {
+
+        if (createDocument === 201) {
           setSubmitSuccess(true);
-          console.log(submitSuccess);
-        }
-        if (createDocument.status === false) {
-          return setSubmitSuccess(false);
-        }
+        } else setSubmitSuccess(false);
       }
       // get payload and create a document for the user
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
   const { values, handleInputChange } = UseForm(initialClientValues);
   const {
@@ -81,7 +88,6 @@ function NewClient({ attorney_id, lawfirm_id }) {
     handleInputChange: handleDocumentValueChange,
   } = UseForm(initialDocumentValues);
 
-  console.log(values, documentValues);
   if (submitSuccess === false) {
     return (
       <Popup
@@ -102,65 +108,63 @@ function NewClient({ attorney_id, lawfirm_id }) {
         handleClick={() => history.push(`/attorney/documents`)}
       />
     );
-  } else {
+  }
+  if (loaded === true) {
     return (
-      documents && (
-        <Form
-          className="space-y-8 divide-y divide-gray-200"
-          onSubmit={handleSubmit}
-        >
-          <div className="pb-5 mt-5 mb-10">
-            <FormHeader
-              header="Add a new investor"
-              body="Please fill out the following information to invite a new investor. They will be sent an email to login"
-            />
-          </div>
-
-          <div class="space-y-6 sm:space-y-5">
-            {NewClientInputs.map((question) => {
-              return (
-                <TextInput
-                  label={question.label}
-                  name={question.name}
-                  id={question.name}
-                  value={initialClientValues[question.name]}
-                  onChange={handleInputChange}
-                />
-              );
-            })}
-          </div>
-          {NewClientDropDown.map((question) => {
-            if (question.name === "company") {
-              return (
-                <MultipleChoice title={question.label} helpText={question.text}>
-                  <SelectDropdown
-                    options={documents.companies}
-                    onChange={handleDocumentValueChange}
-                    name={question.name}
-                    defaultValue={documents.templates[0].id}
-                  />
-                </MultipleChoice>
-              );
-            }
-            if (question.name === "template")
-              return (
-                <MultipleChoice title={question.label} helpText={question.text}>
-                  <SelectDropdown
-                    options={documents.templates}
-                    onChange={handleDocumentValueChange}
-                    name={question.name}
-                    defaultValue={documents.templates[0].id}
-                  />
-                </MultipleChoice>
-              );
-          })}
-          <SubmitButton
-            text="Submit"
-            onClick={() => console.log(`here comes the log`)}
+      <Form
+        className="space-y-8 divide-y divide-gray-200"
+        onSubmit={handleSubmit}
+      >
+        <div className="pb-5 mt-5 mb-10">
+          <FormHeader
+            header="Add a new investor"
+            body="Please fill out the following information to invite a new investor. They will be sent an email to login"
           />
-        </Form>
-      )
+        </div>
+
+        <div class="space-y-6 sm:space-y-5">
+          {NewClientInputs.map((question) => {
+            return (
+              <TextInput
+                label={question.label}
+                name={question.name}
+                id={question.name}
+                value={initialClientValues[question.name]}
+                onChange={handleInputChange}
+              />
+            );
+          })}
+        </div>
+        {NewClientDropDown.map((question) => {
+          if (question.name === "company") {
+            return (
+              <MultipleChoice title={question.label} helpText={question.text}>
+                <SelectDropdown
+                  options={documents.companies}
+                  onChange={handleDocumentValueChange}
+                  name={question.name}
+                  defaultValue={documents.templates[0].id}
+                />
+              </MultipleChoice>
+            );
+          }
+          if (question.name === "template")
+            return (
+              <MultipleChoice title={question.label} helpText={question.text}>
+                <SelectDropdown
+                  options={documents.templates}
+                  onChange={handleDocumentValueChange}
+                  name={question.name}
+                  defaultValue={documents.templates[0].id}
+                />
+              </MultipleChoice>
+            );
+        })}
+        <SubmitButton text="Submit" />
+      </Form>
     );
+  } else {
+    return <h1>Hello world</h1>;
   }
 }
 

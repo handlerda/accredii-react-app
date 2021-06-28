@@ -31,7 +31,7 @@ const api_names = [
 function CompanyRoutes() {
   const history = useHistory();
   const { user, logout } = useAuth0();
-  console.log(user);
+
   return (
     <Switch>
       <Route exact path={`/company`}>

@@ -27,32 +27,50 @@ const getCompanyStatusHelper = (payload) => {
   };
 };
 
-export const createNewCompany = (data) => async (dispatch) => {
-  const url = `${api_path}company/new`;
-  const payload = {
-    data,
-  };
-  const response = await axios.post(url, payload);
-  const newCompany = response.data;
-  dispatch(createNewCompanyHelper(newCompany));
-  return response.data;
+export const createNewCompany = (data, accessToken) => async (dispatch) => {
+  const url = `${api_path}company`;
+  try {
+    const response = await axios.post(url, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    dispatch(createNewCompanyHelper(response.data));
+    return response.status;
+  } catch (error) {
+    dispatch(createNewCompanyHelper(error.response));
+    return error.response.status;
+  }
 };
 
-export const generateInvestorEmbeddedDocument =
-  (id, documentId, type) => async (dispatch) => {
+export const generateCompanyEmbeddedDocument =
+  (documentId, accessToken) => async (dispatch) => {
     const url = `${api_path}company/sign?doc_obj_id=${documentId}`;
-    const documentDataURL = await axios(url);
+    const documentDataURL = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     const generatedDocumentData = documentDataURL.data;
     dispatch(newEmbeddedHelper(generatedDocumentData));
     return generatedDocumentData;
   };
 
-export const getCompanyStatus = (id) => async (dispatch) => {
-  const url = `${api_path}company/status?id=${id}`;
-  const response = await axios(url);
-  const companyStatus = response.data;
-  dispatch(getCompanyStatusHelper(companyStatus));
-  return companyStatus;
+export const getCompanyStatus = (id, accessToken) => async (dispatch) => {
+  try {
+    const url = `${api_path}company/documents?auth0_id=${id}`;
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    dispatch(getCompanyStatusHelper(response.data));
+    return response.status;
+  } catch (error) {
+    dispatch(getCompanyStatusHelper(error.response));
+    return error.response.status;
+  }
 };
 
 const inititalState = { company: null };
