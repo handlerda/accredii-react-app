@@ -13,6 +13,9 @@
 # production
 /build
 
+# must remove for build
+*main.css*
+
 # misc
 .DS_Store
 .env.local
