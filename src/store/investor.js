@@ -56,17 +56,6 @@ const reset = () => {
     payload: null,
     type: RESET_INVESTOR,
   };
-<<<<<<< HEAD
-};
-
-export const getInvestorStatus = (id) => async (dispatch) => {
-  const url = `${api_path}/investor/status?id=${id}`;
-  const response = await axios(url);
-  const investorStatus = response.data;
-  dispatch(getStatus(investorStatus));
-  return investorStatus;
-=======
->>>>>>> version2
 };
 
 export const getInvestorStatus = (id, token) => async (dispatch) => {
