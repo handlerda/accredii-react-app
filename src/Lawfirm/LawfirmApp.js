@@ -26,7 +26,7 @@ function LawfirmApp() {
         audience: "https://accredii.com/authorization",
         scope: "attorney:all",
       });
-      console.log(accessToken);
+
       const documentStatus = await dispatch(
         getAttorneyStatus(user.sub, accessToken)
       );

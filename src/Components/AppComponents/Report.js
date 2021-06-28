@@ -10,7 +10,7 @@ function Report({ tableHeaders, type, id, keys, content }) {
   const [documentStatus, setDocuments] = useState(null);
 
   const reduxValue = useSelector((state) => state);
-  console.log(`here from documents`, reduxValue);
+
   useEffect(() => {
     function documentChecker(data) {
       // if data will return data

@@ -5,7 +5,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useHistory } from "react-router";
 
 function ProfileHeader({ type, name, lawfirm_name = false }) {
-  console.log(`lawfirm name`, lawfirm_name);
   const { user } = useAuth0();
   const history = useHistory();
   return (

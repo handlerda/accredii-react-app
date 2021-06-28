@@ -21,7 +21,7 @@ function InvestorApp() {
 
     getIdTokenClaims,
   } = useAuth0();
-  console.log(user);
+
   const [data, setData] = useState(null);
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(null);
@@ -30,12 +30,12 @@ function InvestorApp() {
   useEffect(() => {
     const getStatus = async () => {
       // GET JWT TOKEN
-      console.log(`did this run`);
+
       const accessToken = await getAccessTokenSilently({
         audience: "https://accredii.com/authorization",
         scope: "investor:all",
       });
-      console.log(accessToken);
+
       const status = await dispatch(getInvestorStatus(user.sub, accessToken));
       if (status === 200) {
         setCurrentUser(true);
@@ -48,7 +48,7 @@ function InvestorApp() {
   }, [dispatch]);
   if (currentUser === false) {
     logout();
-    console.log(`this ran`);
+
     return <h1>You are not a valid user</h1>;
   }
   if (!loaded) {

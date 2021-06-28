@@ -10,7 +10,6 @@ function MyInfo({ id }) {
   const investor = useSelector((state) => state.investor.details);
   const [loaded, setLoading] = useState(false);
   const dispatch = useDispatch();
-  console.log(investor);
 
   useEffect(() => {
     const getInvestorInfo = async (id) => {

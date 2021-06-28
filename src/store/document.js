@@ -62,7 +62,7 @@ export const getDocumentInfo = (doc_id, token) => async (dispatch) => {
     },
   });
   const documentDetails = response.data;
-  console.log(documentDetails);
+
   dispatch(getDocumentDetailsHelper(documentDetails));
   return documentDetails;
 };
@@ -111,11 +111,10 @@ export const getViewableDocument = (id, token) => async (dispatch) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(response);
-  console.log(`hello world`);
+
   //should return the res.url and dispatch in the component
   dispatch(getViewableDocumentHelper(response));
-  console.log(response);
+
   return response.data;
 };
 

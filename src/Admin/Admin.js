@@ -9,7 +9,7 @@ function Admin() {
   const [loggedIn, setLogin] = useState(false);
   //   let loggedIn = false;
   //   function handleClick() {
-  //     console.log(`click`);
+  //     (`click`);
   //     loggedIn = true;
   //   }
 

@@ -25,7 +25,6 @@ function GridItem({
   if (status.includes("awaiting")) {
     const statusSplit = status.split("_");
     statusSplit.map((word) => {
-      console.log(word[0].toUpperCase() + word.substring(1));
       return word[0].toUpperCase() + word.substring(1);
     });
     status =

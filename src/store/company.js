@@ -63,7 +63,7 @@ export const getCompanyStatus = (id, accessToken) => async (dispatch) => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log(response);
+
     dispatch(getCompanyStatusHelper(response.data));
     return response.status;
   } catch (error) {

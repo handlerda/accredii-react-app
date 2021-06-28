@@ -22,7 +22,6 @@ function FormTemplate() {
   const [successSubmit, setSuccessSubmit] = useState(null);
   const data = useSelector((state) => state.investor.details);
 
-  console.log(`here comes data`, data);
   const initialValues = {};
 
   //loop over all the input questions
@@ -39,7 +38,6 @@ function FormTemplate() {
   });
 
   const { values, handleInputChange } = UseForm(initialValues);
-  console.log(values);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -53,7 +51,6 @@ function FormTemplate() {
     }
   }
 
-  console.log(`here is investor info`, values);
   if (successSubmit === true) {
     return (
       <Popup
@@ -102,8 +99,8 @@ function FormTemplate() {
                 helpText={question.helpText}
               >
                 {question.choices.map((choice) => {
-                  // console.log(`here is the choice`, choice);
-                  // console.log(data[choice.question_name]["value"], choice);
+                  //
+                  //
 
                   return (
                     <Checkbox

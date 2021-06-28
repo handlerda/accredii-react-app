@@ -24,17 +24,17 @@ function NewClient({ attorney_id, lawfirm_id }) {
   const [loaded, isLoaded] = useState(false);
   //const dat
   const history = useHistory();
-  console.log(history);
-  console.log("i ran");
+   
+   
   useEffect(() => {
     async function attorneyInfo() {
       const accessToken = await getAccessTokenSilently({
         audience: "https://accredii.com/authorization",
         scope: "attorney:all",
       });
-      console.log(accessToken);
+       
       const data = await dispatch(getAttorneyInfo(user.sub, accessToken));
-      console.log(data);
+       
       isLoaded(true);
       return data;
     }
@@ -66,7 +66,7 @@ function NewClient({ attorney_id, lawfirm_id }) {
       if (newInvestor.status === false) {
         setSubmitSuccess(false);
       } else {
-        console.log(newInvestor);
+         
         const createDocument = await dispatch(
           createNewDocument(
             newInvestor.data.auth0_id,
@@ -76,16 +76,16 @@ function NewClient({ attorney_id, lawfirm_id }) {
             accessToken
           )
         );
-        console.log(`here comes create document`);
-        console.log(createDocument);
+         
+         
         if (createDocument === 201) {
           setSubmitSuccess(true);
-          console.log(submitSuccess);
+           
         } else setSubmitSuccess(false);
       }
       // get payload and create a document for the user
     } catch (error) {
-      console.log(error);
+       
     }
   };
   const { values, handleInputChange } = UseForm(initialClientValues);
@@ -94,7 +94,7 @@ function NewClient({ attorney_id, lawfirm_id }) {
     handleInputChange: handleDocumentValueChange,
   } = UseForm(initialDocumentValues);
 
-  console.log(values, documentValues);
+   
   if (submitSuccess === false) {
     return (
       <Popup
@@ -169,7 +169,7 @@ function NewClient({ attorney_id, lawfirm_id }) {
         })}
         <SubmitButton
           text="Submit"
-          onClick={() => console.log(`here comes the log`)}
+          onClick={() =>  
         />
       </Form>
     );

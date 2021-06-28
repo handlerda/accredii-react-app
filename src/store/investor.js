@@ -67,11 +67,10 @@ export const getInvestorStatus = (id, token) => async (dispatch) => {
       },
     });
     dispatch(getStatus(response.data));
-    console.log(response);
+
     return response.status;
   } catch (error) {
     if (error.response) {
-      console.log(error.response.status);
       dispatch(getStatus(error.response));
       return error.response.status;
     }
@@ -86,7 +85,7 @@ export const getInvestor = (investor_id, token) => async (dispatch) => {
     },
   });
   const investorDetails = response;
-  console.log(investorDetails);
+
   dispatch(getDetails(investorDetails.data));
   return investorDetails.data;
 };
@@ -96,24 +95,17 @@ export const generateInvestorDocument =
     const url = `${api_path}document?investor_id=${investor_id}&lawfirm_id=${lawfirm_id}`;
     const response = await axios(url);
     const newDocument = response.data;
-    console.log(newDocument);
+
     dispatch(generateDocument(newDocument));
     return newDocument;
   };
 
 export const insertInvestor =
   (data, attorney_id, lawfirm_id, token) => async (dispatch) => {
-    // const investorPayload = {
-    //   attorney_id,
-    //   lawfirm_id,
-    //   data,
-    // };
     data["attorney_id"] = attorney_id;
     const investorPayload = {
       data,
     };
-    console.log(investorPayload);
-    console.log(`here comes the payload`, investorPayload);
     const newInvestor = await axios.post(
       `${api_path}investor`,
       investorPayload,
@@ -124,7 +116,6 @@ export const insertInvestor =
       }
     );
 
-    console.log(newInvestor);
     const response = newInvestor.data;
     dispatch(addNewInvestor(response));
     return newInvestor;
@@ -137,7 +128,7 @@ export const updateInvestor =
       auth0_id: investor_id,
       data,
     };
-    console.log(`here is the investor payload`, investorPayload);
+
     const response = await axios.post(
       `${api_path}investor/update`,
       investorPayload,

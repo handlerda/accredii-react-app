@@ -27,7 +27,7 @@ function NewDocument({ id }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const attorneyInfo = useSelector((state) => state.attorney.info);
-  console.log(attorneyInfo);
+   
   //set document state
   const [file, setFile] = useState();
   const [submitSuccess, setSuccess] = useState(null);
@@ -115,7 +115,7 @@ function NewDocument({ id }) {
               />
             </div>
             {NewDocumentDropDown.map((question) => {
-              console.log(question);
+               
               switch (question.name) {
                 case "investors":
                   return (
@@ -164,7 +164,7 @@ function NewDocument({ id }) {
             })}
             <SubmitButton
               text="Submit"
-              onClick={() => console.log(`here comes the log`)}
+              onClick={() =>  
             />
           </Form>
         </>

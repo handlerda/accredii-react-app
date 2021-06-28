@@ -12,7 +12,6 @@ function NewLawfirm() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(`submited`);
   }
 
   function addAttorney(e) {

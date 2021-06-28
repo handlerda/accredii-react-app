@@ -2,14 +2,13 @@ import axios from "axios";
 
 const api_path = process.env.REACT_APP_SERVER_URI_PROD;
 const getDocuments = async (type, id, token) => {
-  console.log(type, id);
   const url = `${api_path}${type}/documents?auth0_id=${id}`;
   const getDocuments = await axios.get(url, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(getDocuments);
+
   const documentJson = await getDocuments.data;
   return documentJson;
 };
@@ -26,7 +25,7 @@ const generateInvestorEmbeddedDocument = async (id, documentId, type) => {
   const url = `${api_path}${type}/sign${queryParams}`;
   const documentDataURL = await axios(url);
   const generatedDocumentData = documentDataURL.data;
-  console.log(generatedDocumentData);
+
   return generatedDocumentData;
 };
 
@@ -42,7 +41,7 @@ const generateInvestorDocument = async (investor_id, lawfirm_id) => {
   const url = `${api_path}document?investor_id=${investor_id}&lawfirm_id=${lawfirm_id}`;
   const documentDataURL = await axios(url);
   const documentJSON = documentDataURL.data;
-  console.log(documentJSON);
+
   return documentJSON.doc_id;
 };
 
@@ -53,10 +52,9 @@ const insertInvestor = async (data, attorney_id, lawfirm_id) => {
     lawfirm_id,
     data,
   };
-  console.log(JSON.stringify(investorPayload));
-  console.log(`hello from insert`);
+
   const response = await axios.post(`${api_path}investor/new`, investorPayload);
-  console.log(response.data);
+
   return response.data;
 };
 
@@ -66,12 +64,12 @@ const updateInvestor = async (investor_id, data) => {
     user_id: investor_id,
     data,
   };
-  console.log(JSON.stringify(investorPayload));
+
   const response = await axios.post(
     `${api_path}investor/update`,
     investorPayload
   );
-  console.log(response);
+
   return response.data;
 };
 
@@ -80,23 +78,23 @@ const uploadNewForm = async (form_data) => {
   const documentPayload = {
     encoded_form: form_data,
   };
-  console.log(`here was the upload`, documentPayload);
+
   const upload = await axios.post(url, documentPayload);
-  console.log(`here was the upload`, documentPayload);
+
   return upload;
 };
 
 const getDocumentInfo = async (doc_id) => {
   const url = `${api_path}document?id=${doc_id}`;
   const response = await axios.get(url);
-  console.log(response.data);
+
   return response.data;
 };
 
 const updateDocument = async (payload) => {
   const url = `${api_path}document/update`;
   const response = await axios.post(url, payload);
-  console.log(response);
+
   return response.data;
 };
 
@@ -109,17 +107,16 @@ const createNewDocument = async (
   template_id = ""
 ) => {
   const url = `${api_path}document/new?investor_id=${investor_id}&attorney_id=${attorney_id}&lawfirm_id=${lawfirm_id}&company_id=${company_id}&company_name=${company_name}&template_id=${template_id}`;
-  console.log(url);
+
   const response = await axios.get(url);
-  console.log(response);
-  console.log(response.data);
+
   return response.data;
 };
 
 const getAttorneyInfo = async (attorney_id) => {
   const url = `${api_path}lawfirm/info?id=${attorney_id}`;
   const response = await axios.get(url);
-  console.log(response);
+
   return response.data;
 };
 
@@ -130,7 +127,7 @@ const createNewCompany = async (data) => {
   };
 
   const response = await axios.post(url, payload);
-  console.log(response.data);
+
   return response.data;
 };
 

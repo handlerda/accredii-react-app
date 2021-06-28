@@ -40,20 +40,20 @@ function DocumentSignContainer({ user_id, type }) {
             : await dispatch(
                 generateCompanyEmbeddedDocument(documentId, accessToken)
               );
-        console.log(signedURL);
+         
         if (signedURL.unanswered_document_questions) {
-          console.log(signedURL);
+           
           setSigning("ask");
           setQuestions(signedURL);
         } else if (signedURL.status === "investor") {
           setSigning("moreInfo");
         } else {
           setHelloSignData(signedURL);
-          console.log(`here is the raw payload from the render`, signedURL);
+           
           setSigning("sign");
         }
       } catch (error) {
-        console.log(error);
+         
       }
     };
     embeddedSigningData();
@@ -74,7 +74,7 @@ function DocumentSignContainer({ user_id, type }) {
         amount: values.amount,
       },
     };
-    console.log(`the submit was called`);
+     
     const status = await dispatch(updateDocument(payload, accessToken));
     if (status === 201) {
       const signedURL =
@@ -85,7 +85,7 @@ function DocumentSignContainer({ user_id, type }) {
           : await dispatch(
               generateCompanyEmbeddedDocument(documentId, accessToken)
             );
-      console.log(`signedURL from the sign`, signedURL);
+       
       setHelloSignData(signedURL);
       setSigning("sign");
     } else {
@@ -93,7 +93,7 @@ function DocumentSignContainer({ user_id, type }) {
     }
     // setOpen(false);
     // history.push(`/hello`);
-    console.log(values);
+     
   }
   const { values, handleInputChange } = UseForm(initialValues);
 
@@ -112,15 +112,15 @@ function DocumentSignContainer({ user_id, type }) {
       history.push(`/${type}/documents`);
     });
     hsClient.current.on("error", () => {
-      console.log(`there was an error`);
+       
     });
 
     hsClient.current.on("open", () => {
-      console.log("the frame has opened");
+       
     });
 
     hsClient.current.on("cancel", () => {
-      console.log("hello from cancel");
+       
       history.push(`/${type}/documents`);
     });
     return <section ref={hsNode}> Hello from container </section>;
@@ -182,11 +182,11 @@ function DocumentSignContainer({ user_id, type }) {
                         We just have a few more questions
                       </Dialog.Title>
                       <Form onSubmit={handleSubmit}>
-                        {console.log(typeof questions)}
-                        {console.log(questions)}
+                        { 
+                        { 
                         {questions.unanswered_document_questions.map(
                           (question) => {
-                            console.log(question);
+                             
                             return (
                               <TextInput
                                 label={question.accredii_version}

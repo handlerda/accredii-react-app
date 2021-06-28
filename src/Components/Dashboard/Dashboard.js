@@ -53,7 +53,7 @@ export default function Dashboard({ user_id, type }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [documentStatus, setDocuments] = useState(null);
   const reduxValue = useSelector((state) => state);
-  console.log(`here from documents`, reduxValue);
+
   useEffect(() => {
     function documentChecker(data) {
       // if data will return data
@@ -198,52 +198,3 @@ export default function Dashboard({ user_id, type }) {
     );
   }
 }
-
-// import React, { useEffect, useState } from "react";
-// import { getDocuments } from "../../Service/Backend";
-// import Piechart from "./Piechart";
-
-// function Dashboard({ type, id }) {
-//   const [data, setData] = useState(null);
-//   useEffect(() => {
-//     const getStatus = async () => {
-//       const data = await getDocuments(type, id);
-//       if (data.data.docs.length) setData(data.data);
-//       else setData(false);
-//     };
-//     getStatus();
-//   }, []);
-//   console.log(data);
-//   const generalStats = [];
-//   if (data !== null) {
-//     console.log(`we made it`);
-//     generalStats.push({
-//       name: "awaiting_company",
-//       value: data.stats.awaiting_company,
-//     });
-//     generalStats.push({
-//       name: "awaiting_investor",
-//       value: data.stats.awaiting_investor,
-//     });
-//     generalStats.push({
-//       name: "awaiting_lawfirm",
-//       value: data.stats.awaiting_lawfirm,
-//     });
-//     generalStats.push({
-//       name: "completed",
-//       value: data.stats.completed,
-//     });
-//     generalStats.push({
-//       name: "total",
-//       value: data.stats.total,
-//     });
-//   }
-//   if (!data) {
-//     return <h1>loading</h1>;
-//   }
-//   return data && <Piechart formattedData={generalStats} key="value" />;
-
-//   //   return <Piechart data={data} key />;
-// }
-
-// export default Dashboard;

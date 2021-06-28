@@ -14,7 +14,7 @@ function CompanyGrid({ type, id }) {
   //   };
   //   getStatus();
   // }, []);
-  console.log(companies);
+
   return (
     companies && (
       <div>

@@ -9,9 +9,7 @@ function NewAttorney() {
   // handle form values
   const { values, handleInputChange } = UseForm(initialValues);
 
-  function handleSubmit(e) {
-    console.log(`submited`);
-  }
+  function handleSubmit(e) {}
 
   return (
     <Form

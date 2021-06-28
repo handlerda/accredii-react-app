@@ -35,7 +35,7 @@ function App() {
           </Auth0Provider>
         </Route>
         <Route path="/company">
-          {console.log(company_auth0_client_id)}
+          {company_auth0_client_id}
           <Auth0Provider
             domain={investor_auth0_domain}
             clientId={company_auth0_client_id}
