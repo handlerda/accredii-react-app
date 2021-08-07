@@ -60,7 +60,7 @@ function LawfirmApp() {
         </MobileContainer>
 
         {/* <!-- Static sidebar for desktop --> */}
-        <Container img="https://media-exp1.licdn.com/dms/image/C4E03AQGLtyzMNWNkjQ/profile-displayphoto-shrink_200_200/0/1516353342859?e=1626307200&v=beta&t=GeoaTf5EGTnTQsCZc48Phjv5hsywtWoXObI9UF4aatY">
+        <Container img="https://www.dolby.com/siteassets/about/leadership/dolby-outside-directors/tevanian_headshot.jpg">
           <Items label="Dashboard" link="/attorney" />
           <Items label="Clients" link="/attorney/clients" />
           <Items label="Companies" link="/attorney/companies" />

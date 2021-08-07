@@ -164,7 +164,7 @@ function NewClient({ attorney_id, lawfirm_id }) {
       </Form>
     );
   } else {
-    return <h1>Hello world</h1>;
+    return <h1>Loading</h1>;
   }
 }
 
